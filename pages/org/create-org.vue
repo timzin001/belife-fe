@@ -593,7 +593,7 @@ const callAPIOrgsOfUser = async () => {
     method: Method.GET,
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.GET_ORGANIZATION_OF_USER,
+    APIPathAccount.GET_ORGANIZATION_OF_USER,
     options,
     toast,
     t,

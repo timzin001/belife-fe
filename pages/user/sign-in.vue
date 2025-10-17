@@ -183,6 +183,8 @@ import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
 import type { SignInData } from '~/types/user/SignInType'
 import { SignInValidate } from '~/validate/user/SignInValidate'
+import { GlobalStore } from '~/store/Global'
+const store = GlobalStore()
 
 /// Define
 const { $auth } = useNuxtApp()
@@ -212,40 +214,50 @@ const instance = ref(<SignInData>{
 
 /// Click sign in
 const clickSignIn = async () => {
-  /// Validate all
-  const validate = Promise.all([
-    SignInValidate.phoneNumber(instance, toast, t),
-    SignInValidate.password(instance, toast, t),
-    SignInValidate.codeFrom(instance, t),
-  ])
-  if (
-    instance.value.phoneNumberError ||
-    instance.value.passwordError ||
-    instance.value.codeFromError
-  ) {
+  const validate = await SignInValidate.validateAll(instance, toast, t)
+  if (!validate) {
     return
   }
-
   /// Get data
   const phoneNumber = `${instance.value.dialCode?.code ?? ''}${(
     instance.value.phoneNumber ?? ''
   ).replaceAll('-', '')}`
   const password = instance.value.password
-  const codeFrom = instance.value.codeFrom
 
-  /// Save tem_sign_in
-  const obj = {
-    phoneNumber: phoneNumber,
-    password: password,
-    codeFrom: codeFrom,
-  }
-  setItem(LocalStorage.TEM_SIGN_IN, JSON.stringify(obj))
-  /// Move to verification code
-  await navigateTo({
-    path: PathUser.VERIFICATION_CODE,
-    query: {
-      previous: PathUser.SIGN_IN,
+  const options: any = {
+    method: Method.POST,
+    body: {
+      phoneNumber: phoneNumber,
+      password: password,
     },
+  }
+  const { data, error, status } = await CallAPI(
+    APIPathAccount.POST_SIGN_IN,
+    options,
+    toast,
+    t,
+    false
+  )
+
+  /// Check error
+  if (status.value !== APIStatus.SUCCESS) {
+    toast.add({
+      severity: Toast.ERROR,
+      summary: t('error'),
+      detail: getErrorMessages(error, t),
+      life: Toast.DURATION,
+    })
+    return
+  }
+  const result: any = data.value
+  console.log(result)
+
+  /// Save user
+  store.setUser(result.data)
+
+  await navigateTo({
+    path: Path.HOME,
+    replace: true,
   })
 }
 
@@ -265,10 +277,6 @@ const changeDialCode = async (evt: any) => {
 const changePassword = async (evt: any) => {
   SignInValidate.password(instance, toast, t)
 }
-/// Change code from
-const changeCodeFrom = async (evt: any) => {
-  SignInValidate.codeFrom(instance, t)
-}
 
 onMounted(() => {
   $auth()
@@ -280,152 +288,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-// flex items-center justify-center h-[100%] pl-[10px]
-.demo {
-  display: flex;
-  height: 100%;
-}
-
-:deep(.p-message-text) {
-  padding-left: 110px;
-}
-
-.link {
-  padding: 0px;
-  color: $text-color;
-  text-decoration: underline;
-}
-.logan {
-  background-color: rgba(100, 100, 100, 0.2);
-  // background-color: red;
-}
-
-.page {
-  padding: 8px;
-}
-
-.group-sign-in {
-  padding: 30px;
-  width: 1000px;
-  flex-direction: row;
-  border-top-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
-.group-image {
-  .image {
-    width: 100%;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-  }
-  .header {
-    font-size: 20px;
-  }
-  .description {
-    font-size: 16px;
-  }
-}
-.group-content {
-  margin-top: unset;
-  padding-left: 20px;
-  .item {
-    width: 450px;
-    .label {
-      width: 110px;
-    }
-    .link {
-      margin-left: 110px;
-    }
-    .register {
-      margin-left: 110px;
-    }
-  }
-}
-
-/// Tablet
-@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {
-}
-
-/// Tablet mini
-@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
-  :deep(.p-message-text) {
-    padding-left: 100px;
-  }
-  .group-sign-in {
-    padding: 10px;
-    width: 500px;
-    padding: 20px;
-    flex-direction: column;
-  }
-  .group-image {
-    max-height: 300px;
-    .image {
-      width: 100%;
-      max-height: 300px;
-    }
-    .header {
-      font-size: 18px;
-    }
-    .description {
-      font-size: 13px;
-    }
-  }
-  .group-content {
-    margin-top: 20px;
-    padding-left: unset;
-    .item {
-      width: 100%;
-      .label {
-        width: 100px;
-      }
-      .link {
-        margin-left: 100px;
-      }
-      .register {
-        margin-left: 100px;
-      }
-    }
-  }
-}
-
-/// Mobile
-@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-  :deep(.p-message-text) {
-    padding-left: 100px;
-  }
-  .group-sign-in {
-    padding: 10px;
-    width: 100%;
-    max-width: 500px;
-    flex-direction: column;
-  }
-  .group-image {
-    max-height: 300px;
-    .image {
-      width: 100%;
-      max-height: 300px;
-    }
-    .header {
-      font-size: 18px;
-    }
-    .description {
-      font-size: 13px;
-    }
-  }
-  .group-content {
-    margin-top: 20px;
-    padding-left: unset;
-    .item {
-      width: 100%;
-      .label {
-        width: 100px;
-      }
-      .link {
-        margin-left: 100px;
-      }
-      .register {
-        margin-left: 100px;
-      }
-    }
-  }
-}
+@import url('~/assets/scss/user/SignIn.scss');
 </style>

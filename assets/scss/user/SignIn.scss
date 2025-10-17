@@ -1,0 +1,170 @@
+:deep(.p-message-text) {
+    padding-left: 110px;
+}
+
+.link {
+    padding: 0px;
+    color: $text-color;
+    text-decoration: underline;
+}
+
+.logan {
+    background-color: rgba(100, 100, 100, 0.2);
+    // background-color: red;
+}
+
+.page {
+    padding: 8px;
+}
+
+.group-sign-in {
+    padding: 30px;
+    width: 1000px;
+    flex-direction: row;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.group-image {
+    .image {
+        width: 100%;
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    .header {
+        font-size: 20px;
+    }
+
+    .description {
+        font-size: 16px;
+    }
+}
+
+.group-content {
+    margin-top: unset;
+    padding-left: 20px;
+
+    .item {
+        width: 450px;
+
+        .label {
+            width: 110px;
+        }
+
+        .link {
+            margin-left: 110px;
+        }
+
+        .register {
+            margin-left: 110px;
+        }
+    }
+}
+
+/// Tablet
+@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {}
+
+/// Tablet mini
+@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
+    :deep(.p-message-text) {
+        padding-left: 100px;
+    }
+
+    .group-sign-in {
+        padding: 10px;
+        width: 500px;
+        padding: 20px;
+        flex-direction: column;
+    }
+
+    .group-image {
+        max-height: 300px;
+
+        .image {
+            width: 100%;
+            max-height: 300px;
+        }
+
+        .header {
+            font-size: 18px;
+        }
+
+        .description {
+            font-size: 13px;
+        }
+    }
+
+    .group-content {
+        margin-top: 20px;
+        padding-left: unset;
+
+        .item {
+            width: 100%;
+
+            .label {
+                width: 100px;
+            }
+
+            .link {
+                margin-left: 100px;
+            }
+
+            .register {
+                margin-left: 100px;
+            }
+        }
+    }
+}
+
+/// Mobile
+@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
+    :deep(.p-message-text) {
+        padding-left: 100px;
+    }
+
+    .group-sign-in {
+        padding: 10px;
+        width: 100%;
+        max-width: 500px;
+        flex-direction: column;
+    }
+
+    .group-image {
+        max-height: 300px;
+
+        .image {
+            width: 100%;
+            max-height: 300px;
+        }
+
+        .header {
+            font-size: 18px;
+        }
+
+        .description {
+            font-size: 13px;
+        }
+    }
+
+    .group-content {
+        margin-top: 20px;
+        padding-left: unset;
+
+        .item {
+            width: 100%;
+
+            .label {
+                width: 100px;
+            }
+
+            .link {
+                margin-left: 100px;
+            }
+
+            .register {
+                margin-left: 100px;
+            }
+        }
+    }
+}

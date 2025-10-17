@@ -74,7 +74,7 @@ const validateNickName = async (
   }
 
   const { data, error, status } = await CallAPI(
-    APIPathUser.GET_EXIST_NICK_NAME_USER,
+    APIPathAccount.GET_EXIST_NICK_NAME_USER,
     options,
     toast,
     t,
@@ -256,7 +256,7 @@ const validatePhoneNumber = async (instance: any, toast: any, t: any) => {
     },
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.GET_EXIST_PHONE_NUMBER_USER,
+    APIPathAccount.GET_EXIST_PHONE_NUMBER,
     options,
     toast,
     t,

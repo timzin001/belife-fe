@@ -30,7 +30,7 @@ export const validatePhoneNumber = async (
     },
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.GET_EXIST_PHONE_NUMBER_USER,
+    APIPathAccount.GET_EXIST_PHONE_NUMBER,
     options,
     toast,
     t,
@@ -107,7 +107,7 @@ const validatePassword = async (instance: any, toast: any, t: any) => {
     },
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.GET_EXIST_USER,
+    APIPathAccount.GET_EXIST_ACCOUNT,
     options,
     toast,
     t,
@@ -149,32 +149,18 @@ const changeDialCode = async (evt: any, instance: any) => {
   instance.value.phoneNumber = ''
 }
 
-/// Validate code from
-const validateCodeFrom = (instance: any, t: any) => {
-  if (!instance.value.codeFrom) {
-    instance.value.codeFromError = t('please_choose_get_code_from')
-    return
-  }
-  instance.value.codeFromError = ''
-}
-
 const validateAll = async (
   instance: any,
   toast: any,
   t: any,
-  phoneNumberController: any,
-  passwordController: any
+  phoneNumberController?: any,
+  passwordController?: any
 ) => {
   const validate = await Promise.all([
     SignInValidate.phoneNumber(instance, toast, t),
     SignInValidate.password(instance, toast, t),
-    SignInValidate.codeFrom(instance, t),
   ])
-  if (
-    instance.value.phoneNumberError ||
-    instance.value.passwordError ||
-    instance.value.codeFromError
-  ) {
+  if (instance.value.phoneNumberError || instance.value.passwordError) {
     return false
   }
   return true
@@ -184,6 +170,5 @@ export const SignInValidate = {
   phoneNumber: validatePhoneNumber,
   password: validatePassword,
   changeDialCode: changeDialCode,
-  codeFrom: validateCodeFrom,
   validateAll: validateAll,
 }

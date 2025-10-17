@@ -14,7 +14,7 @@ const validateUserCode = async (
   }
 
   const listResponses = await Promise.all([
-    CallAPI(APIPathUser.GET_USER_WITH_CODE, options, toast, t, false),
+    CallAPI(APIPathAccount.GET_USER_WITH_CODE, options, toast, t, false),
     CallAPI(APIPathEmployee.GET_EXIST_EMPLOYEE_WITH_CODE, options, toast, t),
   ])
   const resUser = listResponses[0]

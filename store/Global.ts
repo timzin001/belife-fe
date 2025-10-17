@@ -3,18 +3,7 @@ export const GlobalStore = defineStore('global', () => {
   /// Limit only 4KB (4096 bytes)
   const user = useCookie(CookieStorage.USER, CookieStorage.OPTION)
   const language = useCookie(CookieStorage.LANGUAGE, CookieStorage.OPTION)
-  const listOrgs = useCookie(CookieStorage.LIST_ORGS, CookieStorage.OPTION)
   const org = useCookie(CookieStorage.ORG, CookieStorage.OPTION)
-  const userAuth = useCookie(CookieStorage.USER_AUTH, CookieStorage.OPTION)
-  const orgAuth = useCookie(CookieStorage.ORG_AUTH, CookieStorage.OPTION)
-
-  /// Check sign in
-  function isSignIn() {
-    if (userAuth.value) {
-      return true
-    }
-    return false
-  }
 
   /// Set user
   function setUser(value: any) {
@@ -23,33 +12,6 @@ export const GlobalStore = defineStore('global', () => {
   /// Get user
   function getUser() {
     return user.value
-  }
-
-  /// Set user auth
-  function setUserAuth(value: any) {
-    userAuth.value = value
-  }
-  /// Get user auth
-  function getUserAuth() {
-    return userAuth.value
-  }
-
-  /// Set org auth
-  function setOrgAuth(value: any) {
-    orgAuth.value = value
-  }
-  /// Get org auth
-  function getOrgAuth() {
-    return orgAuth.value
-  }
-
-  /// Set list orgs
-  function setListOrgs(value: any) {
-    listOrgs.value = value
-  }
-  /// Get list orgs
-  function getListOrgs() {
-    return listOrgs.value
   }
 
   /// Set org
@@ -86,9 +48,6 @@ export const GlobalStore = defineStore('global', () => {
     /// Not remove language
     // removeItem(LocalStorage.LANGUAGE)
     user.value = null
-    userAuth.value = null
-    orgAuth.value = null
-    listOrgs.value = null
     org.value = null
   }
   /// Set status loaded of editor
@@ -101,7 +60,6 @@ export const GlobalStore = defineStore('global', () => {
   }
 
   return {
-    isSignIn,
     setUser,
     getUser,
     signOut,
@@ -109,13 +67,7 @@ export const GlobalStore = defineStore('global', () => {
     getLanguage,
     setLoadEditor,
     getLoadEditor,
-    setListOrgs: setListOrgs,
-    getListOrganizations: getListOrgs,
     getOrg: getOrg,
     setOrg: setOrg,
-    setUserAuth,
-    getUserAuth,
-    getOrganizationAuth: getOrgAuth,
-    setOrgAuth: setOrgAuth,
   }
 })

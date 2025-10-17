@@ -12,7 +12,8 @@ const CallAPI = (
 ) => {
   const customFetch = $fetch.create({
     // baseURL: 'https://soivip-api.com/api/v1/',
-    baseURL: 'http://localhost:3001/api/v1/',
+    baseURL: 'http://localhost:3001/api/belife/v1',
+    // http://localhost:3001/api/belife/v1/account/update-avatar
     onRequest({ options }) {
       const language = useCookie(CookieStorage.LANGUAGE, CookieStorage.OPTION)
 

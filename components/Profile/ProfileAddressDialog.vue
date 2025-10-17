@@ -110,7 +110,7 @@ const clickSave = async () => {
     },
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.POST_UPDATE_ADDRESS_USER,
+    APIPathAccount.POST_UPDATE_ADDRESS_USER,
     options,
     toast,
     t,

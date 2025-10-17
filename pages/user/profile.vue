@@ -629,7 +629,7 @@ const uploadImgDescription = async (file: any) => {
     body: formData,
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.POST_SET_IMG_DESCRIPTION_AVATAR_USER,
+    APIPathAccount.POST_SET_IMG_DESCRIPTION_AVATAR_USER,
     options,
     toast,
     t,
@@ -690,7 +690,7 @@ const uploadAvatar = async (file: any) => {
     body: formData,
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.POST_SET_AVATAR_USER,
+    APIPathAccount.POST_SET_AVATAR_USER,
     options,
     false,
     true
@@ -717,7 +717,7 @@ const initData = async () => {
     method: Method.GET,
   }
   const { data, error, status } = await CallAPI(
-    APIPathUser.GET_USER,
+    APIPathAccount.GET_USER,
     options,
     toast,
     t,

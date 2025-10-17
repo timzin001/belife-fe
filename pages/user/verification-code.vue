@@ -160,8 +160,6 @@ const callSignIn = async () => {
   const result: any = data.value
   /// Remove data
   removeItem(LocalStorage.TEM_SIGN_UP)
-  /// Save auth
-  store.setUserAuth(result.data.auth)
   /// Save user
   store.setUser(result.data.user)
   /// Save orgs

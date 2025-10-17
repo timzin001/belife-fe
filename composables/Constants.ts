@@ -66,17 +66,21 @@ export const APIStatus = {
   ABORT_API: 'abort_api',
 }
 
-export const APIPathAuth = {
-  POST_SIGN_UP_AUTH: 'auth/post-sign-up',
-  POST_SIGN_IN_AUTH: 'auth/post-sign-in',
-  POST_SIGN_IN_ORG_AUTH: 'auth/post-sign-in-org',
-}
+// export const APIPathAuth = {
+//   POST_SIGN_UP_AUTH: 'auth/post-sign-up',
+//   POST_SIGN_IN_AUTH: 'auth/post-sign-in',
+//   POST_SIGN_IN_ORG_AUTH: 'auth/post-sign-in-org',
+// }
 
-export const APIPathUser = {
+export const APIPathAccount = {
+  GET_EXIST_PHONE_NUMBER: 'account/exist-phone-number',
+  GET_EXIST_ACCOUNT: 'account/exist-account',
+  POST_SIGN_IN: 'account/sign-in',
+  POST_SIGN_UP: 'account/sign-up',
+
   GET_USER: 'user/get-user',
   GET_USER_WITH_CODE: 'user/get-user-with-code',
-  GET_EXIST_PHONE_NUMBER_USER: 'user/get-exist-phone-number',
-  GET_EXIST_USER: 'user/get-exist-user',
+
   GET_ORGANIZATION_OF_USER: 'user/get-org-of-user',
   POST_SET_AVATAR_USER: 'user/post-set-avatar',
   POST_SET_IMG_DESCRIPTION_AVATAR_USER: 'user/post-set-img-description',

@@ -9,6 +9,4 @@ export interface SignInData {
   passwordError?: string
   dialCode?: PhoneNumberType
   countries?: Array<PhoneNumberType>
-  codeFrom?: string
-  codeFromError?: string
 }
