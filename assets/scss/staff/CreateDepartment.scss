@@ -1,0 +1,199 @@
+:deep(.p-textarea) {
+    font-size: 14px;
+}
+
+:deep(.p-message-text) {
+    padding-left: 110px;
+}
+
+:deep(.p-chip) {
+    padding-block: 5px !important;
+}
+
+.page {
+    display: flex;
+    padding: 10px;
+}
+
+.create-department {
+    flex: 1;
+    padding: 30px;
+
+    .contain {
+        display: flex;
+        flex-direction: column;
+
+        .inner {
+            width: 100%;
+            max-width: 700px;
+            border: 1px solid $border-color;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            padding: 30px;
+        }
+    }
+
+    .label {
+        width: 110px;
+
+        span {
+            margin-left: 2px;
+            color: red;
+        }
+    }
+
+    .icon {
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+    }
+
+    .avatar-des {
+        margin-left: 110px;
+    }
+
+    .line {
+        border-radius: 5px;
+        border-bottom: 1px dashed $border-color;
+    }
+
+    .image {
+        margin-left: 50px;
+        width: 50px;
+    }
+
+    .pencil {
+        margin-left: 5px;
+        filter: invert(60%) sepia(75%) saturate(440%) hue-rotate(89deg) brightness(87%) contrast(99%);
+
+        &:hover {
+            cursor: pointer;
+            filter: invert(52%) sepia(41%) saturate(3616%) hue-rotate(166deg) brightness(100%) contrast(89%);
+        }
+    }
+
+    .icon-more {
+        filter: invert(53%) sepia(21%) saturate(5122%) hue-rotate(166deg) brightness(98%) contrast(89%);
+    }
+
+    .chip,
+    .chip-more {
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        height: 30px;
+        background-color: #f1f5f9;
+
+        .icon-chip {
+            border-top-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .chip-more {
+        background-color: $info-color;
+        color: white;
+    }
+
+    .group-message {
+        :deep(.p-message-text) {
+            padding-left: 0px;
+        }
+    }
+}
+
+/// Tablet
+@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {}
+
+/// Tablet mini
+@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
+    :deep(.p-message-text) {
+        padding-left: 100px;
+    }
+
+    .page {
+        display: flex;
+        padding: 8px;
+    }
+
+    .create-department {
+        flex: 1;
+        padding: 10px;
+        padding-top: 20px;
+
+        .contain {
+            display: flex;
+            flex-direction: column;
+
+            .group-information {
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+
+            .group-branch {
+                margin-top: 20px;
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+        }
+    }
+
+    .avatar-des {
+        margin-left: 100px !important;
+    }
+
+    .label {
+        width: 100px !important;
+    }
+}
+
+/// Mobile
+@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
+    :deep(.p-message-text) {
+        padding-left: 100px;
+    }
+
+    .page {
+        display: flex;
+        padding: 8px;
+    }
+
+    .create-department {
+        flex: 1;
+        padding: 10px;
+        padding-top: 20px;
+
+        .contain {
+            display: flex;
+            flex-direction: column;
+
+            .group-information {
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+
+            .group-branch {
+                margin-top: 20px;
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+        }
+    }
+
+    .avatar-des {
+        margin-left: 100px !important;
+    }
+
+    .label {
+        width: 100px !important;
+    } 
+}

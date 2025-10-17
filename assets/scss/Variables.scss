@@ -1,0 +1,56 @@
+/// Define font size
+
+/// Define color
+$primary-color: #22c55e; // button
+
+$second-color: #f1f5f9;
+// $border-color: #e5e7eb;
+// $border-color: #d9d9d9;
+$border-color: #cbd5e1;
+
+
+$text-color: #334155; /// text
+$text-header-color: #0f172a; // header
+
+$danger-color:#ef4444;
+$warn-color: #f97316;
+$info-color: #0ea5e9;
+$help-color: #a855f7;
+$hover-item-color: #ecfdf5; /// hover item 
+$error-color: #dc2626; /// Error color
+
+$button-hover-text-color: #ffffff;
+$button-hover-color: #10b981; /// hover button
+$button-color: #22c55e; // button
+
+$input-focus-color: #10b981; // button
+$input-border-color: #cbd5e1; /// input 
+
+$card-background-color: #ffffff;
+$card-border-color: #e2e8f0;
+$card-box-shadow-color:rgba(221, 224, 255, .54);
+
+$primary-background-color: #f1f5f9;
+$second-background-color: #ffffff;
+
+$left-menu-background-color: #ffffff;
+$left-menu-shadow-color: #d9ddfc;
+
+
+/// Define border
+$input-border-normal: 1px solid $input-border-color;
+$input-border-foucus: 1px solid $input-focus-color;
+$card-border: 1px solid $card-border-color; //border
+
+/// Define shadow
+$left-menu-box-shadow: 0 4px 50px $left-menu-shadow-color;
+$card-box-shadow: 0px 4px 30px $card-box-shadow-color;
+
+/// Break point
+$tablet-max: 1366px;
+$tablet-min: 1024px;
+$tablet-mini-max: 1023px;
+$tablet-mini-min: 768px;
+$mobile-max : 767px;
+$mobile-min: 360px;
+

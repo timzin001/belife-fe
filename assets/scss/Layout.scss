@@ -1,0 +1,618 @@
+@use "primeicons/primeicons.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: $primary-background-color;
+    color: $text-color;
+    font-weight: 400;
+    #__nuxt {
+        width: 100%;
+        height: 100%;
+        // min-width: 374px;
+    }
+}
+
+// Break css
+.card{
+    background-color: $card-background-color;
+    box-shadow: $card-box-shadow;
+    border:$card-border;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.hover-button {
+    &:hover {
+        background-color: $button-hover-color;
+        color: $button-hover-text-color;
+    }
+}
+
+.show-unset{
+    display: unset;
+}
+.show-flex{
+    display: flex;
+}
+.show-block{
+    display: block;
+}
+.hide{
+    display: none;
+}
+
+.tex-color {
+    color: $text-color;
+}
+
+.transition {
+    transition: all 0.5s ease-in-out;
+}
+
+.primary-color{
+    color: $primary-color;
+}
+
+.app{
+    // padding-top:16px;
+    // padding-bottom: 16px;
+    font-size: 14px;
+    display: unset;
+    width: 100%;
+    height: 100%;
+}
+ .not-support {
+     display: none;
+ }
+
+/// Desktop
+
+.cover{
+    background-color:rgba(0, 0, 0, 0.5);
+    width: 0px;
+}
+
+.hide-cover{
+    display: none;
+}
+.show-cover{
+    display: unset;
+}
+
+
+.show-menu {
+    left: 0px;
+}
+
+.hide-menu {
+    left: 0px;
+}
+
+.no-full-contain {
+    margin-left: 300px;
+}
+
+.full-contain {
+    margin-left: 300px;
+}
+
+.page-contain{
+    /// padding-top and padding-bottom -> 0px
+    /// header -> 50px
+    height: calc(100vh - 0px - 50px);
+    overflow: scroll;
+    .page {
+        /// padding-top and padding-bottom -> 0px
+        /// header -> 50px
+        /// footer -> 70px
+        min-height: calc(100vh - 0px - 50px - 70px);
+        padding-top: 10px;
+        padding-bottom:10px;
+    }
+}
+
+ /// Tablet
+ @media screen and (min-width: $tablet-min) and (max-width: $tablet-max){
+    .app {
+        display: unset;
+    }
+    .not-support {
+        display: none;
+    }
+    .show-menu {
+        left: 0;
+    }
+
+    .hide-menu {
+        left: -300px;
+    }
+
+    .no-full-contain{
+        margin-left: 300px;
+    }
+
+    .full-contain{
+        margin-left: 0;
+    }
+    .cover {
+        width: 100%;
+    }
+ }
+
+/// Tablet mini
+@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
+    .app {
+        display: unset;
+    }
+
+    .not-support {
+        display: none;
+    }
+
+    .show-menu {
+        left: 0;
+    }
+
+    .hide-menu {
+        left: -300px;
+    }
+
+    .no-full-contain {
+        margin-left: 300px;
+    }
+
+    .full-contain {
+        margin-left: 0;
+    }
+    .cover {
+        width: 100%;
+    }
+}
+
+/// Mobile
+@media screen and (min-width:  $mobile-min) and (max-width: $mobile-max) {
+    
+    .app {
+        // padding-top:8px;
+        // padding-bottom:8px;
+        min-width: 360px;
+        display: unset;
+    }
+    .not-support {
+        display: none;
+    }
+    .menu-close {
+        display: flex;
+    }
+   
+    .show-menu {
+        left: 0;
+    }
+
+    .hide-menu{
+        left: -100%;
+    }
+
+    .no-full-contain {
+        margin-left: 0;
+    }
+
+    .full-contain {
+        margin-left: 0;
+    }
+   
+    .cover {
+        width: 100%;
+    }
+    .page-contain {
+        /// padding-top and padding-bottom -> 0px
+        /// header -> 60px
+        height: calc(100vh - 0px - 60px);
+        overflow: scroll;
+
+        .page {
+            /// padding-top and padding-bottom -> 0px
+            /// header -> 60px
+            /// footer -> 100px
+            min-height: calc(100vh - 0px - 60px - 100px);
+        }
+    }   
+    /// Overidde dialog
+    .p-dialog {
+        width: 95%;
+        max-height: 90%;
+    }
+    /// Overidde table paging
+    .p-paginator-page,
+    .p-paginator-next,
+    .p-paginator-last,
+    .p-paginator-first,
+    .p-paginator-prev {
+        min-width: 30px;
+        height: 30px;
+    }
+}
+
+/// Not support this screen
+@media screen and (max-height: 666px) {
+    .p-overlay-mask{
+        display: none !important;
+    }
+    .app {
+        display: none;
+    }
+    .not-support {
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        .not-support-text {
+            background-color: rgba(100, 100, 100, 0.5);
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 70px;
+            color: black;
+        }
+    }
+}
+
+/// Not support this screen
+@media screen and (min-width: 0px) and (max-width: 359px){
+    .p-overlay-mask {
+        display: none !important;
+    }
+    .app {
+        display: none;
+    }
+    .not-support{
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        .not-support-text{
+            background-color: rgba(100, 100, 100, 0.5);
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 70px;
+            color: black;
+        }
+    }
+}
+
+/// Loading
+/// Mini
+.spinner-mini {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 0.5px;
+    background: conic-gradient(#0000 10%, $primary-color) content-box;
+    -webkit-mask: repeating-conic-gradient(#0000 0deg,
+            #000 1deg 20deg,
+            #0000 21deg 36deg),
+        radial-gradient(farthest-side,
+            #0000 calc(100% - 3.8px),
+            #000 calc(100% - 3.8px));
+    -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+    animation: spinner-d55elj 1s infinite steps(10);
+}
+
+.spinner-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0.8px;
+    background: conic-gradient(#0000 10%, $primary-color) content-box;
+    -webkit-mask: repeating-conic-gradient(#0000 0deg,
+            #000 1deg 20deg,
+            #0000 21deg 36deg),
+        radial-gradient(farthest-side,
+            #0000 calc(100% - 6.4px),
+            #000 calc(100% - 6.4px));
+    -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+    animation: spinner-d55elj 1s infinite steps(10);
+}
+
+.spinner-medium {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 1.1px;
+    background: conic-gradient(#0000 10%, $primary-color) content-box;
+    -webkit-mask: repeating-conic-gradient(#0000 0deg,
+            #000 1deg 20deg,
+            #0000 21deg 36deg),
+        radial-gradient(farthest-side,
+            #0000 calc(100% - 9px),
+            #000 calc(100% - 9px));
+    -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+    animation: spinner-d55elj 1s infinite steps(10);
+}
+
+@keyframes spinner-d55elj {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+:root {
+    --p-checkbox-width: 15px;
+    --p-checkbox-height: 15px;
+}
+
+ //// Overide drop down
+ .p-select{
+    height: 32px !important;
+    position: unset !important;
+    font-size: 14px !important; // if is not set import then get font-size default after set font size override then ui big after small
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border: 1px solid $border-color !important;
+    &:hover{
+        border: 1px solid $primary-color !important;
+    }
+
+    .p-select-label {
+        padding: unset !important;
+    }
+
+ }
+
+.p-select-clear-icon {
+    margin-top: -6px;
+}
+ .p-select-list-container{
+    .p-select-option {
+        padding: unset !important;
+        height: 32px !important;
+    }
+    
+ }
+
+/// Override datepicker
+ .p-datepicker-panel{
+    border-radius: unset !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+ }
+ .p-datepicker-month {
+     font-size: 14px !important;
+ }
+
+ .p-datepicker-select-year {
+     font-size: 14px !important;
+ }
+
+ .p-datepicker-year {
+     font-size: 14px !important;
+ }
+
+ .p-datepicker-decade {
+     font-size: 14px !important;
+ }
+
+ .p-datepicker-select-year {
+     font-size: 14px !important;
+ }
+
+ .p-datepicker-select-month {
+     font-size: 14px !important;
+ }
+
+ .p-datepicker-weekday {
+     font-size: 14px !important;
+ }
+
+ .p-datepicker-day {
+     font-size: 14px !important;
+ }
+
+ /// Override input
+.p-inputtext {
+    font-size: 14px !important;
+    height: 32px !important;
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border: 1px solid $border-color !important;ton
+
+    &:hover{
+        border: 1px solid $primary-color !important;
+    }
+    &:focus{
+        border: 1px solid $primary-color !important;
+    }
+}
+
+/// Overrdie button
+.p-button{
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    // border: 1px solid $border-color !important;
+    
+    // &:hover {
+    //     border: 1px solid $primary-color !important;
+    // }
+}
+.p-button-label{
+    font-size: 14px !important;;
+    font-weight: unset !important;
+}
+
+
+/// Override message
+.p-message-text {
+    font-weight: unset !important;
+    font-size: 12px !important;
+}
+/// Override toast
+.p-toast{
+    width: 350px !important;
+}
+.p-toast-message-text{
+    gap: 0px !important;
+}
+.p-toast-summary{
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
+.p-toast-detail{
+    font-weight: normal !important;
+    font-size: 14px !important;
+}
+.p-toast-close-button{
+    width: 25px;
+    height: 25px;
+    padding: 7px;
+}
+.p-toast-message-icon{
+    display: none !important;
+}
+
+/// Override table
+.p-datatable-selectable-row {
+    &:hover {
+        background-color: $hover-item-color !important;
+    }
+}
+
+/// Override password
+.p-password-input {
+    width: 100% !important;
+}
+
+.p-password-toggle-mask-icon {
+    margin-top: -6px !important;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+/// Override dialog
+.p-dialog-content{
+    padding: unset !important;
+}
+.p-dialog-header{
+    padding: unset !important;
+    font-size: 14px !important;
+}
+
+/// Override icon
+.p-icon {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.pi {
+    font-size: 13px !important;
+}
+
+/// Override tinymce
+.tox-tinymce {
+    border: 1px solid #eee !important;
+    border-radius: unset !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.tox-statusbar__right-container {
+    display: none !important;
+}
+
+.tox-promotion {
+    display: none !important;
+}
+
+.tox-edit-area::before {
+    border: 1px solid #10b981 !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 9px !important;
+    border-bottom-right-radius: 9px !important;
+}
+.tox .tox-tbtn {
+    transform: scale(0.8) !important;
+    /* you can set the scale that you want */
+    height: unset !important;
+    width: unset !important;
+}
+.tox .tox-tbtn--bespoke .tox-tbtn__select-label {
+    width: unset !important;
+}
+/// Override multiselect
+.p-multiselect-option {
+    font-size: 14px !important;
+    height: 32px !important;
+}
+
+.p-multiselect-label .p-chip {
+    padding-block-start: unset !important;
+    padding-block-end: unset !important;
+}
+
+.p-multiselect-label {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+}
+
+/// Override textarea
+.p-textarea{
+    font-size: 14px !important;
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border: 1px solid $border-color !important;
+    &:hover {
+        border: 1px solid $primary-color !important;
+    }
+}
+
+/// Override dialog
+.p-dialog{
+    border-radius: unset !important;
+    border-bottom-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+/// Override tag
+.p-tag {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 5px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+/// Scrollbar
+
+/* Works on Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #dddddd transparent;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 20px;
+    border: 3px solid #dddddd; }
