@@ -1,12 +1,8 @@
 <template>
   <div class="page flex items-center justify-center">
-    <div class="flex card rounded-[8px] group-sign-in">
+    <div class="flex card group-sign-in">
       <div class="group-image relative">
-        <img
-          :src="HowlingWolves"
-          alt="Flag"
-          class="image rounded-[8px] h-full"
-        />
+        <img :src="HowlingWolves" alt="Flag" class="image h-full" />
         <div
           class="absolute z-[1] bottom-[40px] left-[0px] right-[0px] logan pt-[10px] pb-[10px] h-[75px]"
         >
@@ -31,12 +27,12 @@
               :autoOptionFocus="true"
               @change="changeDialCode"
               placeholder="Select a Country"
-              class="w-[110px] h-[32px] mr-[5px]"
+              class="w-[110px] h-[30px] mr-[5px]"
             >
               <template #value="slotProps">
                 <div
                   v-if="slotProps.value"
-                  class="flex items-center justify-center h-[32px] pl-[10px]"
+                  class="flex items-center justify-center h-[100%] pl-[10px]"
                 >
                   <img
                     :alt="slotProps.value.code"
@@ -53,7 +49,7 @@
               </template>
               <template #option="slotProps">
                 <div
-                  class="flex items-center justify-center pl-[10px] h-[32px]"
+                  class="flex items-center justify-center pl-[10px] h-[30px]"
                 >
                   <img
                     :alt="slotProps.option.code"
@@ -67,7 +63,7 @@
               </template>
             </Select>
             <InputMask
-              class="h-[32px] flex-1"
+              class="h-[30px] flex-1"
               autocomplete="off"
               id="phone-number"
               @blur="changePhoneNumber"
@@ -103,7 +99,7 @@
               toggleMask
               @blur="changePassword"
               :feedback="false"
-              class="h-[32px] flex-1"
+              class="h-[30px] flex-1"
             />
           </div>
 
@@ -115,7 +111,7 @@
             >{{ instance.passwordError }}</Message
           >
         </div>
-        <div class="flex flex-col mt-[10px] item">
+        <!-- <div class="flex flex-col mt-[10px] item">
           <div class="flex items-start justify-center">
             <div class="label">{{ $t('get_code_from') }}</div>
             <div class="flex-1">
@@ -153,13 +149,13 @@
             variant="simple"
             >{{ instance.codeFromError }}</Message
           >
-        </div>
+        </div> -->
         <div class="flex flex-row mt-[10px] item">
           <Button
             @click="clickMoveToSignUp()"
             :label="$t('do_you_have_not_account_sign_up')"
             variant="link"
-            class="h-[32px] link"
+            class="h-[30px] link"
           />
         </div>
 
@@ -167,7 +163,7 @@
           <Button
             @click="clickSignIn()"
             :label="$t('sign_in')"
-            class="w-[130px] h-[32px] register"
+            class="w-[130px] h-[30px] register"
             icon="pi pi-sign-in"
           >
           </Button>
@@ -284,6 +280,12 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+// flex items-center justify-center h-[100%] pl-[10px]
+.demo {
+  display: flex;
+  height: 100%;
+}
+
 :deep(.p-message-text) {
   padding-left: 110px;
 }
@@ -306,10 +308,14 @@ onMounted(() => {
   padding: 30px;
   width: 1000px;
   flex-direction: row;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 .group-image {
   .image {
     width: 100%;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
   }
   .header {
     font-size: 20px;
@@ -346,7 +352,8 @@ onMounted(() => {
   }
   .group-sign-in {
     padding: 10px;
-    width: 100%;
+    width: 500px;
+    padding: 20px;
     flex-direction: column;
   }
   .group-image {
@@ -388,6 +395,7 @@ onMounted(() => {
   .group-sign-in {
     padding: 10px;
     width: 100%;
+    max-width: 500px;
     flex-direction: column;
   }
   .group-image {

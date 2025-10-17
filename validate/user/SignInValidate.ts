@@ -11,7 +11,7 @@ export const validatePhoneNumber = async (
 
   if (!value) {
     instance.value.phoneNumberError = t('please_enter_name', {
-      nam: t('phone_number').toLocaleLowerCase,
+      name: t('phone_number').toLocaleLowerCase(),
     })
     return
   }

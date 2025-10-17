@@ -17,12 +17,12 @@
         :autoOptionFocus="true"
         @value-change="onChangeLanguage"
         placeholder="Select a Country"
-        class="w-[145px] h-[32px] mr-[5px]"
+        class="w-[145px] h-[30px] mr-[5px]"
       >
         <template #value="slotProps">
           <div
             v-if="slotProps.value"
-            class="flex items-center justify-start h-[32px] pl-[10px]"
+            class="flex items-center justify-start h-[100%] pl-[10px]"
           >
             <img
               :alt="slotProps.value.code"
@@ -38,7 +38,7 @@
           </span>
         </template>
         <template #option="slotProps">
-          <div class="flex items-center justify-center pl-[10px] h-[32px]">
+          <div class="flex items-center justify-center pl-[10px] h-[30px]">
             <img
               :alt="slotProps.option.code"
               :src="slotProps.option.icon"

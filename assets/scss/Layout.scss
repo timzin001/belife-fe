@@ -22,8 +22,8 @@ body {
     background-color: $card-background-color;
     box-shadow: $card-box-shadow;
     border:$card-border;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
+    // border-top-right-radius: 20px;
+    // border-bottom-left-radius: 20px;
 }
 
 .hover-button {
@@ -114,6 +114,11 @@ body {
         padding-top: 10px;
         padding-bottom:10px;
     }
+}
+.p-select-overlay{
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
 }
 
  /// Tablet
@@ -350,7 +355,7 @@ body {
 
  //// Overide drop down
  .p-select{
-    height: 32px !important;
+    height: 30px !important;
     position: unset !important;
     font-size: 14px !important; // if is not set import then get font-size default after set font size override then ui big after small
     border-radius: unset !important;
@@ -419,7 +424,7 @@ body {
  /// Override input
 .p-inputtext {
     font-size: 14px !important;
-    height: 32px !important;
+    height: 30px !important;
     border-radius: unset !important;
     border-top-right-radius: 5px !important;
     border-bottom-left-radius: 5px !important;
