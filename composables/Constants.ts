@@ -28,7 +28,7 @@ export const Method = {
 }
 
 export const CookieStorage = {
-  USER: 'user',
+  ACCOUNT: 'account',
   LANGUAGE: 'language',
   USER_AUTH: 'user_auth',
   ORG_AUTH: 'org_auth',

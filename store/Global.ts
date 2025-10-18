@@ -1,17 +1,24 @@
 export const GlobalStore = defineStore('global', () => {
   const loadEditor = ref(false)
   /// Limit only 4KB (4096 bytes)
-  const user = useCookie(CookieStorage.USER, CookieStorage.OPTION)
+  const account = useCookie(CookieStorage.ACCOUNT, CookieStorage.OPTION)
   const language = useCookie(CookieStorage.LANGUAGE, CookieStorage.OPTION)
   const org = useCookie(CookieStorage.ORG, CookieStorage.OPTION)
 
-  /// Set user
-  function setUser(value: any) {
-    user.value = value
+  function isSignIn() {
+    if (!account.value || account.value.webAuth) {
+      return false
+    }
+    return true
   }
-  /// Get user
-  function getUser() {
-    return user.value
+
+  /// Set account
+  function setAccout(value: any) {
+    account.value = value
+  }
+  /// Get account
+  function getAccount() {
+    return account.value
   }
 
   /// Set org
@@ -47,7 +54,7 @@ export const GlobalStore = defineStore('global', () => {
     // removeItem(LocalStorage.ORGANIZATION)
     /// Not remove language
     // removeItem(LocalStorage.LANGUAGE)
-    user.value = null
+    account.value = null
     org.value = null
   }
   /// Set status loaded of editor
@@ -60,8 +67,8 @@ export const GlobalStore = defineStore('global', () => {
   }
 
   return {
-    setUser,
-    getUser,
+    setAccout,
+    getAccount,
     signOut,
     setLanguage,
     getLanguage,

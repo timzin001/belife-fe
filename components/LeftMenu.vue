@@ -8,7 +8,7 @@
       <img :src="Times" />
     </div>
     <div
-      v-if="store.isSignIn()"
+      v-if="instance.account"
       class="personal flex ml-[10px] mr-[10px] items-center justify-start pt-[17px] pb-[17px]"
     >
       <img
@@ -22,7 +22,7 @@
     </div>
     <div class="w-full pl-[10px] pr-[10px]">
       <Select
-        v-if="store.getListOrganizations()"
+        v-if="instance.orgs.length"
         v-model="org"
         :options="getListOptions()"
         optionLabel="name"
@@ -90,21 +90,27 @@ const emits = defineEmits(['clickClose'])
 const store = GlobalStore()
 const toast = useToast()
 const { t, locale } = useI18n()
-const listOrganzations = ref(store.getListOrganizations() ?? [])
+const account = ref(store.getAccount())
 const org = ref(store.getOrg())
 const menus = computed(() => initMenu())
+const instance = ref<LeftMenuType>({
+  menus: [],
+  orgs: [],
+  account: null,
+})
 
 /// Function
 /// Get list options
 const getListOptions = () => {
-  if (!listOrganzations.value) {
+  if (!account.value) {
     return []
   }
-  return listOrganzations.value as []
+  // return account.value.organizations ||
+  return []
 }
 /// Get full name of user
 const getFullNameOfUser = () => {
-  const user: any = store.getUser()
+  const user: any = store.getAccount()
   if (!user || !user.fullName) {
     return ''
   }
@@ -112,7 +118,7 @@ const getFullNameOfUser = () => {
 }
 /// Get avatar of user
 const getAvatarOfUser = () => {
-  const user: any = store.getUser()
+  const user: any = store.getAccount()
   if (!user || !user.avatar || !user.avatar.location) {
     return DefaultAvarar
   }
@@ -169,23 +175,23 @@ const changeOrg = async (evt: any) => {
       idOfOrg: evt._id,
     },
   }
-  const { data, error, status } = await CallAPI(
-    APIPathAuth.POST_SIGN_IN_ORG_AUTH,
-    options,
-    toast,
-    t,
-    false
-  )
+  // const { data, error, status } = await CallAPI(
+  //   APIPathAccount.POST_SIGN_IN_ORG_AUTH,
+  //   options,
+  //   toast,
+  //   t,
+  //   false
+  // )
 
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
-    return
-  }
-  const result: any = data.value
-  /// Save auth
-  store.setOrgAuth(result.data.auth)
-  /// Save org
-  store.setOrg(result.data.org)
+  // if (status.value !== APIStatus.SUCCESS) {
+  //   return
+  // }
+  // const result: any = data.value
+  // /// Save auth
+  // store.setOrgAuth(result.data.auth)
+  // /// Save org
+  // store.setOrg(result.data.org)
   /// Move to
   /// Get user info
   await navigateTo({
@@ -194,13 +200,13 @@ const changeOrg = async (evt: any) => {
 }
 
 const initMenu = () => {
-  if (!store.isSignIn()) {
-    return menuNoAuth({
-      recruit: clickRecruit,
-      inform: clickInform,
-      event: clickEvent,
-    })
-  }
+  // if (!store.isSignIn()) {
+  //   return menuNoAuth({
+  //     recruit: clickRecruit,
+  //     inform: clickInform,
+  //     event: clickEvent,
+  //   })
+  // }
   if (!org.value) {
     return menuUser({
       createOrg: clickCreateOrg,
@@ -223,10 +229,10 @@ const initMenu = () => {
 }
 
 watch(
-  () => store.getListOrganizations(),
+  () => store.getAccount(),
   (value) => {
     /// Set org
-    listOrganzations.value = value ?? []
+    account.value = value
   }
 )
 watch(
@@ -238,50 +244,5 @@ watch(
 )
 </script>
 <style scoped lang="scss">
-.left-menu {
-  background-color: $left-menu-background-color;
-  // box-shadow: $left-menu-box-shadow;
-  width: 300px;
-  overflow: scroll;
-  .menu-close {
-    display: none;
-    img {
-      width: 25px;
-      height: 25px;
-    }
-    &:hover {
-      img {
-        filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(100deg)
-          brightness(108%) contrast(108%);
-      }
-    }
-  }
-}
-
-/// Tablet
-@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {
-  .left-menu {
-    width: 300px;
-    .menu-close {
-      display: flex;
-    }
-  }
-}
-/// Tablet mini
-@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
-  .left-menu {
-    width: 300px;
-    .menu-close {
-      display: flex;
-    }
-  }
-}
-/// Mobile
-@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-  .left-menu {
-    .menu-close {
-      display: flex;
-    }
-  }
-}
+@import url('~/assets/scss/components/LeftMenu.scss');
 </style>

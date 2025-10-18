@@ -253,7 +253,7 @@ const clickSignIn = async () => {
   console.log(result)
 
   /// Save user
-  store.setUser(result.data)
+  store.setAccount(result.data)
 
   await navigateTo({
     path: Path.HOME,

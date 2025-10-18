@@ -161,7 +161,7 @@ const callSignIn = async () => {
   /// Remove data
   removeItem(LocalStorage.TEM_SIGN_UP)
   /// Save user
-  store.setUser(result.data.user)
+  store.setAccount(result.data.user)
   /// Save orgs
   store.setListOrgs(result.data.orgs)
 
@@ -212,7 +212,7 @@ const callSignUp = async () => {
   /// Save auth
   store.setUserAuth(result.data.auth)
   /// Save user
-  store.setUser(result.data.user)
+  store.setAccount(result.data.user)
   /// Save organizations
   store.setListOrgs(result.data.organizations)
   /// Get user info
