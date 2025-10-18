@@ -97,24 +97,5 @@ const onChangeLanguage = (evt: any) => {
 </script>
 
 <style scoped lang="scss">
-.header {
-  padding-left: 16px;
-  padding-right: 16px;
-  height: 50px;
-  .header-text {
-    font-size: 18px;
-  }
-}
-
-@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-  .header {
-    padding-left: 8px;
-    padding-right: 8px;
-    height: 60px;
-
-    .header-text {
-      font-size: 16px;
-    }
-  }
-}
+@import url('~/assets/scss/components/LeftMenu.scss');
 </style>

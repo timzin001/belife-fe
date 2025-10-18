@@ -5,15 +5,8 @@ export const GlobalStore = defineStore('global', () => {
   const language = useCookie(CookieStorage.LANGUAGE, CookieStorage.OPTION)
   const org = useCookie(CookieStorage.ORG, CookieStorage.OPTION)
 
-  function isSignIn() {
-    if (!account.value || account.value.webAuth) {
-      return false
-    }
-    return true
-  }
-
   /// Set account
-  function setAccout(value: any) {
+  function setAccount(value: any) {
     account.value = value
   }
   /// Get account
@@ -67,7 +60,7 @@ export const GlobalStore = defineStore('global', () => {
   }
 
   return {
-    setAccout,
+    setAccount,
     getAccount,
     signOut,
     setLanguage,

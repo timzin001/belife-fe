@@ -14,7 +14,7 @@
       <img
         :src="getAvatarOfUser()"
         alt="Flag"
-        class="image rounded-[5px] w-[32px] h-[32px]"
+        class="avatar w-[32px] h-[32px]"
       />
       <div class="text-[16px] font-bold ml-[5px]">
         {{ getFullNameOfUser() }}
@@ -96,7 +96,7 @@ const menus = computed(() => initMenu())
 const instance = ref<LeftMenuType>({
   menus: [],
   orgs: [],
-  account: null,
+  account: store.getAccount(),
 })
 
 /// Function

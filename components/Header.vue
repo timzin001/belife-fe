@@ -8,7 +8,7 @@
     </div>
 
     <div class="flex-1"></div>
-    <div class="relative h-[32px] search">
+    <div class="relative h-[30px] search">
       <AutoComplete
         v-model="instance.searchValue"
         optionLabel="name"
@@ -41,12 +41,12 @@
         :autoOptionFocus="true"
         @value-change="onChangeLanguage"
         placeholder="Select a Country"
-        class="w-[145px] h-[32px] mr-[5px]"
+        class="w-[145px] h-[30px] mr-[5px]"
       >
         <template #value="slotProps">
           <div
             v-if="slotProps.value"
-            class="flex items-center justify-start h-[32px] pl-[10px]"
+            class="flex items-center justify-start h-[100%] pl-[10px]"
           >
             <img
               :alt="slotProps.value.code"
@@ -62,7 +62,7 @@
           </span>
         </template>
         <template #option="slotProps">
-          <div class="flex items-center justify-center pl-[10px] h-[32px]">
+          <div class="flex items-center justify-center pl-[10px] h-[30px]">
             <img
               :alt="slotProps.option.code"
               :src="slotProps.option.icon"
@@ -160,121 +160,5 @@ onMounted(() => {})
 </script>
 
 <style scoped lang="scss">
-:deep(.pi) {
-  font-size: 14px !important;
-}
-.card {
-  border-top-right-radius: unset;
-  border-bottom-left-radius: unset;
-  border: unset;
-  border-bottom: 1px solid $card-border-color; //border
-}
-.header {
-  padding-left: 16px;
-  padding-right: 16px;
-  height: 50px;
-  // box-shadow: $left-menu-box-shadow;
-
-  .header-text {
-    font-size: 20px;
-  }
-
-  .search {
-    width: 400px;
-    margin-right: 10px;
-    :deep(.p-autocomplete) {
-      .p-inputtext {
-        width: 400px;
-        padding-left: 30px;
-      }
-    }
-    .search-icon {
-      color: #cccccc;
-    }
-  }
-
-  .menu-icon {
-    display: none;
-    img {
-      width: 20px;
-      height: 20px;
-    }
-    &:hover {
-      img {
-        filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(100deg)
-          brightness(108%) contrast(108%);
-      }
-    }
-  }
-}
-/// Tablet
-@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {
-  .header {
-    padding-left: 0px;
-    .menu-icon {
-      display: flex;
-    }
-  }
-}
-/// Tablet mini
-@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
-  .header {
-    padding-left: 0px;
-    padding-right: 8px;
-    height: 60px;
-
-    .header-text {
-      font-size: 16px;
-    }
-
-    .search {
-      width: 160px;
-      margin-right: 10px;
-
-      :deep(.p-autocomplete) {
-        .p-inputtext {
-          width: 160px;
-          padding-right: 30px;
-        }
-      }
-      .search-icon {
-        color: #cccccc;
-      }
-    }
-    .menu-icon {
-      display: flex;
-    }
-  }
-}
-
-/// Mobile
-@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-  .header {
-    padding-left: 0px;
-    padding-right: 8px;
-    height: 60px;
-
-    .header-text {
-      font-size: 16px;
-    }
-
-    .search {
-      width: 160px;
-      margin-right: 10px;
-
-      :deep(.p-autocomplete) {
-        .p-inputtext {
-          width: 160px;
-          padding-right: 30px;
-        }
-      }
-      .search-icon {
-        color: #cccccc;
-      }
-    }
-    .menu-icon {
-      display: flex;
-    }
-  }
-}
+@import url('~/assets/scss/components/Header.scss');
 </style>
