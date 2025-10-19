@@ -103,14 +103,14 @@ body {
 
 .page-contain{
     /// padding-top and padding-bottom -> 0px
-    /// header -> 50px
-    height: calc(100vh - 0px - 50px);
+    /// header -> 60px
+    height: calc(100vh - 0px - 60px);
     overflow: scroll;
     .page {
         /// padding-top and padding-bottom -> 0px
         /// header -> 50px
         /// footer -> 70px
-        min-height: calc(100vh - 0px - 50px - 70px);
+        min-height: calc(100vh - 0px - 60px - 70px);
         padding-top: 10px;
         padding-bottom:10px;
     }
@@ -377,8 +377,11 @@ body {
 }
  .p-select-list-container{
     .p-select-option {
+        border-radius: unset !important;
         padding: unset !important;
-        height: 32px !important;
+        height: 30px !important;
+        border-top-right-radius: 5px !important;
+        border-bottom-left-radius: 5px !important;
     }
     
  }

@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 /// Import
-import type { UpdateDescriptionData } from '~/types/user/ProfileType'
+import type { UpdateDescriptionData } from '~/types/account/ProfileType'
 import { ProfileValidate } from '~/validate/ProfileValidate'
 import { GlobalStore } from '~/store/Global'
 /// Define

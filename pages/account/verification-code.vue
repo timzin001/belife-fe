@@ -92,7 +92,7 @@ definePageMeta({
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
 import { GlobalStore } from '~/store/Global'
 import { useToast } from 'primevue/usetoast'
-import type { VerificationCodeType } from '~/types/user/VerificationCodeType'
+import type { VerificationCodeType } from '~/types/account/VerificationCodeType'
 const { $auth } = useNuxtApp()
 
 /// Define
@@ -118,9 +118,9 @@ const changeOtp = async (evt: any) => {
     instance.value.otp.length == 6 &&
     instance.value.otp === '123456'
   ) {
-    if (instance.value.previous === PathUser.SIGN_UP) {
+    if (instance.value.previous === PathAccount.SIGN_UP) {
       callSignUp()
-    } else if (instance.value.previous === PathUser.SIGN_IN) {
+    } else if (instance.value.previous === PathAccount.SIGN_IN) {
       callSignIn()
     }
   }
@@ -239,7 +239,7 @@ const requestSendCode = () => {
 const initData = () => {
   /// Get data
   const { previous } = route.query
-  if (previous !== PathUser.SIGN_IN && previous !== PathUser.SIGN_UP) {
+  if (previous !== PathAccount.SIGN_IN && previous !== PathAccount.SIGN_UP) {
     /// Access invalid
     instance.value.invalid = true
     return
@@ -247,9 +247,9 @@ const initData = () => {
   instance.value.previous = `${previous}`
   let strValue
 
-  if (previous === PathUser.SIGN_IN) {
+  if (previous === PathAccount.SIGN_IN) {
     strValue = getItem(LocalStorage.TEM_SIGN_IN)
-  } else if (previous === PathUser.SIGN_UP) {
+  } else if (previous === PathAccount.SIGN_UP) {
     strValue = getItem(LocalStorage.TEM_SIGN_UP)
   }
   if (!strValue) {

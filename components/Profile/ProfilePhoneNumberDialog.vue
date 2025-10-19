@@ -112,7 +112,7 @@
 
 <script setup lang="ts">
 /// Import
-import type { UpdatePhoneNumberData } from '~/types/user/ProfileType'
+import type { UpdatePhoneNumberData } from '~/types/account/ProfileType'
 import { ProfileValidate } from '~/validate/ProfileValidate'
 
 import SingaporeFlag from '~/assets/flags/singapore.svg'

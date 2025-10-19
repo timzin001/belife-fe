@@ -1,6 +1,6 @@
 <template>
   <div class="page flex items-center justify-center">
-    <div class="flex card group-sign-in">
+    <div class="flex card sign-in-group" id="sign-in-group">
       <div class="group-image relative">
         <img :src="HowlingWolves" alt="Flag" class="image h-full" />
         <div
@@ -66,7 +66,7 @@
               class="h-[30px] flex-1"
               autocomplete="off"
               id="phone-number"
-              @blur="changePhoneNumber"
+              ref="inputMaskRef"
               @value-change="changePhoneNumber"
               v-model="instance.phoneNumber"
               :mask="instance.phoneNumberPattern"
@@ -91,6 +91,7 @@
               @value-change="changePassword"
               id="password"
               v-model="instance.password"
+              @keyup.enter="clickSignIn"
               :placeholder="
                 $t('please_enter_name', {
                   name: $t('password').toLocaleLowerCase(),
@@ -111,52 +112,14 @@
             >{{ instance.passwordError }}</Message
           >
         </div>
-        <!-- <div class="flex flex-col mt-[10px] item">
-          <div class="flex items-start justify-center">
-            <div class="label">{{ $t('get_code_from') }}</div>
-            <div class="flex-1">
-              <div class="flex items-center gap-2">
-                <RadioButton
-                  size="small"
-                  v-model="instance.codeFrom"
-                  inputId="google-authenticator"
-                  name="google-authenticator"
-                  value="google-authenticator"
-                  @value-change="changeCodeFrom"
-                />
-                <label for="google-authenticator">{{
-                  $t('google_authenticator')
-                }}</label>
-              </div>
-              <div class="flex items-center gap-2">
-                <RadioButton
-                  @value-change="changeCodeFrom"
-                  size="small"
-                  v-model="instance.codeFrom"
-                  inputId="sms"
-                  name="sms"
-                  value="sms"
-                />
-                <label for="sms">{{ $t('short_message_service_sms') }}</label>
-              </div>
-            </div>
-          </div>
 
-          <Message
-            v-if="instance.codeFromError"
-            severity="error"
-            size="small"
-            variant="simple"
-            >{{ instance.codeFromError }}</Message
-          >
-        </div> -->
         <div class="flex flex-row mt-[10px] item">
           <Button
             @click="clickMoveToSignUp()"
             :label="$t('do_you_have_not_account_sign_up')"
             variant="link"
             class="h-[30px] link"
-          />
+          ></Button>
         </div>
 
         <div class="flex flex-row mt-[10px] item">
@@ -181,8 +144,8 @@ definePageMeta({
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
-import type { SignInData } from '~/types/user/SignInType'
-import { SignInValidate } from '~/validate/user/SignInValidate'
+import type { SignInData } from '~/types/account/SignInType'
+import { SignInValidate } from '~/validate/account/SignInValidate'
 import { GlobalStore } from '~/store/Global'
 const store = GlobalStore()
 
@@ -214,6 +177,7 @@ const instance = ref(<SignInData>{
 
 /// Click sign in
 const clickSignIn = async () => {
+  console.log('clickSignIn')
   const validate = await SignInValidate.validateAll(instance, toast, t)
   if (!validate) {
     return
@@ -263,7 +227,25 @@ const clickSignIn = async () => {
 
 /// Move to sign up
 const clickMoveToSignUp = async () => {
-  await navigateTo({ path: PathUser.SIGN_UP })
+  await navigateTo({ path: PathAccount.SIGN_UP })
+}
+
+/// Enter on  group
+const enterSignIn = (evt: any) => {
+  let key = `${evt.key}`.toLowerCase()
+  if (key != 'enter') {
+    return
+  }
+  clickSignIn()
+}
+
+/// Enter on phone number
+const enterPhoneNumber = (evt: any) => {
+  let key = `${evt.key}`.toLowerCase()
+  if (key != 'enter') {
+    return
+  }
+  clickSignIn()
 }
 /// Change phone number
 const changePhoneNumber = async (evt: any) => {
@@ -284,9 +266,13 @@ onMounted(() => {
   const passwordElement = document.getElementById('password')
   let password: any = passwordElement?.firstChild
   password.setAttribute('maxlength', 20)
+  const phoneNumberElement = document.getElementById('phone-number')
+  phoneNumberElement?.addEventListener('blur', changePhoneNumber)
+  phoneNumberElement?.addEventListener('keydown', enterPhoneNumber)
+  phoneNumberElement?.focus()
 })
 </script>
 
 <style scoped lang="scss">
-@import url('~/assets/scss/user/SignIn.scss');
+@import url('~/assets/scss/account/SignIn.scss');
 </style>

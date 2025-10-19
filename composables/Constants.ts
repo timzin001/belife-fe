@@ -143,10 +143,9 @@ export const PathStaff = {
   CREATE_POSITION: '/staff/create-position',
 }
 
-export const PathUser = {
-  SIGN_IN: '/user/sign-in',
-  SIGN_UP: '/user/sign-up',
-  VERIFICATION_CODE: '/user/verification-code',
+export const PathAccount = {
+  SIGN_IN: '/account/sign-in',
+  SIGN_UP: '/account/sign-up',
 }
 
 export const PathOrg = {

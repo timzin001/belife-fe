@@ -7,7 +7,7 @@ const validatePhoneNumber = async (instance: any, toast: any, t: any) => {
 
   if (!value) {
     instance.value.phoneNumberError = t('please_enter_name', {
-      nam: t('phone_number').toLocaleLowerCase,
+      name: t('phone_number').toLocaleLowerCase(),
     })
     return
   }

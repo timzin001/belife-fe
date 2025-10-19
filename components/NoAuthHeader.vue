@@ -97,5 +97,5 @@ const onChangeLanguage = (evt: any) => {
 </script>
 
 <style scoped lang="scss">
-@import url('~/assets/scss/components/LeftMenu.scss');
+@import url('~/assets/scss/components/NoAuthHeader.scss');
 </style>

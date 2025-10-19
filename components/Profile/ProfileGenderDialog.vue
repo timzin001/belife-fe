@@ -95,7 +95,7 @@
 
 <script setup lang="ts">
 /// Import
-import type { UpdateGenderData } from '~/types/user/ProfileType'
+import type { UpdateGenderData } from '~/types/account/ProfileType'
 import { ProfileValidate } from '~/validate/ProfileValidate'
 /// Define
 const toast = useToast()

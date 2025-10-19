@@ -2,11 +2,7 @@
   <div class="page flex items-center justify-center">
     <div class="flex card rounded-[8px] group-sign-up">
       <div class="group-image relative">
-        <img
-          :src="HowlingWolves"
-          alt="logo"
-          class="image rounded-[8px] h-full"
-        />
+        <img :src="HowlingWolves" alt="logo" class="image h-full" />
         <div
           class="absolute z-[1] bottom-[40px] left-[0px] right-[0px] logan pt-[10px] pb-[10px] h-[75px]"
         >
@@ -29,13 +25,15 @@
               v-model="instance.dialCode"
               :options="instance.countries"
               optionLabel="name"
+              :autoOptionFocus="true"
               @change="changeDialCode"
-              class="w-[110px] h-[32px] mr-[5px]"
+              placeholder="Select a Country"
+              class="w-[110px] h-[30px] mr-[5px]"
             >
               <template #value="slotProps">
                 <div
                   v-if="slotProps.value"
-                  class="flex items-center justify-center h-[32px] pl-[10px]"
+                  class="flex items-center justify-center h-[100%] pl-[10px]"
                 >
                   <img
                     :alt="slotProps.value.code"
@@ -52,7 +50,7 @@
               </template>
               <template #option="slotProps">
                 <div
-                  class="flex items-center justify-center pl-[10px] h-[32px]"
+                  class="flex items-center justify-center pl-[10px] h-[30px]"
                 >
                   <img
                     :alt="slotProps.option.code"
@@ -69,7 +67,6 @@
               class="h-[32px] flex-1"
               autocomplete="off"
               id="phone-number"
-              @blur="changePhoneNumber"
               @value-change="changePhoneNumber"
               v-model="instance.phoneNumber"
               :mask="instance.phoneNumberPattern"
@@ -97,11 +94,12 @@
               v-model="instance.password"
               :placeholder="
                 $t('please_enter_name', {
-                  name: $t('passowrd').toLocaleLowerCase(),
+                  name: $t('password').toLocaleLowerCase(),
                 })
               "
               toggleMask
               :feedback="false"
+              @keyup.enter="clickSignUp"
               @blur="changePassword"
               class="h-[32px] flex-1"
             >
@@ -123,6 +121,7 @@
             <InputText
               @value-change="changeFullName"
               v-model="instance.fullName"
+              @keyup.enter="clickSignUp"
               :placeholder="
                 $t('please_enter_name', {
                   name: $t('full_name').toLocaleLowerCase(),
@@ -150,6 +149,7 @@
                   v-model="instance.gender"
                   inputId="male"
                   name="male"
+                  @keyup.enter="clickSignUp"
                   value="male"
                   @value-change="changeGender"
                 />
@@ -159,6 +159,7 @@
                 <RadioButton
                   @value-change="changeGender"
                   size="small"
+                  @keyup.enter="clickSignUp"
                   v-model="instance.gender"
                   inputId="female"
                   name="female"
@@ -170,6 +171,7 @@
                 <RadioButton
                   @value-change="changeGender"
                   size="small"
+                  @keyup.enter="clickSignUp"
                   v-model="instance.gender"
                   inputId="other"
                   name="other"
@@ -198,8 +200,9 @@
                   name: $t('date_of_birth').toLocaleLowerCase(),
                 })
               "
-              class="h-[32px] flex-1"
+              class="h-[30px] flex-1"
               @value-change="changeDateOfBirth"
+              @keyup.enter="clickSignUp"
               :minDate="instance.minDate"
               :maxDate="instance.maxDate"
               @blur="changeDateOfBirth"
@@ -218,14 +221,14 @@
             :label="$t('do_you_have_account_sign_in')"
             variant="link"
             @click="clickMoveToSignIn()"
-            class="h-[32px] link"
+            class="h-[30px] link"
           />
         </div>
         <div class="flex flex-row mt-[10px] item">
           <Button
             @click="clickSignUp()"
             :label="$t('sign_up')"
-            class="w-[130px] h-[32px] register"
+            class="w-[130px] h-[30px] register"
             icon="pi pi-user-plus"
           >
           </Button>
@@ -243,8 +246,10 @@ definePageMeta({
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
-import type { SignUpType } from '~/types/user/SignUpType'
-import { SignUpValidate } from '~/validate/user/SignUpValidate'
+import type { SignUpType } from '~/types/account/SignUpType'
+import { SignUpValidate } from '~/validate/account/SignUpValidate'
+import { GlobalStore } from '~/store/Global'
+const store = GlobalStore()
 
 /// Define
 const { $auth } = useNuxtApp()
@@ -286,25 +291,47 @@ const clickSignUp = async () => {
   const objDateOfBirth: any = instance.value.dateOfBirth
   const dateOfBirth = objDateOfBirth.toISOString() ?? ''
   const gender = instance.value.gender
-  /// Save tem_sign_up
-  const obj = {
-    phoneNumber: phoneNumber,
-    password: password,
-    fullName: fullName,
-    dateOfBirth: dateOfBirth,
-    gender: gender,
-  }
-  setItem(LocalStorage.TEM_SIGN_UP, JSON.stringify(obj))
-  /// Move to verification code
-  await navigateTo({
-    path: PathUser.VERIFICATION_CODE,
-    query: {
-      previous: PathUser.SIGN_UP,
+
+  const options: any = {
+    method: Method.POST,
+    body: {
+      phoneNumber: phoneNumber,
+      password: password,
+      fullName: fullName,
+      dateOfBirth: dateOfBirth,
+      gender: gender,
     },
+  }
+  const { data, error, status } = await CallAPI(
+    APIPathAccount.POST_SIGN_UP,
+    options,
+    toast,
+    t,
+    false
+  )
+  /// Check error
+  if (status.value !== APIStatus.SUCCESS) {
+    toast.add({
+      severity: Toast.ERROR,
+      summary: t('error'),
+      detail: getErrorMessages(error, t),
+      life: Toast.DURATION,
+    })
+    return
+  }
+  const result: any = data.value
+  console.log(result)
+
+  /// Save user
+  store.setAccount(result.data)
+
+  await navigateTo({
+    path: Path.HOME,
+    replace: true,
   })
 }
 const clickMoveToSignIn = async () => {
-  await navigateTo({ path: PathUser.SIGN_IN })
+  await navigateTo({ path: PathAccount.SIGN_IN })
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
@@ -313,6 +340,14 @@ const changeDialCode = async (evt: any) => {
 /// Change phone number
 const changePhoneNumber = async (evt: any) => {
   SignUpValidate.phoneNumber(instance, toast, t)
+}
+/// Enter on phone number
+const enterPhoneNumber = (evt: any) => {
+  let key = `${evt.key}`.toLowerCase()
+  if (key != 'enter') {
+    return
+  }
+  clickSignUp()
 }
 /// Change password
 const changePassword = async (evt: any) => {
@@ -338,143 +373,14 @@ onMounted(() => {
   const passwordElement = document.getElementById('password')
   let password: any = passwordElement?.firstChild
   password.setAttribute('maxlength', 20)
+
+  const phoneNumberElement = document.getElementById('phone-number')
+  phoneNumberElement?.addEventListener('blur', changePhoneNumber)
+  phoneNumberElement?.addEventListener('keydown', enterPhoneNumber)
+  phoneNumberElement?.focus()
 })
 </script>
 
 <style scoped lang="scss">
-:deep(.p-message-text) {
-  padding-left: 110px;
-}
-.link {
-  padding: 0px;
-  color: $text-color;
-  text-decoration: underline;
-}
-.logan {
-  background-color: rgba(100, 100, 100, 0.2);
-  // background-color: red;
-}
-
-.page {
-  padding: 8px;
-}
-
-.group-sign-up {
-  padding: 30px;
-  width: 1000px;
-  flex-direction: row;
-}
-.group-image {
-  .image {
-    width: 100%;
-  }
-  .header {
-    font-size: 20px;
-  }
-  .description {
-    font-size: 16px;
-  }
-}
-.group-content {
-  margin-top: unset;
-  padding-left: 20px;
-  .item {
-    width: 450px;
-    .label {
-      width: 110px;
-    }
-    .link {
-      margin-left: 110px;
-    }
-    .register {
-      margin-left: 110px;
-    }
-  }
-}
-
-/// Tablet
-@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {
-}
-
-/// Tablet mini
-@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
-  :deep(.p-message-text) {
-    padding-left: 100px;
-  }
-  .group-sign-up {
-    padding: 10px;
-    width: 100%;
-    flex-direction: column;
-  }
-  .group-image {
-    max-height: 300px;
-    .image {
-      width: 100%;
-      max-height: 300px;
-    }
-    .header {
-      font-size: 18px;
-    }
-    .description {
-      font-size: 13px;
-    }
-  }
-  .group-content {
-    margin-top: 20px;
-    padding-left: unset;
-    .item {
-      width: 100%;
-      .label {
-        width: 100px;
-      }
-      .link {
-        margin-left: 100px;
-      }
-      .register {
-        margin-left: 100px;
-      }
-    }
-  }
-}
-
-/// Mobile
-@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-  :deep(.p-message-text) {
-    padding-left: 100px;
-  }
-  .group-sign-up {
-    padding: 10px;
-    width: 100%;
-    flex-direction: column;
-  }
-  .group-image {
-    max-height: 300px;
-    .image {
-      width: 100%;
-      max-height: 300px;
-    }
-    .header {
-      font-size: 18px;
-    }
-    .description {
-      font-size: 13px;
-    }
-  }
-  .group-content {
-    margin-top: 20px;
-    padding-left: unset;
-    .item {
-      width: 100%;
-      .label {
-        width: 100px;
-      }
-      .link {
-        margin-left: 100px;
-      }
-      .register {
-        margin-left: 100px;
-      }
-    }
-  }
-}
+@import url('~/assets/scss/account/SignUp.scss');
 </style>

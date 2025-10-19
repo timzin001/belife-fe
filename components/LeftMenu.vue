@@ -12,12 +12,12 @@
       class="personal flex ml-[10px] mr-[10px] items-center justify-start pt-[17px] pb-[17px]"
     >
       <img
-        :src="getAvatarOfUser()"
+        :src="getAvatarOfAccount()"
         alt="Flag"
         class="avatar w-[32px] h-[32px]"
       />
       <div class="text-[16px] font-bold ml-[5px]">
-        {{ getFullNameOfUser() }}
+        {{ getFullNameOfAccount() }}
       </div>
     </div>
     <div class="w-full pl-[10px] pr-[10px]">
@@ -68,7 +68,7 @@
       </Select>
     </div>
     <PanelMenu
-      :model="menus"
+      :model="instance.menus"
       multiple
       class="ml-[10px] mr-[10px] mt-[10px]"
       visible="true"
@@ -91,8 +91,7 @@ const store = GlobalStore()
 const toast = useToast()
 const { t, locale } = useI18n()
 const account = ref(store.getAccount())
-const org = ref(store.getOrg())
-const menus = computed(() => initMenu())
+const org = ref()
 const instance = ref<LeftMenuType>({
   menus: [],
   orgs: [],
@@ -108,28 +107,26 @@ const getListOptions = () => {
   // return account.value.organizations ||
   return []
 }
-/// Get full name of user
-const getFullNameOfUser = () => {
-  const user: any = store.getAccount()
-  if (!user || !user.fullName) {
+const getFullNameOfAccount = () => {
+  const account: any = instance.value.account
+  if (!account || !account.fullName) {
     return ''
   }
-  return user.fullName[locale.value]
+  return account.fullName[locale.value]
 }
-/// Get avatar of user
-const getAvatarOfUser = () => {
-  const user: any = store.getAccount()
-  if (!user || !user.avatar || !user.avatar.location) {
+const getAvatarOfAccount = () => {
+  const account: any = instance.value.account
+  if (!account || !account.avatar || !account.avatar.location) {
     return DefaultAvarar
   }
-  return user.avatar.location
+  return account.avatar.location
 }
 /// Click sign out
 const clickSignOut = async () => {
   /// Clear
   store.signOut()
   /// Move to login
-  await navigateTo({ path: PathUser.SIGN_IN })
+  await navigateTo({ path: PathAccount.SIGN_IN })
 }
 /// Click proifle
 const clickProfile = async () => {
@@ -162,6 +159,7 @@ const clickEvent = async () => {
   await navigateTo({ path: Path.EVENT })
 }
 const clickCreateOrg = async () => {
+  console.log(`clickCreateOrg`)
   await navigateTo({ path: PathOrg.CREATE_ORG })
 }
 const clickClose = () => {
@@ -200,15 +198,15 @@ const changeOrg = async (evt: any) => {
 }
 
 const initMenu = () => {
-  // if (!store.isSignIn()) {
-  //   return menuNoAuth({
-  //     recruit: clickRecruit,
-  //     inform: clickInform,
-  //     event: clickEvent,
-  //   })
-  // }
-  if (!org.value) {
-    return menuUser({
+  if (!instance.value.account) {
+    return menuNoAuth({
+      recruit: clickRecruit,
+      inform: clickInform,
+      event: clickEvent,
+    })
+  }
+  if (!instance.value.orgs) {
+    return menuAccount({
       createOrg: clickCreateOrg,
       recruit: clickRecruit,
       inform: clickInform,
@@ -225,8 +223,13 @@ const initMenu = () => {
     employeesOrg: clickEmployeesOrg,
     profile: clickProfile,
   })
-  return
 }
+
+const initData = () => {
+  instance.value.menus = initMenu()
+}
+
+initData()
 
 watch(
   () => store.getAccount(),
@@ -235,13 +238,13 @@ watch(
     account.value = value
   }
 )
-watch(
-  () => store.getOrg(),
-  (value) => {
-    /// Set org
-    org.value = value
-  }
-)
+// watch(
+//   () => store.getOrg(),
+//   (value) => {
+//     /// Set org
+//     org.value = value
+//   }
+// )
 </script>
 <style scoped lang="scss">
 @import url('~/assets/scss/components/LeftMenu.scss');

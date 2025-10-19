@@ -32,13 +32,13 @@ export const menuNoAuth = (objectCallback: any): MenuItem[] => {
   ]
 }
 
-export const menuUser = (objectCallback: any): MenuItem[] => {
+export const menuAccount = (objectCallback: any): MenuItem[] => {
   return [
     {
       label: 'Tạo tổ chức',
       icon: 'pi pi-objects-column',
       command: () => {
-        objectCallback.createOrganization()
+        objectCallback.createOrg()
         // clickCreateOrganization()
       },
     },

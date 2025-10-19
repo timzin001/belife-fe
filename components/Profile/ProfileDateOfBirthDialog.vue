@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 /// Import
-import type { UpdateDateOfBirthData } from '~/types/user/ProfileType'
+import type { UpdateDateOfBirthData } from '~/types/account/ProfileType'
 import { ProfileValidate } from '~/validate/ProfileValidate'
 /// Define
 const datePicker = ref()
