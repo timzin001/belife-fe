@@ -1,4 +1,4 @@
 export interface PhoneNumberType {
-  code?: string
-  icon?: any
+  code: string
+  icon: any
 }

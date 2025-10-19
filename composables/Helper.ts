@@ -158,7 +158,7 @@ export const getDateFormatPicker = (locale: any) => {
     dateFormat = 'yy/mm/dd'
   }
   if (locale === Locale.VI) {
-    locale = 'dd/mm/yy'
+    dateFormat = 'dd/mm/yy'
   }
   return dateFormat
 }
@@ -169,7 +169,7 @@ export const getDateFormat = (locale: any) => {
     dateFormat = 'YYYY/MM/DD'
   }
   if (locale === Locale.VI) {
-    locale = 'DD/MM/YYYY'
+    dateFormat = 'DD/MM/YYYY'
   }
   return dateFormat
 }

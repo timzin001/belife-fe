@@ -26,10 +26,21 @@
 import '@/assets/scss/Layout.scss'
 import { GlobalStore } from '~/store/Global'
 import NotSupport from '~/assets/images/background_not_support.jpeg'
-
+import en from '../i18n/primevue_en.json'
+import vi from '../i18n/primevue_vi.json'
+const primevue = usePrimeVue()
 /// Define
-const store = GlobalStore()
-const { t } = useI18n()
-
+const { locale } = useI18n()
+watch(
+  locale,
+  (newLocale) => {
+    if (newLocale === 'vi') {
+      primevue.config.locale = vi
+    } else {
+      primevue.config.locale = en
+    }
+  },
+  { immediate: true }
+)
 onMounted(() => {})
 </script>

@@ -39,8 +39,11 @@ import '@/assets/scss/Layout.scss'
 import { ref } from 'vue'
 import { GlobalStore } from '~/store/Global'
 import NotSupport from '~/assets/images/background_not_support.jpeg'
+import en from '../i18n/primevue_en.json'
+import vi from '../i18n/primevue_vi.json'
 
 /// Define
+const primevue = usePrimeVue()
 const store = GlobalStore()
 const leftMenu = ref()
 const contain = ref()
@@ -74,6 +77,20 @@ const clickMenu = () => {
     cover.value.classList.add(Layout.SHOW_COVER)
   }
 }
+
+/// Define
+const { locale } = useI18n()
+watch(
+  locale,
+  (newLocale) => {
+    if (newLocale === 'vi') {
+      primevue.config.locale = vi
+    } else {
+      primevue.config.locale = en
+    }
+  },
+  { immediate: true }
+)
 
 onMounted(() => {
   /// Add header

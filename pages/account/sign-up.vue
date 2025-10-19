@@ -205,6 +205,7 @@
               @keyup.enter="clickSignUp"
               :minDate="instance.minDate"
               :maxDate="instance.maxDate"
+              :dateFormat="instance.dateFormat"
               @blur="changeDateOfBirth"
             />
           </div>
@@ -249,13 +250,15 @@ import HowlingWolves from '~/assets/images/howling-wolves.jpg'
 import type { SignUpType } from '~/types/account/SignUpType'
 import { SignUpValidate } from '~/validate/account/SignUpValidate'
 import { GlobalStore } from '~/store/Global'
+
 const store = GlobalStore()
+const primevue = usePrimeVue()
 
 /// Define
 const { $auth } = useNuxtApp()
-const { t } = useI18n()
 const toast = useToast()
 const abortController = ref()
+const { t, locale } = useI18n()
 const instance = ref(<SignUpType>{
   phoneNumberPattern: '999-999-999',
   phoneNumberPlaceHolder: '123-345-789',
@@ -378,6 +381,8 @@ onMounted(() => {
   phoneNumberElement?.addEventListener('blur', changePhoneNumber)
   phoneNumberElement?.addEventListener('keydown', enterPhoneNumber)
   phoneNumberElement?.focus()
+  instance.value.dateFormat = getDateFormatPicker(locale.value)
+  instance.value.datePlaceHolder = getDateFormat(locale.value)
 })
 </script>
 
