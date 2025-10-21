@@ -1,19 +1,19 @@
 <template>
   <div class="page flex items-center justify-center">
-    <div class="flex card rounded-[8px] group-sign-up">
-      <div class="group-image relative">
+    <div class="flex card rounded-[8px] sign-up-group">
+      <div class="image-group relative">
         <img :src="HowlingWolves" alt="logo" class="image h-full" />
         <div
           class="absolute z-[1] bottom-[40px] left-[0px] right-[0px] logan pt-[10px] pb-[10px] h-[75px]"
         >
-          <div class="ml-[20px] font-bold header">SOI-VIP</div>
+          <div class="ml-[20px] font-bold header">IIBelife</div>
           <div class="ml-[20px] font-bold description">
             {{ $t('support_news_and_mananges_of_organization') }}
           </div>
         </div>
       </div>
 
-      <div class="group-content pl-[20px]">
+      <div class="contain-group pl-[20px]">
         <div class="text-[16px] font-bold ml-[0px] mb-[20px]">
           {{ $t('sign_up_your_account_with_information') }}
         </div>
@@ -142,7 +142,7 @@
         <div class="flex flex-col mt-[10px] item">
           <div class="flex items-start justify-center">
             <div class="label">{{ $t('gender') }}</div>
-            <div class="flex-1">
+            <div class="flex-1 flex flexflex-row">
               <div class="flex items-center gap-2">
                 <RadioButton
                   size="small"
@@ -155,7 +155,7 @@
                 />
                 <label for="male">{{ $t('male') }}</label>
               </div>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 ml-[10px]">
                 <RadioButton
                   @value-change="changeGender"
                   size="small"
@@ -167,7 +167,7 @@
                 />
                 <label for="female">{{ $t('female') }}</label>
               </div>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 ml-[10px]">
                 <RadioButton
                   @value-change="changeGender"
                   size="small"
@@ -217,19 +217,52 @@
             >{{ instance.dateOfBirthError }}</Message
           >
         </div>
-        <div class="flex flex-row mt-[10px] item">
+        <div class="flex flex-col mt-[10px] item">
+          <div class="flex items-start justify-center">
+            <Checkbox
+              v-model="instance.termsPrivacy"
+              inputId="term-privacy"
+              @value-change="changeTermsPrivacy"
+              name="term-privacy"
+              class="term-privacy"
+              value="agree"
+            />
+            <label for="term-privacy">
+              {{ $t('agree_to') }}
+              <Button
+                :label="$t('terms_of_service')"
+                variant="link"
+                @click="clickMoveToTerm()"
+              ></Button>
+              {{ $t('and').toLocaleLowerCase() }}
+              <Button
+                :label="$t('privacy_policy')"
+                variant="link"
+                @click="clickMoveToPrivacy()"
+              ></Button>
+            </label>
+          </div>
+          <Message
+            v-if="instance.termsPrivacyError"
+            severity="error"
+            size="small"
+            variant="simple"
+            >{{ instance.termsPrivacyError }}</Message
+          >
+        </div>
+        <div class="flex flex-row item">
           <Button
             :label="$t('do_you_have_account_sign_in')"
             variant="link"
             @click="clickMoveToSignIn()"
-            class="h-[30px] link"
+            class="no-account"
           />
         </div>
         <div class="flex flex-row mt-[10px] item">
           <Button
             @click="clickSignUp()"
             :label="$t('sign_up')"
-            class="w-[130px] h-[30px] register"
+            class="register"
             icon="pi pi-user-plus"
           >
           </Button>
@@ -362,6 +395,13 @@ const changeDateOfBirth = async (evt: any) => {
   SignUpValidate.dateOfBirth(instance, t)
 }
 
+const changeTermsPrivacy = (evt: any) => {
+  console.log('-----changeTermsPrivacy------')
+  console.log(evt)
+  console.log(instance.value.termsPrivacy)
+  SignUpValidate.termsAndPrivacy(instance, t)
+}
+
 /// Change full name
 const changeFullName = async (evt: any) => {
   SignUpValidate.fullName(instance, t)
@@ -369,6 +409,16 @@ const changeFullName = async (evt: any) => {
 /// Change gender
 const changeGender = async (evt: any) => {
   SignUpValidate.gender(instance, t)
+}
+const clickMoveToTerm = async () => {
+  navigateTo({
+    path: PathTermPrivacy.TERM,
+  })
+}
+const clickMoveToPrivacy = async () => {
+  navigateTo({
+    path: PathTermPrivacy.PRIVACY,
+  })
 }
 onMounted(() => {
   $auth()

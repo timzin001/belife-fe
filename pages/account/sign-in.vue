@@ -6,7 +6,7 @@
         <div
           class="absolute z-[1] bottom-[40px] left-[0px] right-[0px] logan pt-[10px] pb-[10px] h-[75px]"
         >
-          <div class="ml-[20px] font-bold header">SOI-VIP</div>
+          <div class="ml-[20px] font-bold header">IIBelife</div>
           <div class="ml-[20px] font-bold description">
             {{ $t('support_news_and_mananges_of_organization') }}
           </div>

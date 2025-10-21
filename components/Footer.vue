@@ -12,7 +12,7 @@
     </div>
     <div class="email mr-[16px] ml-[16px] flex items-center">
       <div class="label font-bold">{{ $t('email') }}:</div>
-      <div class="value">soivipcontact@gmail.com</div>
+      <div class="value">iibelife@mail.com</div>
     </div>
   </div>
 </template>

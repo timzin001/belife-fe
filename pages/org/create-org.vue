@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="card rounded-[8px] create-org">
+    <div class="card create-org">
       <div
         class="text-[25px] font-bold ml-[0px] mb-[20px] w-full flex items-center justify-center"
       >
@@ -8,404 +8,435 @@
           $t('create_name', { name: $t('organization').toLocaleLowerCase() })
         }}
       </div>
-      <div class="contain">
-        <div class="flex-1 group-information">
-          <div class="w-full flex items-center justify-center mb-[20px]">
-            <span class="text-[20px] font-[700] ml-[10px] mr-[10px]">{{
-              $t('information_of_org')
-            }}</span>
-          </div>
-          <div class="w-full line h-[1px] mb-[20px]"></div>
-          <div>
-            <div class="flex mt-[20px] items-center justify-start">
-              <div class="label">{{ $t('logo') }}<span>*</span></div>
-              <FileUpload
-                mode="basic"
-                @select="onFileSelectOrganization"
-                customUpload
-                :chooseLabel="$t('choose')"
-                auto
-                severity="secondary"
-                class="p-button-outlined h-[32px]"
-              />
-              <img
-                v-if="instance.logoOfOrganization"
-                :src="instance.logoOfOrganization"
-                alt="Image"
-                class="rounded-[8px] image"
-              />
+      <div class="input-group">
+        <div class="info-branch-group">
+          <div class="flex-1 information-group">
+            <div class="w-full flex items-center justify-center mb-[20px]">
+              <span class="text-[20px] font-[700] ml-[10px] mr-[10px]">{{
+                $t('information_of_organization')
+              }}</span>
             </div>
-            <div class="avatar-des">{{ $t('logo_with_1_1_ratio') }}</div>
-            <Message
-              v-if="instance.logoOfOrganizationError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.logoOfOrganizationError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label for="org-name" class="label"
-                >{{ $t('name') }}<span>*</span></label
+            <div class="w-full line h-[1px] mb-[20px]"></div>
+            <div>
+              <div class="flex mt-[20px] items-center justify-start">
+                <div class="label">{{ $t('avatar') }}<span>*</span></div>
+                <FileUpload
+                  mode="basic"
+                  @select="onFileSelectOrganization"
+                  customUpload
+                  :chooseLabel="$t('choose')"
+                  auto
+                  severity="secondary"
+                  class="p-button-outlined h-[30px]"
+                />
+                <img
+                  v-if="instance.logoOfOrganization"
+                  :src="instance.logoOfOrganization"
+                  alt="Image"
+                  class="image"
+                />
+              </div>
+              <div class="avatar-des">{{ $t('avatar_with_1_1_ratio') }}</div>
+              <Message
+                v-if="instance.logoOfOrganizationError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.logoOfOrganizationError }}</Message
               >
-              <InputText
-                id="org-name"
-                autocomplete="off"
-                @blur="changeNameOfOrg"
-                class="flex-1"
-                v-model="instance.nameOfOrg"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('name').toLocaleLowerCase(),
-                  })
-                "
-                @value-change="changeNameOfOrg"
-              />
             </div>
-            <Message
-              v-if="instance.nameOfOrgError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.nameOfOrgError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label for="org-slogan" class="label"
-                >{{ $t('slogan') }}<span>*</span></label
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="org-name" class="label"
+                  >{{ $t('name') }}<span>*</span></label
+                >
+                <InputText
+                  id="org-name"
+                  autocomplete="off"
+                  @blur="changeNameOfOrg"
+                  class="flex-1"
+                  v-model="instance.nameOfOrg"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('name').toLocaleLowerCase(),
+                    })
+                  "
+                  @value-change="changeNameOfOrg"
+                />
+              </div>
+              <Message
+                v-if="instance.nameOfOrgError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.nameOfOrgError }}</Message
               >
-              <InputText
-                id="org-slogan"
-                autocomplete="off"
-                class="flex-1"
-                @blur="changeSloganOfOrg"
-                v-model="instance.sloganOfOrg"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('slogan').toLocaleLowerCase(),
-                  })
-                "
-                @value-change="changeSloganOfOrg"
-              />
             </div>
-            <Message
-              v-if="instance.sloganOfOrganizationError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.sloganOfOrganizationError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label for="org-fields" class="label"
-                >{{ $t('fields') }}<span>*</span></label
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="org-slogan" class="label"
+                  >{{ $t('slogan') }}<span>*</span></label
+                >
+                <InputText
+                  id="org-slogan"
+                  autocomplete="off"
+                  class="flex-1"
+                  @blur="changeSloganOfOrg"
+                  v-model="instance.sloganOfOrg"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('slogan').toLocaleLowerCase(),
+                    })
+                  "
+                  @value-change="changeSloganOfOrg"
+                />
+              </div>
+              <Message
+                v-if="instance.sloganOfOrganizationError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.sloganOfOrganizationError }}</Message
               >
-              <InputText
-                id="org-fields"
-                class="flex-1"
-                v-model="instance.fieldsOfOrg"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('name').toLocaleLowerCase(),
-                  })
-                "
-                @blur="changeFieldsOfOrg"
-                @value-change="changeFieldsOfOrg"
-                autocomplete="off"
-              />
             </div>
-            <Message
-              v-if="instance.fieldsOfOrganizationError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.fieldsOfOrganizationError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label for="org-size" class="label"
-                >{{ $t('size') }}<span>*</span></label
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="org-fields" class="label"
+                  >{{ $t('fields') }}<span>*</span></label
+                >
+                <InputText
+                  id="org-fields"
+                  class="flex-1"
+                  v-model="instance.fieldsOfOrg"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('name').toLocaleLowerCase(),
+                    })
+                  "
+                  @blur="changeFieldsOfOrg"
+                  @value-change="changeFieldsOfOrg"
+                  autocomplete="off"
+                />
+              </div>
+              <Message
+                v-if="instance.fieldsOfOrganizationError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.fieldsOfOrganizationError }}</Message
               >
-              <InputNumber
-                id="org-size"
-                class="flex-1"
-                v-model="instance.sizeOfOrg"
-                @value-change="changeSizeOfOrg"
-                @blur="changeSizeOfOrg"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('size').toLocaleLowerCase(),
-                  })
-                "
-                inputId="integeronly"
-                :locale="instance.locale"
-                :minFractionDigits="instance.minFractionDigits"
-                autocomplete="off"
-                fluid
-              />
             </div>
-            <Message
-              v-if="instance.sizeOfOrganizationError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.sizeOfOrganizationError }}</Message
-            >
-          </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="org-size" class="label"
+                  >{{ $t('size') }}<span>*</span></label
+                >
+                <InputNumber
+                  id="org-size"
+                  class="flex-1"
+                  v-model="instance.sizeOfOrg"
+                  @value-change="changeSizeOfOrg"
+                  @blur="changeSizeOfOrg"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('size').toLocaleLowerCase(),
+                    })
+                  "
+                  inputId="integeronly"
+                  :locale="instance.locale"
+                  :minFractionDigits="instance.minFractionDigits"
+                  autocomplete="off"
+                  fluid
+                />
+              </div>
+              <Message
+                v-if="instance.sizeOfOrganizationError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.sizeOfOrganizationError }}</Message
+              >
+            </div>
 
-          <div class="mt-[10px]">
-            <div class="flex items-start justify-start w-full">
-              <div class="label">{{ $t('description') }}</div>
-              <Textarea
-                class="flex-1"
-                autocomplete="off"
-                rows="2"
-                v-model="instance.descriptionOfOrg"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('description').toLocaleLowerCase(),
-                  })
-                "
-              />
+            <div class="mt-[10px]">
+              <div class="flex items-start justify-start w-full">
+                <div class="label">{{ $t('description') }}</div>
+                <Textarea
+                  class="flex-1"
+                  autocomplete="off"
+                  rows="2"
+                  v-model="instance.descriptionOfOrg"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('description').toLocaleLowerCase(),
+                    })
+                  "
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 branch-group">
+            <div class="w-full flex items-center justify-center">
+              <span
+                class="text-[20px] font-[700] ml-[10px] mb-[20px] mr-[10px]"
+                >{{ $t('main_branch_of_organization') }}</span
+              >
+            </div>
+            <div class="w-full line h-[1px] mb-[20px]"></div>
+            <div>
+              <div class="flex mt-[20px] items-center justify-start">
+                <label class="label">{{ $t('avatar') }}<span>*</span></label>
+                <FileUpload
+                  mode="basic"
+                  @select="onFileSelectBranch"
+                  customUpload
+                  auto
+                  :chooseLabel="$t('choose')"
+                  severity="secondary"
+                  class="p-button-outlined h-[30px] flex-1"
+                />
+                <img
+                  :src="instance.avatarOfBranch"
+                  alt="Image"
+                  class="w-full image"
+                />
+              </div>
+              <div class="avatar-des">{{ $t('avatar_with_1_1_ratio') }}</div>
+              <Message
+                v-if="instance.avatarOfBranchError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.avatarOfBranchError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label id="branch-name" class="label"
+                  >{{ $t('name') }}<span>*</span></label
+                >
+                <InputText
+                  id="branch-name"
+                  autocomplete="off"
+                  class="flex-1"
+                  v-model="instance.nameOfBranch"
+                  @blur="changeNameOfBranch"
+                  @value-change="changeNameOfBranch"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('name').toLocaleLowerCase(),
+                    })
+                  "
+                />
+              </div>
+              <Message
+                v-if="instance.nameOfBranchError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.nameOfBranchError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="branch-email" class="label"
+                  >{{ $t('email') }}<span>*</span></label
+                >
+                <InputText
+                  id="branch-email"
+                  autocomplete="off"
+                  @value-change="changeEmailOfBranch"
+                  @blur="changeEmailOfBranch"
+                  class="flex-1"
+                  v-model="instance.emailOfBranch"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('email').toLocaleLowerCase(),
+                    })
+                  "
+                />
+              </div>
+              <Message
+                v-if="instance.emailOfBranchError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.emailOfBranchError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label class="label" for="branch-phone-number"
+                  >{{ $t('phone_number') }}<span>*</span></label
+                >
+                <Select
+                  v-model="instance.dialCode"
+                  :options="instance.countries"
+                  optionLabel="name"
+                  @change="changeDialCode"
+                  placeholder="Select a Country"
+                  class="w-[110px] h-[30px] mr-[5px]"
+                >
+                  <template #value="slotProps">
+                    <div
+                      v-if="slotProps.value"
+                      class="flex items-center justify-center h-[30px] pl-[10px]"
+                    >
+                      <img
+                        :alt="slotProps.value.code"
+                        :src="slotProps.value.icon"
+                        style="width: 18px"
+                      />
+                      <div class="text-[14px] ml-[5px]">
+                        {{ slotProps.value.code }}
+                      </div>
+                    </div>
+                    <span v-else>
+                      {{ slotProps.placeholder }}
+                    </span>
+                  </template>
+                  <template #option="slotProps">
+                    <div
+                      class="flex items-center justify-center pl-[10px] h-[30px]"
+                    >
+                      <img
+                        :alt="slotProps.option.code"
+                        :src="slotProps.option.icon"
+                        style="width: 18px"
+                      />
+                      <div class="text-[14px] ml-[5px]">
+                        {{ slotProps.option.code }}
+                      </div>
+                    </div>
+                  </template>
+                </Select>
+                <InputMask
+                  class="h-[30px] flex-1"
+                  autocomplete="off"
+                  id="branch-phone-number"
+                  @value-change="changePhoneNumberOfBranch"
+                  @blur="changePhoneNumberOfBranch"
+                  v-model="instance.phoneNumberOfBranch"
+                  :mask="instance.phoneNumberOfBranchPattern"
+                  :placeholder="instance.phoneNumberOBranchPlaceHolder"
+                  fluid
+                />
+              </div>
+              <Message
+                v-if="instance.phoneNumberOfBranchError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.phoneNumberOfBranchError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="branch-address" class="label"
+                  >{{ $t('address') }}<span>*</span></label
+                >
+                <InputText
+                  id="branch-address"
+                  class="flex-1"
+                  autocomplete="off"
+                  @blur="changeAddressOfBranch"
+                  @value-change="changeAddressOfBranch"
+                  v-model="instance.addressOfBranch"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('address').toLocaleLowerCase(),
+                    })
+                  "
+                />
+              </div>
+              <Message
+                v-if="instance.addressOfBranchError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.addressOfBranchError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-start justify-start w-full">
+                <div class="label">{{ $t('description') }}</div>
+                <Textarea
+                  class="flex-1"
+                  autocomplete="off"
+                  rows="2"
+                  v-model="instance.descriptionOfBranch"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('description').toLocaleLowerCase(),
+                    })
+                  "
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div class="flex-1 group-branch">
-          <div class="w-full flex items-center justify-center">
-            <span
-              class="text-[20px] font-[700] ml-[10px] mb-[20px] mr-[10px]"
-              >{{ $t('main_branch_of_organization') }}</span
-            >
-          </div>
-          <div class="w-full line h-[1px] mb-[20px]"></div>
-          <div>
-            <div class="flex mt-[20px] items-center justify-start">
-              <label class="label">{{ $t('avatar') }}<span>*</span></label>
-              <FileUpload
-                mode="basic"
-                @select="onFileSelectBranch"
-                customUpload
-                auto
-                :chooseLabel="$t('choose')"
-                severity="secondary"
-                class="p-button-outlined h-[32px] flex-1"
+        <div class="w-full line h-[1px] mb-[20px]"></div>
+        <div class="w-full flex items-center justify-center">
+          <div class="flex items-center gap-2">
+            <Checkbox
+              v-model="instance.agree"
+              inputId="ingredient1"
+              name="pizza"
+              value="Cheese"
+            />
+            <label for="ingredient1">
+              Vui lòng đồng ý với
+              <Button
+                :label="$t('điều khoản dịch vụ')"
+                variant="link"
+                @click="clickMoveToTerm()"
+                class="h-[30px] link"
               />
-              <img
-                :src="instance.avatarOfBranch"
-                alt="Image"
-                class="rounded-[8px] w-full image"
+              và
+              <Button
+                :label="$t('chính sách quyền riêng tư')"
+                variant="link"
+                @click="clickMoveToPrivacy()"
+                class="h-[30px] link"
               />
-            </div>
-            <div class="avatar-des">{{ $t('avatar_with_1_1_ratio') }}</div>
-            <Message
-              v-if="instance.avatarOfBranchError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.avatarOfBranchError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label id="branch-name" class="label"
-                >{{ $t('name') }}<span>*</span></label
-              >
-              <InputText
-                id="branch-name"
-                autocomplete="off"
-                class="flex-1"
-                v-model="instance.nameOfBranch"
-                @blur="changeNameOfBranch"
-                @value-change="changeNameOfBranch"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('name').toLocaleLowerCase(),
-                  })
-                "
-              />
-            </div>
-            <Message
-              v-if="instance.nameOfBranchError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.nameOfBranchError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label for="branch-email" class="label"
-                >{{ $t('email') }}<span>*</span></label
-              >
-              <InputText
-                id="branch-email"
-                autocomplete="off"
-                @value-change="changeEmailOfBranch"
-                @blur="changeEmailOfBranch"
-                class="flex-1"
-                v-model="instance.emailOfBranch"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('email').toLocaleLowerCase(),
-                  })
-                "
-              />
-            </div>
-            <Message
-              v-if="instance.emailOfBranchError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.emailOfBranchError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label class="label" for="branch-phone-number"
-                >{{ $t('phone_number') }}<span>*</span></label
-              >
-              <Select
-                v-model="instance.dialCode"
-                :options="instance.countries"
-                optionLabel="name"
-                @change="changeDialCode"
-                placeholder="Select a Country"
-                class="w-[110px] h-[32px] mr-[5px]"
-              >
-                <template #value="slotProps">
-                  <div
-                    v-if="slotProps.value"
-                    class="flex items-center justify-center h-[32px] pl-[10px]"
-                  >
-                    <img
-                      :alt="slotProps.value.code"
-                      :src="slotProps.value.icon"
-                      style="width: 18px"
-                    />
-                    <div class="text-[14px] ml-[5px]">
-                      {{ slotProps.value.code }}
-                    </div>
-                  </div>
-                  <span v-else>
-                    {{ slotProps.placeholder }}
-                  </span>
-                </template>
-                <template #option="slotProps">
-                  <div
-                    class="flex items-center justify-center pl-[10px] h-[32px]"
-                  >
-                    <img
-                      :alt="slotProps.option.code"
-                      :src="slotProps.option.icon"
-                      style="width: 18px"
-                    />
-                    <div class="text-[14px] ml-[5px]">
-                      {{ slotProps.option.code }}
-                    </div>
-                  </div>
-                </template>
-              </Select>
-              <InputMask
-                class="h-[32px] flex-1"
-                autocomplete="off"
-                id="branch-phone-number"
-                @value-change="changePhoneNumberOfBranch"
-                @blur="changePhoneNumberOfBranch"
-                v-model="instance.phoneNumberOfBranch"
-                :mask="instance.phoneNumberOfBranchPattern"
-                :placeholder="instance.phoneNumberOBranchPlaceHolder"
-                fluid
-              />
-            </div>
-            <Message
-              v-if="instance.phoneNumberOfBranchError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.phoneNumberOfBranchError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-center justify-start w-full">
-              <label for="branch-address" class="label"
-                >{{ $t('address') }}<span>*</span></label
-              >
-              <InputText
-                id="branch-address"
-                class="flex-1"
-                autocomplete="off"
-                @blur="changeAddressOfBranch"
-                @value-change="changeAddressOfBranch"
-                v-model="instance.addressOfBranch"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('address').toLocaleLowerCase(),
-                  })
-                "
-              />
-            </div>
-            <Message
-              v-if="instance.addressOfBranchError"
-              severity="error"
-              size="small"
-              variant="simple"
-              >{{ instance.addressOfBranchError }}</Message
-            >
-          </div>
-          <div class="mt-[10px]">
-            <div class="flex items-start justify-start w-full">
-              <div class="label">{{ $t('description') }}</div>
-              <Textarea
-                class="flex-1"
-                autocomplete="off"
-                rows="2"
-                v-model="instance.descriptionOfBranch"
-                :placeholder="
-                  $t('please_enter_name', {
-                    name: $t('description').toLocaleLowerCase(),
-                  })
-                "
-              />
-            </div>
+            </label>
           </div>
         </div>
-      </div>
-      <div class="w-full flex items-center justify-center mt-[30px]">
-        <Button
-          :label="$t('save')"
-          class="w-[130px] h-[32px] register"
-          icon="pi pi-save"
-          @click="clickSave"
-        />
+        <div
+          class="w-full flex items-center justify-center mb-[20px] mt-[20px]"
+        >
+          <Button :label="$t('start_now')" class="register" @click="clickSave">
+            <template #icon> <img :src="Add" class="w-[18px] icon" /> </template
+          ></Button>
+        </div>
       </div>
 
-      <div class="w-full mt-[30px] pricing-group">
+      <div class="w-full mt-[30px] about-group">
         <div
           class="text-[20px] font-[700] ml-[0px] mb-[20px] w-full flex items-center justify-center"
         >
-          Cộng đồng doanh nghiệp
+          Giới thiêu về chúng tôi
         </div>
         <div class="w-full line h-[1px] mb-[20px]"></div>
         <div class="contain">
-          Nhóm ABC là một [mô tả ngắn gọn về mục đích và lĩnh vực hoạt động của
-          nhóm]. Chúng tôi tập hợp những cá nhân có chung [liệt kê các điểm
-          chung, ví dụ: sở thích, mục tiêu, mối quan tâm] để cùng nhau [liệt kê
-          các hoạt động chính của nhóm, ví dụ: học hỏi, chia sẻ, hợp tác, phát
-          triển]. Tham gia nhóm ABC, bạn sẽ có cơ hội: Kết nối: Gặp gỡ và giao
-          lưu với những người có cùng chí hướng, mở rộng mạng lưới quan hệ. Học
-          hỏi và phát triển: Chia sẻ kiến thức, kinh nghiệm và học hỏi những
-          điều mới từ các thành viên khác. Hợp tác: Tham gia vào các dự án, hoạt
-          động nhóm để cùng nhau đạt được mục tiêu chung. Đóng góp: Chia sẻ tài
-          năng, kỹ năng và ý tưởng của bạn để xây dựng cộng đồng ngày càng vững
-          mạnh. Cập nhật thông tin: Nắm bắt những thông tin mới nhất về [lĩnh
-          vực liên quan đến nhóm]. Tìm kiếm sự hỗ trợ: Nhận được sự giúp đỡ, lời
-          khuyên và động viên từ các thành viên khác khi cần thiết. Tham gia các
-          sự kiện: Tham gia các buổi gặp mặt, hội thảo, workshop, hoạt động
-          ngoại khóa do nhóm tổ chức.
+          <div>
+            <strong>IIBelife</strong> là một đơn vị tiên phong trong lĩnh vực
+            phát triển phần mềm tiện ích quản lý tổ chức/doanh nghiệp đưa tổ
+            chức/doanh nghiệp của bạn đến với công chúng dễ dàng giúp nâng cao
+            hiệu suất kinh doanh của tổ chức/doanh nghiệp của bạn.
+          </div>
+          <div class="mt-[5px]">
+            <strong>IIBelife</strong> tập trung vào các mảng kinh doanh cốt lõi
+            sau:
+          </div>
+          <div>
+            - Chuyên xây dựng các hệ thống quản lý tùy chỉnh tổ chức/doanh
+            nghiệp, giúp tự động hóa quy trình và tối ưu hóa vận hành
+          </div>
+          <div>
+            - Đưa thông tin tổ chức/doanh nghiệp của bạn thông qua hệ thống một
+            cách dễ dàng.
+          </div>
         </div>
       </div>
     </div>
@@ -417,6 +448,7 @@ import { ref } from 'vue'
 import type { CreateOrganizationType } from '~/types/org/CreateOrganizationType'
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
+import Add from '~/assets/icons/add.svg'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
 import { CreateOrganizationValidate } from '~/validate/org/CreateOrgValidate'
 import { GlobalStore } from '~/store/Global'
@@ -449,6 +481,16 @@ const instance = ref(<CreateOrganizationType>{
 })
 /// Function
 
+const clickMoveToTerm = async () => {
+  navigateTo({
+    path: PathTermPrivacy.TERM,
+  })
+}
+const clickMoveToPrivacy = async () => {
+  navigateTo({
+    path: PathTermPrivacy.PRIVACY,
+  })
+}
 /// Change name of org
 const changeNameOfOrg = async (evt: any) => {
   CreateOrganizationValidate.nameOfOrg(instance, t)
@@ -660,185 +702,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-:deep(.p-textarea) {
-  font-size: 14px;
-}
-
-:deep(.p-message-text) {
-  padding-left: 110px;
-}
-.page {
-  display: flex;
-  padding: 10px;
-}
-.create-org {
-  flex: 1;
-  padding: 30px;
-  .contain {
-    display: flex;
-    flex-direction: row;
-    .group-information {
-      margin-right: 20px;
-      padding: 20px;
-      border: 1px solid $border-color;
-      border-top-right-radius: 15px;
-      border-bottom-left-radius: 15px;
-    }
-    .group-branch {
-      margin-top: 0px;
-      margin-left: 20px;
-      padding: 20px;
-
-      border: 1px solid $border-color;
-      border-top-right-radius: 15px;
-      border-bottom-left-radius: 15px;
-    }
-  }
-
-  .pricing-group {
-    border: 1px solid $border-color;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    padding: 20px;
-    .contain {
-      margin-left: 20px;
-      margin-right: 20px;
-      display: flex;
-      flex-direction: row;
-      .icon {
-        color: $primary-color;
-        margin-top: 3px;
-      }
-    }
-  }
-  .label {
-    width: 110px;
-    span {
-      margin-left: 2px;
-      color: red;
-    }
-  }
-  .logo-des,
-  .avatar-des {
-    margin-left: 110px;
-  }
-  .line {
-    border-radius: 5px;
-    border-bottom: 1px dashed $border-color;
-  }
-  .image {
-    margin-left: 50px;
-    width: 50px;
-  }
-}
-
-/// Tablet
-@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {
-}
-
-/// Tablet mini
-@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
-  :deep(.p-message-text) {
-    padding-left: 100px;
-  }
-  .page {
-    display: flex;
-    padding: 8px;
-  }
-  .create-org {
-    flex: 1;
-    padding: 10px;
-    padding-top: 20px;
-    .contain {
-      display: flex;
-      flex-direction: column;
-      .group-information {
-        margin-left: 0px;
-        margin-right: 0px;
-        padding: 10px;
-        padding-top: 20px;
-      }
-      .group-branch {
-        margin-top: 20px;
-        margin-left: 0px;
-        margin-right: 0px;
-        padding: 10px;
-        padding-top: 20px;
-      }
-    }
-    .pricing-group {
-      padding: 10px;
-      padding-top: 20px;
-      // display: inline-block;
-      margin-top: 10px;
-      .contain {
-        margin-left: 0px;
-        margin-right: 0px;
-        flex-direction: column;
-        .icon {
-        }
-      }
-    }
-  }
-  .logo-des,
-  .avatar-des {
-    margin-left: 100px !important;
-  }
-  .label {
-    width: 100px !important;
-  }
-}
-
-/// Mobile
-@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-  :deep(.p-message-text) {
-    padding-left: 100px;
-  }
-  .page {
-    display: flex;
-    padding: 8px;
-  }
-  .create-org {
-    flex: 1;
-    padding: 10px;
-    padding-top: 20px;
-    .contain {
-      display: flex;
-      flex-direction: column;
-      .group-information {
-        margin-left: 0px;
-        margin-right: 0px;
-        padding: 10px;
-        padding-top: 20px;
-      }
-      .group-branch {
-        margin-top: 20px;
-        margin-left: 0px;
-        margin-right: 0px;
-        padding: 10px;
-        padding-top: 20px;
-      }
-    }
-    .pricing-group {
-      padding: 10px;
-      padding-top: 20px;
-      // display: inline-block;
-      margin-top: 10px;
-      .contain {
-        margin-left: 0px;
-        margin-right: 0px;
-        flex-direction: column;
-        .icon {
-        }
-      }
-    }
-  }
-  .logo-des,
-  .avatar-des {
-    margin-left: 100px !important;
-  }
-  .label {
-    width: 100px !important;
-  }
-}
+@import url('~/assets/scss/org/CreateOrg.scss');
 </style>

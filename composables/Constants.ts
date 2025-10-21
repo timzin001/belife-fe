@@ -147,6 +147,10 @@ export const PathAccount = {
   SIGN_IN: '/account/sign-in',
   SIGN_UP: '/account/sign-up',
 }
+export const PathTermPrivacy = {
+  TERM: '/term-privacy/term',
+  PRIVACY: '/term-privacy/privacy',
+}
 
 export const PathOrg = {
   CREATE_ORG: '/org/create-org',

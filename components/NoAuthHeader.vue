@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center w-full header card">
     <div class="flex flex-col justify-center">
-      <div class="header-text font-bold text-[12px]">SOI-VIP</div>
+      <div class="header-text font-bold text-[12px]">IIBelife</div>
       <div class="tex-[12px]">
         {{ $t('news_and_mananges') }}
       </div>

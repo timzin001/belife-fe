@@ -44,4 +44,5 @@ export interface CreateOrganizationType {
   locale: string
   minFractionDigits: number
   org: any
+  agree: boolean
 }

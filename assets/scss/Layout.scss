@@ -349,8 +349,8 @@ body {
 }
 
 :root {
-    --p-checkbox-width: 15px;
-    --p-checkbox-height: 15px;
+    --p-checkbox-width: 15px !important;
+    --p-checkbox-height: 15px !important;
 }
 
  //// Overide drop down
@@ -571,6 +571,10 @@ body {
 .p-multiselect-label {
     padding: 5px 10px !important;
     font-size: 14px !important;
+}
+
+.p-button-link {
+    padding: unset !important;
 }
 
 /// Override textarea

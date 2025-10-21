@@ -19,4 +19,6 @@ export interface SignUpType {
   maxDate: Date
   dialCode: PhoneNumberType
   countries: Array<PhoneNumberType>
+  termsPrivacy: any
+  termsPrivacyError: string
 }

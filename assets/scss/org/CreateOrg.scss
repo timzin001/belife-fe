@@ -1,0 +1,224 @@
+:deep(.p-message-text) {
+    padding-left: 110px;
+}
+
+.page {
+    display: flex;
+    padding: 10px;
+}
+
+.create-org {
+    flex: 1;
+    padding: 30px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid $border-color;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+
+        .info-branch-group {
+            display: flex;
+            flex-direction: row;
+
+            .information-group {
+                margin-right: 20px;
+                padding: 20px;
+            }
+
+            .branch-group {
+                margin-top: 0px;
+                margin-left: 20px;
+                padding: 20px;
+            }
+        }
+
+        .register {
+            height: 30px;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+
+            .icon {
+                filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(312deg) brightness(104%) contrast(101%);
+            }
+        }
+    }
+
+    .about-group {
+        border: 1px solid $border-color;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        padding: 20px;
+
+        .contain {
+            margin-left: 20px;
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+
+            .icon {
+                color: $primary-color;
+                margin-top: 3px;
+            }
+        }
+    }
+
+    .label {
+        width: 110px;
+
+        span {
+            margin-left: 2px;
+            color: red;
+        }
+    }
+
+    .logo-des,
+    .avatar-des {
+        margin-left: 110px;
+    }
+
+    .line {
+        border-radius: 5px;
+        border-bottom: 1px dashed $border-color;
+    }
+
+    .image {
+        margin-left: 50px;
+        width: 50px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-color: $second-color;
+        border-style: solid;
+        border-width: 1px;
+    }
+}
+
+/// Tablet
+@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {}
+
+/// Tablet mini
+@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
+    :deep(.p-message-text) {
+        padding-left: 100px;
+    }
+
+    .page {
+        display: flex;
+        padding: 8px;
+    }
+
+    .create-org {
+        flex: 1;
+        padding: 10px;
+        padding-top: 20px;
+
+        .contain {
+            display: flex;
+            flex-direction: column;
+
+            .information-group {
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+
+            .branch-group {
+                margin-top: 20px;
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+        }
+
+        .about-group {
+            padding: 10px;
+            padding-top: 20px;
+            // display: inline-block;
+            margin-top: 10px;
+
+            .contain {
+                margin-left: 0px;
+                margin-right: 0px;
+                flex-direction: column;
+
+                .icon {}
+            }
+        }
+    }
+
+    .logo-des,
+    .avatar-des {
+        margin-left: 100px !important;
+    }
+
+    .label {
+        width: 100px !important;
+    }
+}
+
+/// Mobile
+@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
+    :deep(.p-message-text) {
+        padding-left: 100px;
+    }
+
+    .page {
+        display: flex;
+        padding: 8px;
+    }
+
+    .create-org {
+        flex: 1;
+        padding: 10px;
+        padding-top: 20px;
+
+        .contain {
+            display: flex;
+            flex-direction: column;
+
+            .information-group {
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+
+            .branch-group {
+                margin-top: 20px;
+                margin-left: 0px;
+                margin-right: 0px;
+                padding: 10px;
+                padding-top: 20px;
+            }
+        }
+
+        .about-group {
+            padding: 10px;
+            padding-top: 20px;
+            // display: inline-block;
+            margin-top: 10px;
+
+            .contain {
+                margin-left: 0px;
+                margin-right: 0px;
+                flex-direction: column;
+
+                .icon {}
+            }
+        }
+    }
+
+    .logo-des,
+    .avatar-des {
+        margin-left: 100px !important;
+    }
+
+    .label {
+        width: 100px !important;
+    }
+}

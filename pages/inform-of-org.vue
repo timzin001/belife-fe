@@ -419,13 +419,13 @@ watch(
   border: unset;
 }
 :deep(.p-checkbox-box) {
-  width: 15px;
-  height: 15px;
+  width: 15px !important;
+  height: 15px !important;
   border-radius: 2px;
 }
 :deep(.p-checkbox) {
-  width: 15px;
-  height: 15px;
+  width: 15px !important;
+  height: 15px !important;
 }
 .padding-span {
   grid-column: unset;

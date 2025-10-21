@@ -1,5 +1,11 @@
+import { type Ref } from 'vue'
+import type { SignUpType } from '~/types/account/SignUpType'
 /// Call API validate phone number
-const validatePhoneNumber = async (instance: any, toast: any, t: any) => {
+const validatePhoneNumber = async (
+  instance: Ref<SignUpType>,
+  t: any,
+  toast: any
+) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
   value = value.replaceAll('-', '')
@@ -51,7 +57,7 @@ const validatePhoneNumber = async (instance: any, toast: any, t: any) => {
 }
 
 /// Validate password
-const validatePassword = (instance: any, t: any) => {
+const validatePassword = (instance: Ref<SignUpType>, t: any) => {
   if (!instance.value.password) {
     instance.value.passwordError = t('please_enter_name', {
       name: t('password').toLocaleLowerCase(),
@@ -85,7 +91,7 @@ const validatePassword = (instance: any, t: any) => {
 }
 
 /// Validate full name
-const validateFullName = (instance: any, t: any) => {
+const validateFullName = (instance: Ref<SignUpType>, t: any) => {
   if (!instance.value.fullName) {
     instance.value.fullNameError = t('please_enter_name', {
       name: t('full_name').toLocaleLowerCase(),
@@ -103,17 +109,35 @@ const validateFullName = (instance: any, t: any) => {
 }
 
 /// Validate gender
-const validateGender = (instance: any, t: any) => {
+const validateGender = (instance: Ref<SignUpType>, t: any) => {
   if (!instance.value.gender) {
-    instance.value.genderError = t('please_choose_gender')
+    instance.value.genderError = t('please_select_name', {
+      name: t('gender').toLocaleLowerCase(),
+    })
     return
   }
 
   instance.value.genderError = ''
 }
 
+const validateTermsAndPrivacy = (instance: Ref<SignUpType>, t: any) => {
+  if (
+    !instance.value.termsPrivacy ||
+    Object.keys(instance.value.termsPrivacy).length == 0
+  ) {
+    instance.value.termsPrivacyError = t('please_select_name', {
+      name: `${t('agree_to')} ${t('terms_of_service')} ${t(
+        'and'
+      ).toLocaleLowerCase()} ${t('privacy_policy')}`,
+    })
+    return
+  }
+
+  instance.value.termsPrivacyError = ''
+}
+
 /// Validate date of birth
-const validateDateOfBirth = (instance: any, t: any) => {
+const validateDateOfBirth = (instance: Ref<SignUpType>, t: any) => {
   if (!instance.value.dateOfBirth) {
     instance.value.dateOfBirthError = t('please_enter_name', {
       name: t('date_of_birth').toLocaleLowerCase(),
@@ -124,7 +148,7 @@ const validateDateOfBirth = (instance: any, t: any) => {
 }
 
 /// Change dial code
-const changeDialCode = async (evt: any, instance: any) => {
+const changeDialCode = async (evt: any, instance: Ref<SignUpType>) => {
   if (evt.value.code === '(+84)') {
     /// change pattern
     instance.value.phoneNumberPattern = '999-999-999'
@@ -138,17 +162,18 @@ const changeDialCode = async (evt: any, instance: any) => {
   instance.value.phoneNumber = ''
 }
 const validateAll = (
-  instance: any,
+  instance: Ref<SignUpType>,
   toast: any,
   t: any,
   abortController: any
 ) => {
   const validate = Promise.all([
-    SignUpValidate.phoneNumber(instance, Toast, t),
+    SignUpValidate.phoneNumber(instance, t, toast),
     SignUpValidate.password(instance, t),
     SignUpValidate.fullName(instance, t),
     SignUpValidate.gender(instance, t),
     SignUpValidate.dateOfBirth(instance, t),
+    SignUpValidate.termsAndPrivacy(instance, t),
   ])
 
   if (
@@ -170,5 +195,6 @@ export const SignUpValidate = {
   dateOfBirth: validateDateOfBirth,
   changeDialCode: changeDialCode,
   gender: validateGender,
+  termsAndPrivacy: validateTermsAndPrivacy,
   all: validateAll,
 }
