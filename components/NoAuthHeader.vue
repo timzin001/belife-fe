@@ -63,7 +63,7 @@ import VietNamFlag from '~/assets/flags/vietnam.svg'
 
 // https://nucleoapp.com/svg-flag-icons
 /// Define
-const { setLocale } = useI18n()
+const { setLocale, locale } = useI18n()
 const store = GlobalStore()
 const instance = ref(<NoAuthHeaderType>{
   language: {
@@ -94,6 +94,15 @@ const onChangeLanguage = (evt: any) => {
   setLocale(code)
   store.setLanguage(code)
 }
+
+const initData = () => {
+  if (locale.value === Locale.VI) {
+    instance.value.language = instance.value.listLanguages[1]
+  } else {
+    instance.value.language = instance.value.listLanguages[0]
+  }
+}
+initData()
 </script>
 
 <style scoped lang="scss">

@@ -67,7 +67,7 @@ export const GlobalStore = defineStore('global', () => {
     getLanguage,
     setLoadEditor,
     getLoadEditor,
-    getOrg: getOrg,
-    setOrg: setOrg,
+    getOrg,
+    setOrg,
   }
 })

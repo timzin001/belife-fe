@@ -22,9 +22,9 @@
     </div>
     <div class="w-full pl-[10px] pr-[10px]">
       <Select
-        v-if="instance.orgs.length"
-        v-model="org"
-        :options="getListOptions()"
+        v-if="instance.listOrgs.length"
+        v-model="instance.selectOrg"
+        :options="instance.listOrgs"
         optionLabel="name"
         @value-change="changeOrg"
         :placeholder="$t('choose_organization')"
@@ -90,23 +90,17 @@ const emits = defineEmits(['clickClose'])
 const store = GlobalStore()
 const toast = useToast()
 const { t, locale } = useI18n()
-const account = ref(store.getAccount())
-const org = ref()
+// const account = ref(store.getAccount())
+
 const instance = ref<LeftMenuType>({
   menus: [],
-  orgs: [],
+  org: store.getOrg(),
+  selectOrg: null,
+  listOrgs: [],
   account: store.getAccount(),
 })
 
 /// Function
-/// Get list options
-const getListOptions = () => {
-  if (!account.value) {
-    return []
-  }
-  // return account.value.organizations ||
-  return []
-}
 const getFullNameOfAccount = () => {
   const account: any = instance.value.account
   if (!account || !account.fullName) {
@@ -198,14 +192,20 @@ const changeOrg = async (evt: any) => {
 }
 
 const initMenu = () => {
-  if (!instance.value.account) {
-    return menuNoAuth({
-      recruit: clickRecruit,
-      inform: clickInform,
-      event: clickEvent,
+  console.log('----initMenu----')
+  console.log(instance.value.account)
+  console.log(instance.value.org)
+  if (instance.value.org) {
+    return menuOrganization({
+      signOut: clickSignOut,
+      positionsOrg: clickPositionOrg,
+      branchesOrg: clickBranchesOrg,
+      departmentsOrg: clickDepartmentsOrg,
+      employeesOrg: clickEmployeesOrg,
+      profile: clickProfile,
     })
   }
-  if (!instance.value.orgs) {
+  if (instance.value.account) {
     return menuAccount({
       createOrg: clickCreateOrg,
       recruit: clickRecruit,
@@ -215,29 +215,25 @@ const initMenu = () => {
       signOut: clickSignOut,
     })
   }
-  return menuOrganization({
-    signOut: clickSignOut,
-    positionsOrg: clickPositionOrg,
-    branchesOrg: clickBranchesOrg,
-    departmentsOrg: clickDepartmentsOrg,
-    employeesOrg: clickEmployeesOrg,
-    profile: clickProfile,
+  return menuNoAuth({
+    recruit: clickRecruit,
+    inform: clickInform,
+    event: clickEvent,
   })
+  console.log(instance.value.account)
 }
 
 const initData = () => {
   instance.value.menus = initMenu()
 }
 
-initData()
-
-watch(
-  () => store.getAccount(),
-  (value) => {
-    /// Set org
-    account.value = value
-  }
-)
+// watch(
+//   () => store.getAccount(),
+//   (value) => {
+//     /// Set org
+//     account.value = value
+//   }
+// )
 // watch(
 //   () => store.getOrg(),
 //   (value) => {
@@ -245,6 +241,7 @@ watch(
 //     org.value = value
 //   }
 // )
+initData()
 </script>
 <style scoped lang="scss">
 @import url('~/assets/scss/components/LeftMenu.scss');

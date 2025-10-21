@@ -90,7 +90,7 @@ const value = ref(null)
 const items = ref([])
 // https://nucleoapp.com/svg-flag-icons
 /// Define
-const { setLocale } = useI18n()
+const { setLocale, locale } = useI18n()
 const store = GlobalStore()
 
 const instance = ref(<HeaderType>{
@@ -155,8 +155,14 @@ onMounted(() => {
   /// Set language
   setLang(store.getLanguage())
 })
-
-onMounted(() => {})
+const initData = () => {
+  if (locale.value === Locale.VI) {
+    instance.value.language = instance.value.listLanguages[1]
+  } else {
+    instance.value.language = instance.value.listLanguages[0]
+  }
+}
+initData()
 </script>
 
 <style scoped lang="scss">
