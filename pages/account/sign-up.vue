@@ -375,7 +375,7 @@ const changeDialCode = async (evt: any) => {
 }
 /// Change phone number
 const changePhoneNumber = async (evt: any) => {
-  SignUpValidate.phoneNumber(instance, toast, t)
+  SignUpValidate.phoneNumber(instance, t, toast)
 }
 /// Enter on phone number
 const enterPhoneNumber = (evt: any) => {
@@ -417,6 +417,39 @@ const clickMoveToPrivacy = async () => {
     path: PathTermPrivacy.PRIVACY,
   })
 }
+const transitionError = () => {
+  if (instance.value.phoneNumberError) {
+    SignUpValidate.phoneNumber(instance, t, toast)
+  }
+  if (instance.value.passwordError) {
+    SignUpValidate.password(instance, t)
+  }
+  if (instance.value.fullNameError) {
+    SignUpValidate.fullName(instance, t)
+  }
+  if (instance.value.genderError) {
+    SignUpValidate.gender(instance, t)
+  }
+  if (instance.value.genderError) {
+    SignUpValidate.gender(instance, t)
+  }
+  if (instance.value.dateOfBirthError) {
+    SignUpValidate.dateOfBirth(instance, t)
+  }
+  if (instance.value.termsPrivacyError) {
+    SignUpValidate.termsAndPrivacy(instance, t)
+  }
+}
+watch(
+  () => store.getLanguage(),
+  (value) => {
+    /// Set language
+    setTimeout(() => {
+      transitionError()
+    }, 100)
+  }
+)
+
 onMounted(() => {
   $auth()
   instance.value.maxDate = new Date()
@@ -435,12 +468,4 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import url('~/assets/scss/account/SignUp.scss');
-
-.test1 {
-  background-color: red;
-  padding: unset;
-}
-.term-privacy {
-  background-color: yellow;
-}
 </style>

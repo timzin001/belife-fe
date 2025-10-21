@@ -12,6 +12,12 @@ const validatePhoneNumber = async (
   let pattern = instance.value.phoneNumberPattern.replaceAll('-', '')
 
   if (!value) {
+    console.log('validatePhoneNumber')
+    console.log(
+      t('please_enter_name', {
+        name: t('phone_number').toLocaleLowerCase(),
+      })
+    )
     instance.value.phoneNumberError = t('please_enter_name', {
       name: t('phone_number').toLocaleLowerCase(),
     })
@@ -181,7 +187,8 @@ const validateAll = (
     instance.value.passwordError ||
     instance.value.fullNameError ||
     instance.value.genderError ||
-    instance.value.dateOfBirthError
+    instance.value.dateOfBirthError ||
+    instance.value.termsPrivacyError
   ) {
     return false
   }
