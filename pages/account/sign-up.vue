@@ -218,7 +218,7 @@
           >
         </div>
         <div class="flex flex-col mt-[10px] item">
-          <div class="flex items-start justify-center">
+          <div class="flex items-start justify-start">
             <Checkbox
               v-model="instance.termsPrivacy"
               inputId="term-privacy"
@@ -396,9 +396,6 @@ const changeDateOfBirth = async (evt: any) => {
 }
 
 const changeTermsPrivacy = (evt: any) => {
-  console.log('-----changeTermsPrivacy------')
-  console.log(evt)
-  console.log(instance.value.termsPrivacy)
   SignUpValidate.termsAndPrivacy(instance, t)
 }
 
@@ -438,4 +435,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import url('~/assets/scss/account/SignUp.scss');
+
+.test1 {
+  background-color: red;
+  padding: unset;
+}
+.term-privacy {
+  background-color: yellow;
+}
 </style>
