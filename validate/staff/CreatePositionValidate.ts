@@ -1,5 +1,6 @@
 import type { CreatePositionType } from '~/types/staff/CreatePositionType'
 import { type Ref } from 'vue'
+import type { ToastServiceMethods } from 'primevue'
 /// Validate avatar
 const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
   const avatar = instance.value.avatar || ''
@@ -19,7 +20,7 @@ const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
 const validateName = async (
   instance: Ref<CreatePositionType>,
   t: any,
-  toast: any,
+  toast: ToastServiceMethods,
   locale: string
 ) => {
   let nameObject: any = instance.value.name
@@ -90,13 +91,13 @@ const validateName = async (
 const validateAll = async (
   instance: Ref<CreatePositionType>,
   t: any,
-  toast: any,
+  toast: ToastServiceMethods,
   locale: string,
   position: any = null
 ) => {
   await Promise.all([
     validateAvatar(instance, t),
-    validateName(instance, t, Toast, locale),
+    validateName(instance, t, toast, locale),
   ])
 
   if (instance.value.avatarError || instance.value.nameError) {

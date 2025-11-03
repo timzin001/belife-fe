@@ -2,10 +2,12 @@
 // import { GlobalStore } from '~/store/Global'
 // const store = GlobalStore()
 
+import type { ToastServiceMethods } from 'primevue'
+
 const CallAPI = (
   url: string | (() => string),
   options = {},
-  toast: any,
+  toast: ToastServiceMethods,
   t: any,
   isOrg = true,
   isMultipart = false

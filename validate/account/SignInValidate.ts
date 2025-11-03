@@ -1,7 +1,9 @@
+import type { ToastServiceMethods } from 'primevue'
+
 /// Call API validate phone number
 export const validatePhoneNumber = async (
   instance: any,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`
@@ -19,9 +21,7 @@ export const validatePhoneNumber = async (
     return
   }
 
-  const phoneNumber = `${
-    instance.value.dialCode.code
-  }${phoneNumberStr.replaceAll('-', '')}`
+  const phoneNumber = `${instance.value.dialCode.code}${value}`
 
   const options: any = {
     method: 'get',
@@ -151,7 +151,7 @@ const changeDialCode = async (evt: any, instance: any) => {
 
 const validateAll = async (
   instance: any,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any,
   phoneNumberController?: any,
   passwordController?: any

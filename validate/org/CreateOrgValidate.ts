@@ -1,10 +1,11 @@
+import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
 import type { CreateOrgType } from '~/types/org/CreateOrgType'
 /// Validate name of org
 const validateNameOfOrg = async (
   instance: Ref<CreateOrgType>,
   t: any,
-  toast: any
+  toast: ToastServiceMethods
 ) => {
   let nameOfOrg = instance.value.nameOfOrg
 
@@ -29,13 +30,11 @@ const validateNameOfOrg = async (
   ) {
     instance.value.nameOfOrgError = ''
   }
-
-  if (instance.value.nameAbortController) {
-    instance.value.nameAbortController.abort(APIStatus.ABORT_API)
+  if (instance.value.nameOfOrgAbortController) {
+    instance.value.nameOfOrgAbortController.abort(APIStatus.ABORT_API)
   }
-  instance.value.nameAbortController = new AbortController()
-  const signal = instance.value.nameAbortController.signal
-
+  instance.value.nameOfOrgAbortController = new AbortController()
+  const signal = instance.value.nameOfOrgAbortController.signal
   const options = {
     method: 'get',
     signal: signal,
@@ -51,7 +50,7 @@ const validateNameOfOrg = async (
     t,
     false
   )
-  instance.value.nameAbortController = null
+  instance.value.nameOfOrgAbortController = null
   if (status.value !== APIStatus.SUCCESS) {
     const strError = error?.value?.message || ''
     if (!strError.includes(APIStatus.ABORT_API)) {
@@ -125,7 +124,8 @@ const validateSizeOfOrganization = (instance: Ref<CreateOrgType>, t: any) => {
 /// Validate phone number of branch
 const validatePhoneNumberOfBranch = async (
   instance: Ref<CreateOrgType>,
-  t: any
+  t: any,
+  toast: ToastServiceMethods
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumberOfBranch ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
@@ -141,8 +141,52 @@ const validatePhoneNumberOfBranch = async (
     })
     return
   }
+
   if (pattern.length !== value.length) {
     return
+  }
+  const phoneNumber = `${instance.value.dialCode.code}${value}`
+
+  if (instance.value.phoneNumberOfBranchAbortController) {
+    instance.value.phoneNumberOfBranchAbortController.abort(APIStatus.ABORT_API)
+  }
+  instance.value.phoneNumberOfBranchAbortController = new AbortController()
+  const signal = instance.value.phoneNumberOfBranchAbortController.signal
+  const options = {
+    method: 'get',
+    signal: signal,
+    query: {
+      phoneNumber: phoneNumber,
+    },
+  }
+
+  const { data, error, status } = await CallAPI(
+    APIPathOrg.GET_EXIST_NAME_ORG,
+    options,
+    toast,
+    t,
+    false
+  )
+  instance.value.nameOfOrgAbortController = null
+  if (status.value !== APIStatus.SUCCESS) {
+    const strError = error?.value?.message || ''
+    if (!strError.includes(APIStatus.ABORT_API)) {
+      instance.value.nameOfOrgError = t('name_is_exist_in_system', {
+        name: t('name'),
+      })
+      return
+    }
+    /// Abort
+    return
+  }
+  const valueCont: any = data.value
+  const result: any = valueCont.data
+  if (result) {
+    instance.value.nameOfOrgError = t('name_is_exist_in_system', {
+      name: t('name'),
+    })
+  } else {
+    instance.value.nameOfOrgError = ''
   }
 
   instance.value.phoneNumberOfBranchError = ''
@@ -233,7 +277,7 @@ const validateNameOfBranch = async (instance: Ref<CreateOrgType>, t: any) => {
 const validateAll = async (
   instance: Ref<CreateOrgType>,
   t: any,
-  toast: any
+  toast: ToastServiceMethods
 ) => {
   await Promise.all([
     validateLogoOfOrg(instance, t),
@@ -245,7 +289,7 @@ const validateAll = async (
     validateAvatarOfBranch(instance, t),
     validateNameOfBranch(instance, t),
     validateEmailOfBranch(instance, t),
-    validatePhoneNumberOfBranch(instance, t),
+    validatePhoneNumberOfBranch(instance, t, toast),
     validateAddressOfBranch(instance, t),
   ])
 

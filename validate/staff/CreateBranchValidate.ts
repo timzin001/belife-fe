@@ -1,5 +1,6 @@
 import type { CreateBranchType } from '~/types/staff/CreateBranchType'
 import { type Ref } from 'vue'
+import type { ToastServiceMethods } from 'primevue'
 /// Validate avatar of branch
 const validateAvatar = (instance: Ref<CreateBranchType>, t: any) => {
   if ((instance.value.avatar || '').endsWith(DEFAULT_AVATAR)) {
@@ -17,7 +18,7 @@ const validateAvatar = (instance: Ref<CreateBranchType>, t: any) => {
 /// Validate name of branch
 const validateName = async (
   instance: Ref<CreateBranchType>,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any,
   locale: string
 ) => {
@@ -71,7 +72,7 @@ const validateName = async (
 /// Validate  email
 const validateEmail = async (
   instance: Ref<CreateBranchType>,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any
 ) => {
   const email = instance.value.email
@@ -122,7 +123,7 @@ const validateEmail = async (
 /// Validate address
 const validateAddress = async (
   instance: Ref<CreateBranchType>,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any,
   locale: string
 ) => {
@@ -173,7 +174,7 @@ const validateAddress = async (
 /// Validate all
 const validateAll = async (
   instance: Ref<CreateBranchType>,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any,
   locale: string
 ) => {
@@ -200,7 +201,7 @@ const validateAll = async (
 /// Validate phone number
 const validatePhoneNumber = async (
   instance: Ref<CreateBranchType>,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`

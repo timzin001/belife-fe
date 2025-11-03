@@ -16,29 +16,30 @@ export interface CreateOrgType {
   sloganOfOrg: string
   sloganOfOrgError: string
   fieldsOfOrg: string
-  fieldsOfOrgError?: string
-  descriptionOfOrg?: string
-  descriptionOfBranch?: string
-  nameOfBranch?: string
-  nameOfBranchError?: string
-  emailOfBranch?: string
-  emailOfBranchError?: string
-  addressOfBranch?: string
-  addressOfBranchError?: string
-  sizeOfOrg?: number
-  sizeOfOrganizationError?: string
-  phoneNumberOfBranch?: string
-  phoneNumberOfBranchPattern?: string
-  phoneNumberOBranchPlaceHolder?: string
-  phoneNumberOfBranchError?: string
-  icon?: any
-  dialCode?: PhoneNumberType
-  countries?: Array<PhoneNumberType>
+  fieldsOfOrgError: string
+  descriptionOfOrg: string
+  descriptionOfBranch: string
+  nameOfBranch: string
+  nameOfBranchError: string
+  emailOfBranch: string
+  emailOfBranchError: string
+  addressOfBranch: string
+  addressOfBranchError: string
+  sizeOfOrg: number
+  sizeOfOrganizationError: string
+  phoneNumberOfBranch: string
+  phoneNumberOfBranchPattern: string
+  phoneNumberOBranchPlaceHolder: string
+  phoneNumberOfBranchError: string
+  icon: any
+  dialCode: PhoneNumberType
+  countries: Array<PhoneNumberType>
   locale: string
   minFractionDigits: number
   org: any
   agree: boolean
-  nameAbortController: AbortController | null
+  nameOfOrgAbortController: AbortController | null
+  phoneNumberOfBranchAbortController: AbortController | null
 
   // const controller = new AbortController();
 }

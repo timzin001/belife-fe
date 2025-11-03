@@ -1,10 +1,11 @@
+import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
 import type { SignUpType } from '~/types/account/SignUpType'
 /// Call API validate phone number
 const validatePhoneNumber = async (
   instance: Ref<SignUpType>,
   t: any,
-  toast: any
+  toast: ToastServiceMethods
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
@@ -27,9 +28,7 @@ const validatePhoneNumber = async (
     return
   }
 
-  const phoneNumber = `${
-    instance.value.dialCode.code
-  }${phoneNumberStr.replaceAll('-', '')}`
+  const phoneNumber = `${instance.value.dialCode.code}${value}`
 
   const options: any = {
     method: 'get',
@@ -169,7 +168,7 @@ const changeDialCode = async (evt: any, instance: Ref<SignUpType>) => {
 }
 const validateAll = (
   instance: Ref<SignUpType>,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any,
   abortController: any
 ) => {

@@ -1,3 +1,4 @@
+import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
 import type { CreateDepartmentType } from '~/types/staff/CreateDepartmentType'
 /// Validate logo of org
@@ -19,7 +20,7 @@ const validateAvatar = (instance: any, t: any) => {
 const validateName = async (
   instance: Ref<CreateDepartmentType>,
   t: any,
-  toast: any,
+  toast: ToastServiceMethods,
   locale: string
 ) => {
   let nameObject: any = instance.value.name
@@ -90,7 +91,7 @@ const validateName = async (
 const validateAll = async (
   instance: any,
   t: any,
-  toast: any,
+  toast: ToastServiceMethods,
   locale: string
 ) => {
   await Promise.all([

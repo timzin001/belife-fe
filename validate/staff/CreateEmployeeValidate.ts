@@ -1,10 +1,11 @@
 import type { CreateEmployeeType } from '~/types/staff/CreateEmployeeType'
 import { type Ref } from 'vue'
+import type { ToastServiceMethods } from 'primevue'
 /// Validate name of branch
 const validateUserCode = async (
   instance: Ref<CreateEmployeeType>,
   t: any,
-  toast: any
+  toast: ToastServiceMethods
 ) => {
   const options: any = {
     method: Method.GET,
@@ -41,7 +42,7 @@ const validateUserCode = async (
 const validateAll = async (
   instance: Ref<CreateEmployeeType>,
   t: any,
-  toast: any,
+  toast: ToastServiceMethods,
   locale: string
 ) => {
   await Promise.all([

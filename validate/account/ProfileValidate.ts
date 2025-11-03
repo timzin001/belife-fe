@@ -1,3 +1,5 @@
+import type { ToastServiceMethods } from 'primevue'
+
 /// Validate full name
 const validateFullName = (instance: any, t: any): boolean => {
   if (!instance.value.fullName) {
@@ -43,7 +45,7 @@ const validateDateOfBirth = (instance: any, toast: any, t: any) => {
 /// Validate nickname
 const validateNickName = async (
   instance: any,
-  toast: any,
+  toast: ToastServiceMethods,
   t: any,
   abortController: any
 ) => {

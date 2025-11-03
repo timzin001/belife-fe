@@ -598,7 +598,7 @@ const changeAddressOfBranch = async (evt: any) => {
 /// Change phone number of branch
 const changePhoneNumberOfBranch = async (evt: any) => {
   // validatePhoneNumberWithExist(instance, t, abortController)
-  CreateOrgValidate.phoneNumberOfBranch(instance, t)
+  CreateOrgValidate.phoneNumberOfBranch(instance, t, toast)
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
