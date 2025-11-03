@@ -1,10 +1,10 @@
-import type { UseFetchOptions } from 'nuxt/app'
+// import type { UseFetchOptions } from 'nuxt/app'
 // import { GlobalStore } from '~/store/Global'
 // const store = GlobalStore()
 
 const CallAPI = (
   url: string | (() => string),
-  options: UseFetchOptions<null> = {},
+  options = {},
   toast: any,
   t: any,
   isOrg = true,

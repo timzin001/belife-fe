@@ -45,6 +45,10 @@
                 filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(312deg) brightness(104%) contrast(101%);
             }
         }
+        .term-group{
+            padding-left: 8px;
+            padding-right: 8px;
+        }
     }
 
     .about-group {
@@ -52,6 +56,7 @@
         border-top-right-radius: 10px;
         border-bottom-left-radius: 10px;
         padding: 20px;
+        margin-top: 30px;
 
         .contain {
             margin-left: 20px;
@@ -80,9 +85,17 @@
         margin-left: 110px;
     }
 
-    .line {
+    .line, .line2, .line3 {
         border-radius: 5px;
         border-bottom: 1px dashed $border-color;
+    }
+    .line2{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .line3{
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
     .image {
@@ -102,44 +115,68 @@
 /// Tablet mini
 @media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
     :deep(.p-message-text) {
-        padding-left: 100px;
+        padding-left: 110px;
     }
-
     .page {
         display: flex;
         padding: 8px;
+        align-items: center;
+        justify-content: center;
     }
 
     .create-org {
-        flex: 1;
-        padding: 10px;
+        // flex: 1;
+        // padding: 10px;
         padding-top: 20px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-bottom: 50px;
+        flex: unset;
 
-        .contain {
+        .input-group {
             display: flex;
             flex-direction: column;
-
-            .information-group {
-                margin-left: 0px;
-                margin-right: 0px;
-                padding: 10px;
-                padding-top: 20px;
+            border: 1px solid $border-color;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+    
+            .info-branch-group {
+                display: flex;
+                flex-direction: column;
+    
+                .information-group {
+                    margin-right: unset;
+                    padding: 20px;
+                    padding-left: 70px;
+                    padding-right: 70px;
+                }
+    
+                .branch-group {
+                    margin-top: 0px;
+                    margin-left: unset;
+                    padding: 20px;
+                    padding-left: 70px;
+                    padding-right: 70px;
+                }
             }
-
-            .branch-group {
-                margin-top: 20px;
-                margin-left: 0px;
-                margin-right: 0px;
-                padding: 10px;
-                padding-top: 20px;
+    
+            .register {
+                height: 30px;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+    
+                .icon {
+                    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(312deg) brightness(104%) contrast(101%);
+                }
             }
         }
-
         .about-group {
             padding: 10px;
             padding-top: 20px;
-            // display: inline-block;
-            margin-top: 10px;
+            margin-top: 30px;
+            padding-left: 70px;
+            padding-right: 70px;
+            padding-bottom: 30px;
 
             .contain {
                 margin-left: 0px;
@@ -149,59 +186,95 @@
                 .icon {}
             }
         }
+        .line2 {
+            margin-left: 70px;
+            margin-right: 70px;
+        }
+        .line3{
+            margin-left: 0px;
+            margin-right: 0px;
+        }
     }
 
     .logo-des,
     .avatar-des {
-        margin-left: 100px !important;
+        margin-left: 110px !important;
     }
 
     .label {
-        width: 100px !important;
+        width: 110px !important;
     }
 }
 
 /// Mobile
 @media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
     :deep(.p-message-text) {
-        padding-left: 100px;
+        padding-left: 110px;
     }
 
     .page {
         display: flex;
         padding: 8px;
+        align-items: center;
+        justify-content: center;
     }
 
     .create-org {
-        flex: 1;
-        padding: 10px;
+        // flex: 1;
+        // padding: 10px;
+        padding: 8px;
         padding-top: 20px;
+        flex: unset;
 
-        .contain {
+        .input-group {
             display: flex;
             flex-direction: column;
+            border: 1px solid $border-color;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 10px;
 
-            .information-group {
-                margin-left: 0px;
-                margin-right: 0px;
-                padding: 10px;
-                padding-top: 20px;
+            .info-branch-group {
+                display: flex;
+                flex-direction: column;
+
+                .information-group {
+                    margin-right: unset;
+                    padding-left: 8px;
+                    padding-right: 8px;
+                    // padding: 20px;
+                    // padding-left: 70px;
+                    // padding-right: 70px;
+                }
+
+                .branch-group {
+                    margin-top: 0px;
+                    margin-left: unset;
+                    padding-left: 8px;
+                    padding-right: 8px;
+                    // padding: 20px;
+                    // padding-left: 70px;
+                    // padding-right: 70px;
+                }
             }
 
-            .branch-group {
-                margin-top: 20px;
-                margin-left: 0px;
-                margin-right: 0px;
-                padding: 10px;
-                padding-top: 20px;
+            .register {
+                height: 30px;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+
+                .icon {
+                    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(312deg) brightness(104%) contrast(101%);
+                }
             }
         }
 
         .about-group {
             padding: 10px;
             padding-top: 20px;
-            // display: inline-block;
-            margin-top: 10px;
+            margin-top: 30px;
+            padding-left: 8px;
+            padding-right: 8px;
+            padding-bottom: 20px;
 
             .contain {
                 margin-left: 0px;
@@ -211,14 +284,24 @@
                 .icon {}
             }
         }
+
+        .line2 {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
+        .line3 {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
     }
 
     .logo-des,
     .avatar-des {
-        margin-left: 100px !important;
+        margin-left: 110px !important;
     }
 
     .label {
-        width: 100px !important;
+        width: 110px !important;
     }
 }

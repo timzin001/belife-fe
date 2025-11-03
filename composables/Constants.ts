@@ -63,7 +63,7 @@ export const Toast = {
 export const APIStatus = {
   SUCCESS: 'success',
   IDLE: 'idle',
-  ABORT_API: 'abort_api',
+  ABORT_API: 'belife_abort_api',
 }
 
 // export const APIPathAuth = {
@@ -95,7 +95,7 @@ export const APIPathAccount = {
   POST_UPDATE_PHONE_NUMBER_USER: 'user/post-update-phone-number',
 }
 export const APIPathOrg = {
-  GET_EXIST_NAME_ORG: 'org/get-exist-name',
+  GET_EXIST_NAME_ORG: 'org/exist-name',
   POST_CREATE_ORG: 'org/post-create',
   POST_SET_LOGO_ORG: 'org/post-set-logo',
 }

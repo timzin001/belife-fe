@@ -17,6 +17,25 @@ body {
     }
 }
 
+input::-webkit-contacts-auto-fill-button,
+input::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}
+
+/* Tùy chọn: Thêm quy tắc để đảm bảo độ ưu tiên cao hơn */
+.p-inputmask input::-webkit-contacts-auto-fill-button,
+.p-inputmask input::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}
+
 // Break css
 .card{
     background-color: $card-background-color;
@@ -138,7 +157,8 @@ body {
     }
 
     .no-full-contain{
-        margin-left: 300px;
+        // margin-left: 300px;
+        margin-left: 0;
     }
 
     .full-contain{
@@ -168,7 +188,8 @@ body {
     }
 
     .no-full-contain {
-        margin-left: 300px;
+        // margin-left: 300px;
+        margin-left: 0;
     }
 
     .full-contain {
@@ -225,6 +246,8 @@ body {
             /// header -> 60px
             /// footer -> 100px
             min-height: calc(100vh - 0px - 60px - 100px);
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
     }   
     /// Overidde dialog

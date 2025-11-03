@@ -1,8 +1,8 @@
 import { type Ref } from 'vue'
-import type { CreateOrganizationType } from '~/types/org/CreateOrganizationType'
+import type { CreateOrgType } from '~/types/org/CreateOrgType'
 /// Validate name of org
 const validateNameOfOrg = async (
-  instance: Ref<CreateOrganizationType>,
+  instance: Ref<CreateOrgType>,
   t: any,
   toast: any
 ) => {
@@ -30,8 +30,15 @@ const validateNameOfOrg = async (
     instance.value.nameOfOrgError = ''
   }
 
-  const options: any = {
+  if (instance.value.nameAbortController) {
+    instance.value.nameAbortController.abort(APIStatus.ABORT_API)
+  }
+  instance.value.nameAbortController = new AbortController()
+  const signal = instance.value.nameAbortController.signal
+
+  const options = {
     method: 'get',
+    signal: signal,
     query: {
       name: nameOfOrg,
     },
@@ -44,13 +51,13 @@ const validateNameOfOrg = async (
     t,
     false
   )
+  instance.value.nameAbortController = null
   if (status.value !== APIStatus.SUCCESS) {
-    const strError = error?.value?.message ?? ''
+    const strError = error?.value?.message || ''
     if (!strError.includes(APIStatus.ABORT_API)) {
       instance.value.nameOfOrgError = t('name_is_exist_in_system', {
         name: t('name'),
       })
-
       return
     }
     /// Abort
@@ -68,10 +75,7 @@ const validateNameOfOrg = async (
 }
 
 /// Change dial code
-const changeDialCode = async (
-  evt: any,
-  instance: Ref<CreateOrganizationType>
-) => {
+const changeDialCode = async (evt: any, instance: Ref<CreateOrgType>) => {
   let data = getDialCodePattern(evt.value.code)
   /// change pattern
   instance.value.phoneNumberOfBranchPattern = data.pattern
@@ -80,19 +84,16 @@ const changeDialCode = async (
 }
 
 /// Validate fields of organzation
-const validateFieldsOfOrganization = (
-  instance: Ref<CreateOrganizationType>,
-  t: any
-) => {
+const validateFieldsOfOrganization = (instance: Ref<CreateOrgType>, t: any) => {
   let fieldsOfOrganization = instance.value.fieldsOfOrg
 
   if (!fieldsOfOrganization) {
-    instance.value.fieldsOfOrganizationError = t('please_enter_name', {
+    instance.value.fieldsOfOrgError = t('please_enter_name', {
       name: t('fields').toLocaleLowerCase(),
     })
     return
   }
-  instance.value.fieldsOfOrganizationError = ''
+  instance.value.fieldsOfOrgError = ''
 }
 
 /// Validate slogan of organzation
@@ -109,10 +110,7 @@ const validateSloganOfOrganization = (instance: any, t: any) => {
 }
 
 /// Validate size of organzation
-const validateSizeOfOrganization = (
-  instance: Ref<CreateOrganizationType>,
-  t: any
-) => {
+const validateSizeOfOrganization = (instance: Ref<CreateOrgType>, t: any) => {
   let sizeOfOrganization = instance.value.sizeOfOrg
 
   if (!sizeOfOrganization) {
@@ -126,7 +124,7 @@ const validateSizeOfOrganization = (
 
 /// Validate phone number of branch
 const validatePhoneNumberOfBranch = async (
-  instance: Ref<CreateOrganizationType>,
+  instance: Ref<CreateOrgType>,
   t: any
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumberOfBranch ?? ''}`
@@ -139,19 +137,18 @@ const validatePhoneNumberOfBranch = async (
 
   if (!value) {
     instance.value.phoneNumberOfBranchError = t('please_enter_name', {
-      nam: t('phone_number').toLocaleLowerCase,
+      name: t('phone_number').toLocaleLowerCase(),
     })
     return
   }
   if (pattern.length !== value.length) {
     return
   }
+
+  instance.value.phoneNumberOfBranchError = ''
 }
 /// Validate email of branch
-const validateEmailOfBranch = async (
-  instance: Ref<CreateOrganizationType>,
-  t: any
-) => {
+const validateEmailOfBranch = async (instance: Ref<CreateOrgType>, t: any) => {
   const emailOfBranch = instance.value.emailOfBranch
   if (!emailOfBranch) {
     instance.value.emailOfBranchError = t('please_enter_name', {
@@ -168,10 +165,7 @@ const validateEmailOfBranch = async (
   instance.value.emailOfBranchError = ''
 }
 /// Validate address of branch
-const validateAddressOfBranch = (
-  instance: Ref<CreateOrganizationType>,
-  t: any
-) => {
+const validateAddressOfBranch = (instance: Ref<CreateOrgType>, t: any) => {
   const addressOfBranch = instance.value.addressOfBranch
   if (!addressOfBranch) {
     instance.value.addressOfBranchError = t('please_enter_name', {
@@ -183,33 +177,25 @@ const validateAddressOfBranch = (
 }
 
 /// Validate logo of org
-const validateLogoOfOrg = (instance: Ref<CreateOrganizationType>, t: any) => {
-  const logoOfOrganization = instance.value.logoOfOrganization || ''
+const validateLogoOfOrg = (instance: Ref<CreateOrgType>, t: any) => {
+  const logoOfOrganization = instance.value.avatarOfOrg || ''
   if (logoOfOrganization.endsWith(DEFAULT_AVATAR)) {
-    instance.value.logoOfOrganizationError = t(
-      'please_choose_logo_of_organization'
-    )
+    instance.value.avatarOfOrgError = t('please_choose_avatar')
     return
   }
-  if (
-    instance.value.widthLogoOfOrganization !==
-    instance.value.heightLogoOfOrganization
-  ) {
-    instance.value.logoOfOrganizationError = t('ratio_of_logo_is_not_1x1')
+  if (instance.value.widthAvatarOfOrg !== instance.value.heightAvatarOfOrg) {
+    instance.value.avatarOfOrgError = t('ratio_of_avatar_is_not_1x1')
     return
   }
 
-  instance.value.logoOfOrganizationError = ''
+  instance.value.avatarOfOrgError = ''
 }
 
 /// Validate avatar of branch
-const validateAvatarOfBranch = (
-  instance: Ref<CreateOrganizationType>,
-  t: any
-) => {
+const validateAvatarOfBranch = (instance: Ref<CreateOrgType>, t: any) => {
   const avatarOfBranch = instance.value.avatarOfBranch || ''
   if (avatarOfBranch.endsWith(DEFAULT_AVATAR)) {
-    instance.value.avatarOfBranchError = t('please_choose_avatar_of_branch')
+    instance.value.avatarOfBranchError = t('please_choose_avatar')
     return
   }
   if (
@@ -223,10 +209,7 @@ const validateAvatarOfBranch = (
 }
 
 /// Validate name of branch
-const validateNameOfBranch = async (
-  instance: Ref<CreateOrganizationType>,
-  t: any
-) => {
+const validateNameOfBranch = async (instance: Ref<CreateOrgType>, t: any) => {
   let nameOfBranch = `${instance.value.nameOfBranch || ''}`
 
   if (!nameOfBranch) {
@@ -247,7 +230,11 @@ const validateNameOfBranch = async (
 }
 
 /// Validate all
-const validateAll = async (instance: any, t: any, toast: any) => {
+const validateAll = async (
+  instance: Ref<CreateOrgType>,
+  t: any,
+  toast: any
+) => {
   await Promise.all([
     validateLogoOfOrg(instance, t),
     validateNameOfOrg(instance, t, toast),
@@ -263,10 +250,10 @@ const validateAll = async (instance: any, t: any, toast: any) => {
   ])
 
   if (
-    instance.value.logoOfOrganizationError ||
-    instance.value.nameOfOrganizationError ||
-    instance.value.sloganOfOrganizationError ||
-    instance.value.fieldsOfOrganizationError ||
+    instance.value.avatarOfOrgError ||
+    instance.value.nameOfOrgError ||
+    instance.value.sloganOfOrgError ||
+    instance.value.fieldsOfOrgError ||
     instance.value.sizeOfOrganizationError ||
     instance.value.avatarOfBranchError ||
     instance.value.nameOfBranchError ||
@@ -279,8 +266,8 @@ const validateAll = async (instance: any, t: any, toast: any) => {
   return true
 }
 
-export const CreateOrganizationValidate = {
-  logoOfOrganization: validateLogoOfOrg,
+export const CreateOrgValidate = {
+  avatarOfOrg: validateLogoOfOrg,
   nameOfOrg: validateNameOfOrg,
   nameOfBranch: validateNameOfBranch,
   changeDialCode: changeDialCode,

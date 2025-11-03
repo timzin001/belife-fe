@@ -56,7 +56,6 @@
     "ratio_of_logo_is_not_1x1": "Ratio of logo is not 1x1",
     "ratio_of_avatar_is_not_1x1": "Ratio of avatar is not 1x1",
     "please_choose_logo_of_organization": "Please choose logo of organization",
-    "please_choose_avatar_of_branch": "Please choose avatar of branch",
     "please_choose_avatar": "Please choose avatar",
     "create": "Create",
     "slogan": "Slogan",
@@ -159,5 +158,11 @@
     "agree_to": "Agree to",
     "and": "And",
     "terms_of_service": "Terms of service",
-    "privacy_policy": "Privacy policy"
+    "privacy_policy": "Privacy policy",
+    "about_us": "About us", 
+    "is_a_leading_provider_of_utility_software_for_organizational_management_making_it_easy_to_reach_the_public_and_significantly_boosting_your_business_performance": "is a leading provider of utility software for organizational management, making it easy to reach the public and significantly boosting your business performance.",
+    "focus_on_developing":"focus on developing",
+    "specializing_in_building_management_systems_for_organizations_to_help_optimize_management": "Specializing in building management systems for organizations, to help optimize management.",
+    "easily_convey_your_organizations_information_through_our_system": "Easily convey your organization's information through our system.", 
+    "easily_source_quality_human_resources_for_the_organization":"Easily source quality human resources for the organization."
 }

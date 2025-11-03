@@ -56,7 +56,6 @@
     "ratio_of_logo_is_not_1x1": "Tỉ lệ của biểu tượng không phải là 1x1",
     "ratio_of_avatar_is_not_1x1": "Tỉ lệ của ảnh đại diện không phải là 1x1",
     "please_choose_logo_of_organization": "Vui lòng chọn biểu tượng của tổ chức",
-    "please_choose_avatar_of_branch": "Vui lòng chọn ảnh đại diện của chi nhánh",
     "please_choose_avatar": "Vui lòng chọn ảnh đại diện",
     "create": "Tạo",
     "slogan": "Khẩu hiệu",
@@ -159,5 +158,11 @@
     "agree_to": "Đồng ý với",
     "and": "Và",
     "terms_of_service": "Điều khoản dịch vụ",
-    "privacy_policy": "Chính sách và quyền riêng tư"
+    "privacy_policy": "Chính sách và quyền riêng tư", 
+    "about_us": "Về chúng tôi",
+    "is_a_leading_provider_of_utility_software_for_organizational_management_making_it_easy_to_reach_the_public_and_significantly_boosting_your_business_performance": "là một đơn vị tiên phong trong lĩnh vực phát triển phần mềm tiện ích quản lý tổ chức đưa tổ chức của bạn đến với công chúng dễ dàng giúp nâng cao hiệu suất kinh doanh của tổ chức của bạn.",
+    "focus_on_developing":"tập trung phát triển",
+    "specializing_in_building_management_systems_for_organizations_to_help_optimize_management": "Chuyên xây dựng hệ thống quản lý cho tổ chức, giúp quản lý tôi ưu.",
+    "easily_convey_your_organizations_information_through_our_system": "Đưa thông tin tổ chức của bạn thông qua hệ thống của chúng tôi một cách dễ dàng.",
+     "easily_source_quality_human_resources_for_the_organization":"Dễ dàng tìm kiếm nguồn lực nhân sự tốt cho tổ chức."
 }

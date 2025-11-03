@@ -1,29 +1,22 @@
 import type { PhoneNumberType } from '../common/PhoneNumberType'
 
-export interface PricingType {
-  members?: number
-  price?: number
-  textChoose?: string
-  textInfo?: string
-}
-
-export interface CreateOrganizationType {
-  logoOfOrganization?: string
-  logoFileOfOrg?: any
-  widthLogoOfOrganization?: number
-  heightLogoOfOrganization?: number
-  logoOfOrganizationError?: string
-  avatarOfBranch?: string
-  avatarFileOfBranch?: any
-  widthAvatarOfBranch?: number
-  heightAvatarOfBranch?: number
-  avatarOfBranchError?: string
-  nameOfOrg?: string
-  nameOfOrgError?: string
-  sloganOfOrg?: string
-  sloganOfOrganizationError?: string
-  fieldsOfOrg?: string
-  fieldsOfOrganizationError?: string
+export interface CreateOrgType {
+  avatarOfOrg: string
+  avatarFileOfOrg: any
+  widthAvatarOfOrg: number
+  heightAvatarOfOrg: number
+  avatarOfOrgError: string
+  avatarOfBranch: string
+  avatarFileOfBranch: any
+  widthAvatarOfBranch: number
+  heightAvatarOfBranch: number
+  avatarOfBranchError: string
+  nameOfOrg: string
+  nameOfOrgError: string
+  sloganOfOrg: string
+  sloganOfOrgError: string
+  fieldsOfOrg: string
+  fieldsOfOrgError?: string
   descriptionOfOrg?: string
   descriptionOfBranch?: string
   nameOfBranch?: string
@@ -45,4 +38,7 @@ export interface CreateOrganizationType {
   minFractionDigits: number
   org: any
   agree: boolean
+  nameAbortController: AbortController | null
+
+  // const controller = new AbortController();
 }

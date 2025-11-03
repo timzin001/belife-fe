@@ -30,19 +30,19 @@
                   class="p-button-outlined h-[30px]"
                 />
                 <img
-                  v-if="instance.logoOfOrganization"
-                  :src="instance.logoOfOrganization"
+                  v-if="instance.avatarOfOrg"
+                  :src="instance.avatarOfOrg"
                   alt="Image"
                   class="image"
                 />
               </div>
               <div class="avatar-des">{{ $t('avatar_with_1_1_ratio') }}</div>
               <Message
-                v-if="instance.logoOfOrganizationError"
+                v-if="instance.avatarOfOrgError"
                 severity="error"
                 size="small"
                 variant="simple"
-                >{{ instance.logoOfOrganizationError }}</Message
+                >{{ instance.avatarOfOrgError }}</Message
               >
             </div>
             <div class="mt-[10px]">
@@ -92,11 +92,11 @@
                 />
               </div>
               <Message
-                v-if="instance.sloganOfOrganizationError"
+                v-if="instance.sloganOfOrgError"
                 severity="error"
                 size="small"
                 variant="simple"
-                >{{ instance.sloganOfOrganizationError }}</Message
+                >{{ instance.sloganOfOrgError }}</Message
               >
             </div>
             <div class="mt-[10px]">
@@ -119,11 +119,11 @@
                 />
               </div>
               <Message
-                v-if="instance.fieldsOfOrganizationError"
+                v-if="instance.fieldsOfOrgError"
                 severity="error"
                 size="small"
                 variant="simple"
-                >{{ instance.fieldsOfOrganizationError }}</Message
+                >{{ instance.fieldsOfOrgError }}</Message
               >
             </div>
             <div class="mt-[10px]">
@@ -269,7 +269,7 @@
                 <label class="label" for="branch-phone-number"
                   >{{ $t('phone_number') }}<span>*</span></label
                 >
-                <Select
+                <!-- <Select
                   v-model="instance.dialCode"
                   :options="instance.countries"
                   optionLabel="name"
@@ -314,6 +314,61 @@
                   class="h-[30px] flex-1"
                   autocomplete="off"
                   id="branch-phone-number"
+                  @value-change="changePhoneNumberOfBranch"
+                  @blur="changePhoneNumberOfBranch"
+                  v-model="instance.phoneNumberOfBranch"
+                  :mask="instance.phoneNumberOfBranchPattern"
+                  :placeholder="instance.phoneNumberOBranchPlaceHolder"
+                  fluid
+                />
+              </div> -->
+
+                <Select
+                  v-model="instance.dialCode"
+                  :options="instance.countries"
+                  optionLabel="name"
+                  :autoOptionFocus="true"
+                  @change="changeDialCode"
+                  class="w-[110px] h-[30px] mr-[5px]"
+                >
+                  <template #value="slotProps">
+                    <div
+                      v-if="slotProps.value"
+                      class="flex items-center justify-center h-[100%] pl-[10px]"
+                    >
+                      <img
+                        :alt="slotProps.value.code"
+                        :src="slotProps.value.icon"
+                        style="width: 18px"
+                      />
+                      <div class="text-[14px] ml-[5px]">
+                        {{ slotProps.value.code }}
+                      </div>
+                    </div>
+                    <span v-else>
+                      {{ slotProps.placeholder }}
+                    </span>
+                  </template>
+                  <template #option="slotProps">
+                    <div
+                      class="flex items-center justify-center pl-[10px] h-[30px]"
+                    >
+                      <img
+                        :alt="slotProps.option.code"
+                        :src="slotProps.option.icon"
+                        style="width: 18px"
+                      />
+                      <div class="text-[14px] ml-[5px]">
+                        {{ slotProps.option.code }}
+                      </div>
+                    </div>
+                  </template>
+                </Select>
+                <InputMask
+                  class="h-[30px] flex-1"
+                  autocomplete="off"
+                  id="branch-phone-number"
+                  ref="inputMaskRef"
                   @value-change="changePhoneNumberOfBranch"
                   @blur="changePhoneNumberOfBranch"
                   v-model="instance.phoneNumberOfBranch"
@@ -375,35 +430,36 @@
             </div>
           </div>
         </div>
-        <div class="w-full line h-[1px] mb-[20px]"></div>
-        <div class="w-full flex items-center justify-center">
-          <div class="flex items-center gap-2">
+        <div class="line2 h-[1px] mb-[20px]"></div>
+        <div class="flex items-center justify-center term-group">
+          <div class="flex items-start gap-2">
             <Checkbox
               v-model="instance.agree"
               inputId="ingredient1"
               name="pizza"
               value="Cheese"
+              class="mt-[4px]"
             />
             <label for="ingredient1">
-              Vui lòng đồng ý với
+              {{ $t('agree_to') }}
               <Button
-                :label="$t('điều khoản dịch vụ')"
+                :label="$t('terms_of_service')"
                 variant="link"
                 @click="clickMoveToTerm()"
-                class="h-[30px] link"
+                class="link"
               />
-              và
+              {{ $t('and').toLocaleLowerCase() }}
               <Button
-                :label="$t('chính sách quyền riêng tư')"
+                :label="$t('privacy_policy')"
                 variant="link"
                 @click="clickMoveToPrivacy()"
-                class="h-[30px] link"
+                class="link"
               />
             </label>
           </div>
         </div>
         <div
-          class="w-full flex items-center justify-center mb-[20px] mt-[20px]"
+          class="w-full flex items-center justify-center mb-[20px] mt-[20px] ml-[20px] mr-[20px]"
         >
           <Button :label="$t('start_now')" class="register" @click="clickSave">
             <template #icon> <img :src="Add" class="w-[18px] icon" /> </template
@@ -411,31 +467,46 @@
         </div>
       </div>
 
-      <div class="w-full mt-[30px] about-group">
+      <div class="w-full about-group">
         <div
           class="text-[20px] font-[700] ml-[0px] mb-[20px] w-full flex items-center justify-center"
         >
-          Giới thiêu về chúng tôi
+          {{ $t('about_us') }}
         </div>
-        <div class="w-full line h-[1px] mb-[20px]"></div>
+        <div class="line3 h-[1px] mb-[20px]"></div>
         <div class="contain">
           <div>
-            <strong>IIBelife</strong> là một đơn vị tiên phong trong lĩnh vực
-            phát triển phần mềm tiện ích quản lý tổ chức/doanh nghiệp đưa tổ
-            chức/doanh nghiệp của bạn đến với công chúng dễ dàng giúp nâng cao
-            hiệu suất kinh doanh của tổ chức/doanh nghiệp của bạn.
+            <strong>IIBelife</strong>
+            {{
+              $t(
+                'is_a_leading_provider_of_utility_software_for_organizational_management_making_it_easy_to_reach_the_public_and_significantly_boosting_your_business_performance'
+              )
+            }}
           </div>
           <div class="mt-[5px]">
-            <strong>IIBelife</strong> tập trung vào các mảng kinh doanh cốt lõi
-            sau:
+            <strong>IIBelife</strong> {{ $t('focus_on_developing') }}
           </div>
           <div>
-            - Chuyên xây dựng các hệ thống quản lý tùy chỉnh tổ chức/doanh
-            nghiệp, giúp tự động hóa quy trình và tối ưu hóa vận hành
+            -
+            {{
+              $t(
+                'specializing_in_building_management_systems_for_organizations_to_help_optimize_management'
+              )
+            }}
           </div>
           <div>
-            - Đưa thông tin tổ chức/doanh nghiệp của bạn thông qua hệ thống một
-            cách dễ dàng.
+            -
+            {{
+              $t(
+                'easily_convey_your_organizations_information_through_our_system'
+              )
+            }}
+          </div>
+          <div>
+            -
+            {{
+              $t('easily_source_quality_human_resources_for_the_organization')
+            }}
           </div>
         </div>
       </div>
@@ -445,12 +516,12 @@
 <script setup lang="ts">
 /// Import
 import { ref } from 'vue'
-import type { CreateOrganizationType } from '~/types/org/CreateOrganizationType'
+import type { CreateOrgType } from '~/types/org/CreateOrgType'
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import Add from '~/assets/icons/add.svg'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
-import { CreateOrganizationValidate } from '~/validate/org/CreateOrgValidate'
+import { CreateOrgValidate } from '~/validate/org/CreateOrgValidate'
 import { GlobalStore } from '~/store/Global'
 import { useToast } from 'primevue/usetoast'
 /// Define
@@ -458,8 +529,8 @@ const store = GlobalStore()
 const toast = useToast()
 
 const { t } = useI18n()
-const instance = ref(<CreateOrganizationType>{
-  logoOfOrganization: DefaultAvatar,
+const instance = ref(<CreateOrgType>{
+  avatarOfOrg: DefaultAvatar,
   avatarOfBranch: DefaultAvatar,
   phoneNumberOfBranchPattern: '999-999-999',
   // +65 XXXX XXXX
@@ -478,6 +549,7 @@ const instance = ref(<CreateOrganizationType>{
       icon: SingaporeFlag,
     },
   ],
+  // nameAbortController: new AbortController(),
 })
 /// Function
 
@@ -493,62 +565,62 @@ const clickMoveToPrivacy = async () => {
 }
 /// Change name of org
 const changeNameOfOrg = async (evt: any) => {
-  CreateOrganizationValidate.nameOfOrg(instance, t)
+  CreateOrgValidate.nameOfOrg(instance, t, toast)
 }
 /// Change name of org
 const changeSloganOfOrg = async (evt: any) => {
-  CreateOrganizationValidate.sloganOfOrg(instance, t)
+  CreateOrgValidate.sloganOfOrg(instance, t)
 }
 
 /// Change size of org
 const changeSizeOfOrg = async (evt: any) => {
-  CreateOrganizationValidate.sizeOfOrg(instance, t)
+  CreateOrgValidate.sizeOfOrg(instance, t)
 }
 
 /// Chnage fields of org
 const changeFieldsOfOrg = async (evt: any) => {
-  CreateOrganizationValidate.fieldsOfOrg(instance, t)
+  CreateOrgValidate.fieldsOfOrg(instance, t)
 }
 /// Change name of branch
 const changeNameOfBranch = async (evt: any) => {
-  CreateOrganizationValidate.nameOfBranch(instance, t)
+  CreateOrgValidate.nameOfBranch(instance, t)
 }
 /// Change email of branch
 const changeEmailOfBranch = async (evt: any) => {
-  CreateOrganizationValidate.emailOfBranch(instance, t)
+  CreateOrgValidate.emailOfBranch(instance, t)
 }
 
 /// Change address of branch
 const changeAddressOfBranch = async (evt: any) => {
-  CreateOrganizationValidate.addressOfBranch(instance, t)
+  CreateOrgValidate.addressOfBranch(instance, t)
 }
 
 /// Change phone number of branch
 const changePhoneNumberOfBranch = async (evt: any) => {
   // validatePhoneNumberWithExist(instance, t, abortController)
-  CreateOrganizationValidate.phoneNumberOfBranch(instance, t)
+  CreateOrgValidate.phoneNumberOfBranch(instance, t)
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
-  CreateOrganizationValidate.changeDialCode(evt, instance)
+  CreateOrgValidate.changeDialCode(evt, instance)
 }
 /// Select logo
 const onFileSelectOrganization = (event: any) => {
   const file = event.files[0]
   const reader = new FileReader()
-  instance.value.logoFileOfOrg = file
+  instance.value.avatarFileOfOrg = file
   reader.onload = async (e) => {
     //Initiate the JavaScript Image object.
     let image = new Image()
     //Set the Base64 string return from FileReader as source.
     image.src = `${e.target?.result ?? ''}`
-    instance.value.logoOfOrganization = `${e.target?.result ?? ''}`
+    instance.value.avatarOfOrg = `${e.target?.result ?? ''}`
     image.onload = async () => {
       const height = image.height
       const width = image.width
-      instance.value.widthLogoOfOrganization = width
-      instance.value.heightLogoOfOrganization = height
-      CreateOrganizationValidate.logoOfOrganization(instance, t)
+      instance.value.widthAvatarOfOrg = width
+      instance.value.heightAvatarOfOrg = height
+      CreateOrgValidate.avatarOfOrg(instance, t)
     }
   }
   reader.readAsDataURL(file)
@@ -569,7 +641,7 @@ const onFileSelectBranch = (event: any) => {
       const width = image.width
       instance.value.widthAvatarOfBranch = width
       instance.value.heightAvatarOfBranch = height
-      CreateOrganizationValidate.avatarOfBranch(instance, t)
+      CreateOrgValidate.avatarOfBranch(instance, t)
     }
   }
   reader.readAsDataURL(file)
@@ -592,7 +664,7 @@ const callAPICreateOrg = async (): Promise<boolean> => {
   const descriptionOfBranch = instance.value.descriptionOfBranch ?? ''
 
   const formData = new FormData()
-  formData.append('files', instance.value.logoFileOfOrg)
+  formData.append('files', instance.value.avatarFileOfOrg)
   formData.append('files', instance.value.avatarFileOfBranch)
   formData.append('nameOfOrg', nameOfOrg)
   formData.append('sloganOfOrg', sloganOfOrg)
@@ -625,7 +697,7 @@ const callAPICreateOrg = async (): Promise<boolean> => {
   const result: any = data.value
   instance.value.org = result.data.org
   /// Save auth
-  store.setOrgAuth(result.data.auth)
+  // store.setOrgAuth(result.data.auth)
   return true
 }
 
@@ -652,7 +724,7 @@ const callAPIOrgsOfUser = async () => {
 
 /// Create save org
 const clickSave = async (evt: any) => {
-  const validate = await CreateOrganizationValidate.validateAll(instance, t)
+  const validate = await CreateOrgValidate.validateAll(instance, t, toast)
   if (!validate) {
     return
   }
@@ -665,7 +737,7 @@ const clickSave = async (evt: any) => {
   const orgs = await callAPIOrgsOfUser()
 
   /// Set org to store
-  store.setListOrgs(orgs)
+  // store.setListOrgs(orgs)
   /// Move to information of org
   /// Go to information of org
   await navigateTo({
