@@ -144,7 +144,7 @@ definePageMeta({
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
-import type { SignInData } from '~/types/account/SignInType'
+import type { SignInType } from '~/types/account/SignInType'
 import { SignInValidate } from '~/validate/account/SignInValidate'
 import { GlobalStore } from '~/store/Global'
 const store = GlobalStore()
@@ -153,7 +153,7 @@ const store = GlobalStore()
 const { $auth } = useNuxtApp()
 const toast = useToast()
 const { t } = useI18n()
-const instance = ref(<SignInData>{
+const instance = ref(<SignInType>{
   phoneNumberPattern: '999-999-999',
   // +65 XXXX XXXX
   phoneNumberPlaceHolder: '123-345-789',
@@ -178,7 +178,7 @@ const instance = ref(<SignInData>{
 /// Click sign in
 const clickSignIn = async () => {
   console.log('clickSignIn')
-  const validate = await SignInValidate.validateAll(instance, toast, t)
+  const validate = await SignInValidate.allValidate(instance, t, toast)
   if (!validate) {
     return
   }
@@ -230,15 +230,6 @@ const clickMoveToSignUp = async () => {
   await navigateTo({ path: PathAccount.SIGN_UP })
 }
 
-/// Enter on  group
-const enterSignIn = (evt: any) => {
-  let key = `${evt.key}`.toLowerCase()
-  if (key != 'enter') {
-    return
-  }
-  clickSignIn()
-}
-
 /// Enter on phone number
 const enterPhoneNumber = (evt: any) => {
   let key = `${evt.key}`.toLowerCase()
@@ -249,7 +240,7 @@ const enterPhoneNumber = (evt: any) => {
 }
 /// Change phone number
 const changePhoneNumber = async (evt: any) => {
-  SignInValidate.phoneNumber(instance, toast, t)
+  SignInValidate.phoneNumber(instance, t, toast)
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
@@ -257,7 +248,7 @@ const changeDialCode = async (evt: any) => {
 }
 /// Change password
 const changePassword = async (evt: any) => {
-  SignInValidate.password(instance, toast, t)
+  SignInValidate.password(instance, t, toast)
 }
 
 onMounted(() => {

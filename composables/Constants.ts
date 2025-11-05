@@ -98,11 +98,14 @@ export const APIPathOrg = {
   GET_EXIST_NAME_ORG: 'org/exist-name',
   POST_CREATE_ORG: 'org/post-create',
   POST_SET_LOGO_ORG: 'org/post-set-logo',
+  BRANCH: {
+    GET_EXIST_PHONE_NUMBER_IN_SYSTEM: 'branch/exist-phone-number-in-system',
+    GET_EXIST_EMAIL_IN_SYSTEM: 'branch/exist-email-in-system',
+  },
 }
 export const APIPathBranch = {
   GET_LIST: 'branch/get-list',
-  GET_EXIST_EMAIL: 'branch/get-exist-email',
-  GET_EXIST_NAME: 'branch/get-exist-name',
+  GET_EXIST_EMAIL: 'branch/exist-email',
   GET_EXIST_ADDRESS: 'branch/get-exist-address',
   GET_EXIST_PHONE_NUMBER: 'branch/get-exist-phone-number',
   POST_CREATE: 'branch/post-create',

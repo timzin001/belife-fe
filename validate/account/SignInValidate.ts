@@ -1,10 +1,11 @@
 import type { ToastServiceMethods } from 'primevue'
-
+import { type Ref } from 'vue'
+import type { SignInType } from '~/types/account/SignInType'
 /// Call API validate phone number
-export const validatePhoneNumber = async (
-  instance: any,
-  toast: ToastServiceMethods,
-  t: any
+export const phoneNumber = async (
+  instance: Ref<SignInType>,
+  t: any,
+  toast: ToastServiceMethods
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
@@ -20,11 +21,16 @@ export const validatePhoneNumber = async (
   if (pattern.length !== value.length) {
     return
   }
-
   const phoneNumber = `${instance.value.dialCode.code}${value}`
+  if (instance.value.phoneNumberAbort) {
+    instance.value.phoneNumberAbort.abort(APIStatus.ABORT_API)
+  }
+  instance.value.phoneNumberAbort = new AbortController()
+  const signal = instance.value.phoneNumberAbort.signal
 
   const options: any = {
     method: 'get',
+    signal: signal,
     query: {
       phoneNumber: phoneNumber,
     },
@@ -36,10 +42,13 @@ export const validatePhoneNumber = async (
     t,
     false
   )
+  instance.value.phoneNumberAbort = null
   if (status.value !== APIStatus.SUCCESS) {
     const strError = error?.value?.message ?? ''
     if (!strError.includes(APIStatus.ABORT_API)) {
-      instance.value.phoneNumberError = t('phone_number_is_not_exsit_in_system')
+      instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
+        name: t('phone_number'),
+      })
       return
     }
     /// Abort
@@ -48,14 +57,16 @@ export const validatePhoneNumber = async (
   const valueCont: any = data.value
   const result: any = valueCont.data
   if (!result) {
-    instance.value.phoneNumberError = t('phone_number_is_not_exsit_in_system')
-    return
+    instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
+      name: t('phone_number'),
+    })
+  } else {
+    instance.value.phoneNumberError = ''
   }
-  instance.value.phoneNumberError = ''
 }
 
 /// Validate password
-const validatePassword = async (instance: any, toast: any, t: any) => {
+const password = async (instance: Ref<SignInType>, t: any, toast: any) => {
   if (!instance.value.password) {
     instance.value.passwordError = t('please_enter_name', {
       name: t('password').toLocaleLowerCase(),
@@ -98,9 +109,15 @@ const validatePassword = async (instance: any, toast: any, t: any) => {
   ).replaceAll('-', '')}`
   console.log('4')
   const password = instance.value.password
+  if (instance.value.passwordAbort) {
+    instance.value.passwordAbort.abort(APIStatus.ABORT_API)
+  }
+  instance.value.passwordAbort = new AbortController()
+  const signal = instance.value.passwordAbort.signal
   /// Check user exist
   const options: any = {
     method: 'get',
+    signal: signal,
     query: {
       phoneNumber: phoneNumber,
       password: password,
@@ -113,6 +130,7 @@ const validatePassword = async (instance: any, toast: any, t: any) => {
     t,
     false
   )
+  instance.value.passwordAbort = null
   if (status.value !== APIStatus.SUCCESS) {
     const strError = error?.value?.message ?? ''
     if (!strError.includes(APIStatus.ABORT_API)) {
@@ -130,12 +148,12 @@ const validatePassword = async (instance: any, toast: any, t: any) => {
     instance.value.passwordError = t('name_is_not_correct', {
       name: t('password'),
     })
-    return
+  } else {
+    instance.value.passwordError = ''
   }
-  instance.value.passwordError = ''
 }
 /// Change dial code
-const changeDialCode = async (evt: any, instance: any) => {
+const changeDialCode = async (evt: any, instance: Ref<SignInType>) => {
   if (evt.value.code === '(+84)') {
     /// change pattern
     instance.value.phoneNumberPattern = '999-999-999'
@@ -149,16 +167,14 @@ const changeDialCode = async (evt: any, instance: any) => {
   instance.value.phoneNumber = ''
 }
 
-const validateAll = async (
-  instance: any,
-  toast: ToastServiceMethods,
+const allValidate = async (
+  instance: Ref<SignInType>,
   t: any,
-  phoneNumberController?: any,
-  passwordController?: any
+  toast: ToastServiceMethods
 ) => {
   const validate = await Promise.all([
-    SignInValidate.phoneNumber(instance, toast, t),
-    SignInValidate.password(instance, toast, t),
+    SignInValidate.phoneNumber(instance, t, toast),
+    SignInValidate.password(instance, t, toast),
   ])
   if (instance.value.phoneNumberError || instance.value.passwordError) {
     return false
@@ -167,8 +183,8 @@ const validateAll = async (
 }
 
 export const SignInValidate = {
-  phoneNumber: validatePhoneNumber,
-  password: validatePassword,
+  phoneNumber: phoneNumber,
+  password: password,
   changeDialCode: changeDialCode,
-  validateAll: validateAll,
+  allValidate: allValidate,
 }

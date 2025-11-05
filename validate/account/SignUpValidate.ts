@@ -2,7 +2,7 @@ import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
 import type { SignUpType } from '~/types/account/SignUpType'
 /// Call API validate phone number
-const validatePhoneNumber = async (
+const phoneNumber = async (
   instance: Ref<SignUpType>,
   t: any,
   toast: ToastServiceMethods
@@ -29,9 +29,14 @@ const validatePhoneNumber = async (
   }
 
   const phoneNumber = `${instance.value.dialCode.code}${value}`
-
+  if (instance.value.phoneNumberAbort) {
+    instance.value.phoneNumberAbort.abort(APIStatus.ABORT_API)
+  }
+  instance.value.phoneNumberAbort = new AbortController()
+  const signal = instance.value.phoneNumberAbort.signal
   const options: any = {
     method: 'get',
+    signal: signal,
     query: {
       phoneNumber: phoneNumber,
     },
@@ -43,6 +48,7 @@ const validatePhoneNumber = async (
     t,
     false
   )
+  instance.value.phoneNumberAbort = null
   if (status.value !== APIStatus.SUCCESS) {
     const strError = error?.value?.message ?? ''
     if (!strError.includes(APIStatus.ABORT_API)) {
@@ -62,7 +68,7 @@ const validatePhoneNumber = async (
 }
 
 /// Validate password
-const validatePassword = (instance: Ref<SignUpType>, t: any) => {
+const password = (instance: Ref<SignUpType>, t: any) => {
   if (!instance.value.password) {
     instance.value.passwordError = t('please_enter_name', {
       name: t('password').toLocaleLowerCase(),
@@ -195,8 +201,8 @@ const validateAll = (
 }
 
 export const SignUpValidate = {
-  phoneNumber: validatePhoneNumber,
-  password: validatePassword,
+  phoneNumber: phoneNumber,
+  password: password,
   fullName: validateFullName,
   dateOfBirth: validateDateOfBirth,
   changeDialCode: changeDialCode,

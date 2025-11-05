@@ -20,7 +20,6 @@
     "email": "Email",
     "hotline": "Hotline",
     "phone_number_is_exsit_in_system": "Số điện thoại đã tồn tại trong hệ thống",
-    "phone_number_is_not_exsit_in_system": "Số điện thoại không tồn tại trong hệ thống",
     "password_must_have_a_lowercase_letter": "Mật khẩu phải có chữ thường",
     "password_must_have_a_uppercase_letter": "Mật khẩu phải có chữ in hoa",
     "password_must_have_a_number": "Mật khẩu phải có số",

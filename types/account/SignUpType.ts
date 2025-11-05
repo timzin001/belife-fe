@@ -21,4 +21,5 @@ export interface SignUpType {
   countries: Array<PhoneNumberType>
   termsPrivacy: any
   termsPrivacyError: string
+  phoneNumberAbort: AbortController | null
 }

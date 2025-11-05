@@ -26,7 +26,7 @@ export interface CreateOrgType {
   addressOfBranch: string
   addressOfBranchError: string
   sizeOfOrg: number
-  sizeOfOrganizationError: string
+  sizeOfOrgError: string
   phoneNumberOfBranch: string
   phoneNumberOfBranchPattern: string
   phoneNumberOBranchPlaceHolder: string
@@ -38,8 +38,9 @@ export interface CreateOrgType {
   minFractionDigits: number
   org: any
   agree: boolean
-  nameOfOrgAbortController: AbortController | null
-  phoneNumberOfBranchAbortController: AbortController | null
+  nameOfOrgAbort: AbortController | null
+  phoneNumberOfBranchAbort: AbortController | null
+  emailOfBranchAbort: AbortController | null
 
   // const controller = new AbortController();
 }

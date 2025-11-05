@@ -150,11 +150,11 @@
                 />
               </div>
               <Message
-                v-if="instance.sizeOfOrganizationError"
+                v-if="instance.sizeOfOrgError"
                 severity="error"
                 size="small"
                 variant="simple"
-                >{{ instance.sizeOfOrganizationError }}</Message
+                >{{ instance.sizeOfOrgError }}</Message
               >
             </div>
 
@@ -587,7 +587,7 @@ const changeNameOfBranch = async (evt: any) => {
 }
 /// Change email of branch
 const changeEmailOfBranch = async (evt: any) => {
-  CreateOrgValidate.emailOfBranch(instance, t)
+  CreateOrgValidate.emailOfBranch(instance, t, toast)
 }
 
 /// Change address of branch
@@ -724,7 +724,7 @@ const callAPIOrgsOfUser = async () => {
 
 /// Create save org
 const clickSave = async (evt: any) => {
-  const validate = await CreateOrgValidate.validateAll(instance, t, toast)
+  const validate = await CreateOrgValidate.allValidate(instance, t, toast)
   if (!validate) {
     return
   }
