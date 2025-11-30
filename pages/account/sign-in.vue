@@ -148,6 +148,7 @@ import type { SignInType } from '~/types/account/SignInType'
 import { SignInValidate } from '~/validate/account/SignInValidate'
 import { GlobalStore } from '~/store/Global'
 const store = GlobalStore()
+const { $accountAPI } = useNuxtApp()
 
 /// Define
 const { $auth } = useNuxtApp()
@@ -177,8 +178,7 @@ const instance = ref(<SignInType>{
 
 /// Click sign in
 const clickSignIn = async () => {
-  console.log('clickSignIn')
-  const validate = await SignInValidate.allValidate(instance, t, toast)
+  const validate = await SignInValidate.all(instance, t)
   if (!validate) {
     return
   }
@@ -189,38 +189,24 @@ const clickSignIn = async () => {
   const password = instance.value.password
 
   const options: any = {
-    method: Method.POST,
+    method: MethodCons.POST,
     body: {
       phoneNumber: phoneNumber,
       password: password,
     },
   }
-  const { data, error, status } = await CallAPI(
-    APIPathAccount.POST_SIGN_IN,
-    options,
-    toast,
-    t,
-    false
-  )
+  const response: any = await $accountAPI(APIAccountAuthCons.SIGN_IN, options)
+  console.log(response)
+  console.log(response.data)
+  const data = response.data
 
-  /// Check error
-  if (status.value !== APIStatusCons.SUCCESS) {
-    toast.add({
-      severity: ToastCons.ERROR,
-      summary: t('error'),
-      detail: getErrorMessages(error, t),
-      life: ToastCons.DURATION,
-    })
-    return
-  }
-  const result: any = data.value
-  console.log(result)
-
-  /// Save user
-  store.setAccount(result.data)
+  /// Save access token
+  store.setAccessTokenUser(data.accessToken)
+  store.setRefreshTokenUser(data.refreshToken)
+  store.setUser(data.user)
 
   await navigateTo({
-    path: PathCons.HOME,
+    path: PathSocialHomeCons.HOME,
     replace: true,
   })
 }
@@ -240,7 +226,7 @@ const enterPhoneNumber = (evt: any) => {
 }
 /// Change phone number
 const changePhoneNumber = async (evt: any) => {
-  SignInValidate.phoneNumber(instance, t, toast)
+  SignInValidate.phoneNumber(instance, t)
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
@@ -248,8 +234,26 @@ const changeDialCode = async (evt: any) => {
 }
 /// Change password
 const changePassword = async (evt: any) => {
-  SignInValidate.password(instance, t, toast)
+  SignInValidate.password(instance, t)
 }
+
+const transitionError = () => {
+  if (instance.value.phoneNumberError) {
+    SignInValidate.phoneNumber(instance, t)
+  }
+  if (instance.value.passwordError) {
+    SignInValidate.password(instance, t)
+  }
+}
+watch(
+  () => store.getLanguage(),
+  (value) => {
+    /// Set language
+    setTimeout(() => {
+      transitionError()
+    }, 100)
+  }
+)
 
 onMounted(() => {
   $auth()

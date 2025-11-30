@@ -2,11 +2,7 @@ import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
 import type { SignInType } from '~/types/account/SignInType'
 /// Call API validate phone number
-export const phoneNumber = async (
-  instance: Ref<SignInType>,
-  t: any,
-  toast: ToastServiceMethods
-) => {
+export const phoneNumber = async (instance: Ref<SignInType>, t: any) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
   value = value.replaceAll('-', '')
@@ -21,59 +17,18 @@ export const phoneNumber = async (
   if (pattern.length !== value.length) {
     return
   }
-  const phoneNumber = `${instance.value.dialCode.code}${value}`
-  if (instance.value.phoneNumberAbort) {
-    instance.value.phoneNumberAbort.abort(APIStatusCons.ABORT_API)
-  }
-  instance.value.phoneNumberAbort = new AbortController()
-  const signal = instance.value.phoneNumberAbort.signal
-
-  const options: any = {
-    method: 'get',
-    signal: signal,
-    query: {
-      phoneNumber: phoneNumber,
-    },
-  }
-
-  // const { data, error, status } = await CallAPI(
-  //   APIAccountUser.GET_EXIST_PHONE_NUMBER,
-  //   options,
-  //   toast,
-  //   t,
-  //   BETYPE.ACCOUNT
-  // )
-  // instance.value.phoneNumberAbort = null
-  // if (status.value !== APIStatusCons.SUCCESS) {
-  //   const strError = error?.value?.message ?? ''
-  //   if (!strError.includes(APIStatusCons.ABORT_API)) {
-  //     instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
-  //       name: t('phone_number'),
-  //     })
-  //     return
-  //   }
-  //   /// Abort
-  //   return
-  // }
-  // const valueCont: any = data.value
-  // const result: any = valueCont.data
-  // if (!result) {
-  //   instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
-  //     name: t('phone_number'),
-  //   })
-  // } else {
-  //   instance.value.phoneNumberError = ''
-  // }
+  instance.value.phoneNumberError = ''
 }
 
 /// Validate password
-const password = async (instance: Ref<SignInType>, t: any, toast: any) => {
+const password = async (instance: Ref<SignInType>, t: any) => {
   if (!instance.value.password) {
     instance.value.passwordError = t('please_enter_name', {
       name: t('password').toLocaleLowerCase(),
     })
     return
   }
+
   if (instance.value.password.length < 9) {
     instance.value.passwordError = t(
       'name1_must_be_greater_than_name2_characters',
@@ -81,81 +36,41 @@ const password = async (instance: Ref<SignInType>, t: any, toast: any) => {
     )
     return
   }
+
   if (!/[a-z]/.test(instance.value.password)) {
-    instance.value.passwordError = t('password_must_have_a_lowercase_letter')
+    instance.value.passwordError = t(
+      'name_must_contain_at_least_one_lowercase_letter',
+      {
+        name: t('password'),
+      }
+    )
     return
   }
   if (!/[A-Z]/.test(instance.value.password)) {
-    instance.value.passwordError = t('password_must_have_a_uppercase_letter')
+    instance.value.passwordError = t(
+      'name_must_contain_at_least_one_uppercase_letter',
+      {
+        name: t('password'),
+      }
+    )
+
     return
   }
 
   if (!/\d/.test(instance.value.password)) {
-    instance.value.passwordError = t('password_must_have_a_number')
+    instance.value.passwordError = t('name_must_contain_at_least_one_number', {
+      name: t('password'),
+    })
     return
   }
-  if (!instance.value.phoneNumber || instance.value.phoneNumberError) {
-    instance.value.passwordError = ''
+  if (!/[^a-zA-Z0-9\s]/.test(instance.value.password)) {
+    instance.value.passwordError = t(
+      'name_must_contain_at_least_one_special_character',
+      { name: t('password') }
+    )
     return
   }
-  if (
-    instance.value.passwordError !=
-    t('name_is_not_correct', { name: t('password') })
-  ) {
-    instance.value.passwordError = ''
-  }
-  /// Get data
-  const phoneNumber = `${instance.value.dialCode?.code ?? ''}${(
-    instance.value.phoneNumber ?? ''
-  ).replaceAll('-', '')}`
-  console.log('4')
-  const password = instance.value.password
-  if (instance.value.passwordAbort) {
-    instance.value.passwordAbort.abort(APIStatusCons.ABORT_API)
-  }
-  instance.value.passwordAbort = new AbortController()
-  const signal = instance.value.passwordAbort.signal
-  /// Check user exist
-  const options: any = {
-    method: 'get',
-    signal: signal,
-    query: {
-      phoneNumber: phoneNumber,
-      password: password,
-    },
-  }
-
-  // const response = await $userApiFetch('/create-user', customOptions)
-  // console.log('API Response:', response)
-
-  // const { data, error, status } = await CallAPI(
-  //   APIPathAccount.GET_EXIST_ACCOUNT,
-  //   options,
-  //   toast,
-  //   t,
-  //   false
-  // )
-  // instance.value.passwordAbort = null
-  // if (status.value !== APIStatusCons.SUCCESS) {
-  //   const strError = error?.value?.message ?? ''
-  //   if (!strError.includes(APIStatusCons.ABORT_API)) {
-  //     instance.value.passwordError = t('name_is_not_correct', {
-  //       name: t('password'),
-  //     })
-  //     return
-  //   }
-  //   /// Abort
-  //   return
-  // }
-  // const valueCont: any = data.value
-  // const result: any = valueCont.data
-  // if (!result) {
-  //   instance.value.passwordError = t('name_is_not_correct', {
-  //     name: t('password'),
-  //   })
-  // } else {
-  //   instance.value.passwordError = ''
-  // }
+  instance.value.passwordError = ''
 }
 /// Change dial code
 const changeDialCode = async (evt: any, instance: Ref<SignInType>) => {
@@ -172,15 +87,13 @@ const changeDialCode = async (evt: any, instance: Ref<SignInType>) => {
   instance.value.phoneNumber = ''
 }
 
-const allValidate = async (
-  instance: Ref<SignInType>,
-  t: any,
-  toast: ToastServiceMethods
-) => {
+const allValidate = async (instance: Ref<SignInType>, t: any) => {
   const validate = await Promise.all([
-    SignInValidate.phoneNumber(instance, t, toast),
-    SignInValidate.password(instance, t, toast),
+    SignInValidate.phoneNumber(instance, t),
+    SignInValidate.password(instance, t),
   ])
+  console.log(instance.value.phoneNumberError)
+  console.log(instance.value.passwordError)
   if (instance.value.phoneNumberError || instance.value.passwordError) {
     return false
   }
@@ -191,5 +104,5 @@ export const SignInValidate = {
   phoneNumber: phoneNumber,
   password: password,
   changeDialCode: changeDialCode,
-  allValidate: allValidate,
+  all: allValidate,
 }

@@ -14,12 +14,6 @@ const phoneNumber = async (
   let pattern = instance.value.phoneNumberPattern.replaceAll('-', '')
 
   if (!value) {
-    console.log('validatePhoneNumber')
-    console.log(
-      t('please_enter_name', {
-        name: t('phone_number').toLocaleLowerCase(),
-      })
-    )
     instance.value.phoneNumberError = t('please_enter_name', {
       name: t('phone_number').toLocaleLowerCase(),
     })
@@ -36,7 +30,7 @@ const phoneNumber = async (
   instance.value.phoneNumberAbort = new AbortController()
   const signal = instance.value.phoneNumberAbort.signal
   const options: any = {
-    method: 'get',
+    method: MethodCons.GET,
     signal: signal,
     query: {
       phoneNumber: phoneNumber,

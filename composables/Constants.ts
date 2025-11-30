@@ -76,8 +76,11 @@ export const APIStatusCons = {
   UNAUTHORIZED: 401,
 }
 
+/// BACKEND
+
 export const APIAccountAuthCons = {
-  POST_SIGN_UP: 'auth/sign-up',
+  SIGN_UP: 'auth/sign-up',
+  SIGN_IN: 'auth/sign-in',
 }
 export const APIAccountUserCons = {
   GET_EXIST_PHONE_NUMBER: 'user/exist-phone-number',

@@ -285,7 +285,6 @@ import { SignUpValidate } from '~/validate/account/SignUpValidate'
 import { GlobalStore } from '~/store/Global'
 
 const store = GlobalStore()
-const primevue = usePrimeVue()
 const { $accountAPI } = useNuxtApp()
 
 /// Define
@@ -315,7 +314,12 @@ const instance = ref(<SignUpType>{
 /// Function
 const clickSignUp = async () => {
   /// Validate all
-  const validate = SignUpValidate.all(instance, t, $accountAPI, abortController)
+  const validate = await SignUpValidate.all(
+    instance,
+    t,
+    $accountAPI,
+    abortController
+  )
   if (!validate) {
     return
   }
@@ -339,10 +343,7 @@ const clickSignUp = async () => {
       gender: gender,
     },
   }
-  const response: any = await $accountAPI(
-    APIAccountAuthCons.POST_SIGN_UP,
-    options
-  )
+  const response: any = await $accountAPI(APIAccountAuthCons.SIGN_UP, options)
   console.log(response)
   console.log(response.data)
   const data = response.data
@@ -410,7 +411,7 @@ const clickMoveToPrivacy = async () => {
 }
 const transitionError = () => {
   if (instance.value.phoneNumberError) {
-    SignUpValidate.phoneNumber(instance, t, toast)
+    SignUpValidate.phoneNumber(instance, t, $accountAPI)
   }
   if (instance.value.passwordError) {
     SignUpValidate.password(instance, t)
