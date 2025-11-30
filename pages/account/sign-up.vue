@@ -352,13 +352,13 @@ const clickSignUp = async () => {
   store.setRefreshTokenUser(data.refreshToken)
   store.setUser(data.user)
 
-  // await navigateTo({
-  //   path: PathCons.HOME,
-  //   replace: true,
-  // })
+  await navigateTo({
+    path: PathSocialHomeCons.HOME,
+    replace: true,
+  })
 }
 const clickMoveToSignIn = async () => {
-  await navigateTo({ path: PathAccountCons.SIGN_IN })
+  await navigateTo({ path: PathAccountSignInCons.SIGN_IN })
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {

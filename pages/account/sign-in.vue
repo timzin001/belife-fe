@@ -227,7 +227,7 @@ const clickSignIn = async () => {
 
 /// Move to sign up
 const clickMoveToSignUp = async () => {
-  await navigateTo({ path: PathAccountCons.SIGN_UP })
+  await navigateTo({ path: PathAccountSignUpCons.SIGN_UP })
 }
 
 /// Enter on phone number

@@ -146,6 +146,21 @@ export const APIPathCons = {
   POST_MULTIPLE_MEDIA_ORG: 'media/post-multiple-media',
   POST_SET_AVATAR_BRANCH_ORG: 'branch/post-set-avatar',
 }
+
+/// FRONT END
+
+export const PathAccountSignInCons = {
+  SIGN_IN: '/account/sign-in',
+}
+
+export const PathAccountSignUpCons = {
+  SIGN_UP: '/account/sign-up',
+}
+
+export const PathSocialHomeCons = {
+  HOME: '/',
+}
+
 export const PathStaffCons = {
   BRANCHES: '/staff/branches',
   EMPLOYEES: '/staff/employees',
@@ -157,10 +172,6 @@ export const PathStaffCons = {
   CREATE_POSITION: '/staff/create-position',
 }
 
-export const PathAccountCons = {
-  SIGN_IN: '/account/sign-in',
-  SIGN_UP: '/account/sign-up',
-}
 export const PathTermPrivacyCons = {
   TERM: '/term-privacy/term',
   PRIVACY: '/term-privacy/privacy',

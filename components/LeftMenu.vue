@@ -8,16 +8,16 @@
       <img :src="Times" />
     </div>
     <div
-      v-if="instance.account"
+      v-if="instance.user"
       class="personal flex ml-[10px] mr-[10px] items-center justify-start pt-[17px] pb-[17px]"
     >
       <img
-        :src="getAvatarOfAccount()"
+        :src="getAvatarOfUser()"
         alt="Flag"
         class="avatar w-[32px] h-[32px]"
       />
       <div class="text-[16px] font-bold ml-[5px]">
-        {{ getFullNameOfAccount() }}
+        {{ getFullNameOfUser() }}
       </div>
     </div>
     <div class="w-full pl-[10px] pr-[10px]">
@@ -97,30 +97,30 @@ const instance = ref<LeftMenuType>({
   org: store.getOrg(),
   selectOrg: null,
   listOrgs: [],
-  account: store.getAccount(),
+  user: store.getUser(),
 })
 
 /// Function
-const getFullNameOfAccount = () => {
-  const account: any = instance.value.account
-  if (!account || !account.fullName) {
+const getFullNameOfUser = () => {
+  const user: any = instance.value.user
+  if (!user || !user.fullName) {
     return ''
   }
-  return account.fullName[locale.value]
+  return user.fullName[locale.value]
 }
-const getAvatarOfAccount = () => {
-  const account: any = instance.value.account
-  if (!account || !account.avatar || !account.avatar.location) {
+const getAvatarOfUser = () => {
+  const user: any = instance.value.user
+  if (!user || !user.avatar || !user.avatar.location) {
     return DefaultAvarar
   }
-  return account.avatar.location
+  return user.avatar.location
 }
 /// Click sign out
 const clickSignOut = async () => {
   /// Clear
   store.signOut()
   /// Move to login
-  await navigateTo({ path: PathAccountCons.SIGN_IN })
+  await navigateTo({ path: PathAccountSignInCons.SIGN_IN })
 }
 /// Click proifle
 const clickProfile = async () => {
@@ -192,8 +192,7 @@ const changeOrg = async (evt: any) => {
 }
 
 const initMenu = () => {
-  console.log('----initMenu----')
-  console.log(instance.value.account)
+  console.log(instance.value.user)
   console.log(instance.value.org)
   if (instance.value.org) {
     return menuOrganization({
@@ -205,7 +204,7 @@ const initMenu = () => {
       profile: clickProfile,
     })
   }
-  if (instance.value.account) {
+  if (instance.value.user) {
     return menuAccount({
       createOrg: clickCreateOrg,
       recruit: clickRecruit,
@@ -220,7 +219,6 @@ const initMenu = () => {
     inform: clickInform,
     event: clickEvent,
   })
-  console.log(instance.value.account)
 }
 
 const initData = () => {
