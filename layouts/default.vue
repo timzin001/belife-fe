@@ -57,24 +57,24 @@ const { t } = useI18n()
 const clickMenu = () => {
   const className = leftMenu.value.className
 
-  if (className.includes(Layout.SHOW_MENU)) {
-    leftMenu.value.classList.remove(Layout.SHOW_MENU)
-    contain.value.classList.remove(Layout.NO_FULL_CONTAIN)
+  if (className.includes(LayoutCons.SHOW_MENU)) {
+    leftMenu.value.classList.remove(LayoutCons.SHOW_MENU)
+    contain.value.classList.remove(LayoutCons.NO_FULL_CONTAIN)
 
-    leftMenu.value.classList.add(Layout.HIDE_MENU)
-    contain.value.classList.add(Layout.FULL_CONTAIN)
+    leftMenu.value.classList.add(LayoutCons.HIDE_MENU)
+    contain.value.classList.add(LayoutCons.FULL_CONTAIN)
 
-    cover.value.classList.remove(Layout.SHOW_COVER)
-    cover.value.classList.add(Layout.HIDE_COVER)
+    cover.value.classList.remove(LayoutCons.SHOW_COVER)
+    cover.value.classList.add(LayoutCons.HIDE_COVER)
   } else {
-    leftMenu.value.classList.remove(Layout.HIDE_MENU)
-    contain.value.classList.remove(Layout.FULL_CONTAIN)
+    leftMenu.value.classList.remove(LayoutCons.HIDE_MENU)
+    contain.value.classList.remove(LayoutCons.FULL_CONTAIN)
 
-    leftMenu.value.classList.add(Layout.SHOW_MENU)
-    contain.value.classList.add(Layout.NO_FULL_CONTAIN)
+    leftMenu.value.classList.add(LayoutCons.SHOW_MENU)
+    contain.value.classList.add(LayoutCons.NO_FULL_CONTAIN)
 
-    cover.value.classList.remove(Layout.HIDE_COVER)
-    cover.value.classList.add(Layout.SHOW_COVER)
+    cover.value.classList.remove(LayoutCons.HIDE_COVER)
+    cover.value.classList.add(LayoutCons.SHOW_COVER)
   }
 }
 
@@ -110,9 +110,9 @@ onMounted(() => {
   // store.setOrganization('orgas')
   // store.setListOrganizations('lisOr')
 
-  // const user = useCookie('user', CookieStorage.OPTION)
+  // const user = useCookie('user', CookieCons.OPTION)
   // user.value = 'con ga'
-  // const user2 = useCookie(CookieStorage.USER, CookieStorage.OPTION)
+  // const user2 = useCookie(CookieCons.USER, CookieCons.OPTION)
 
   // const counter = useCookie('counter', { default: Number })
   // counter.value = counter.value || Math.round(Math.random() * 1000)

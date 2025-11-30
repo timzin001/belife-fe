@@ -1,17 +1,41 @@
+import { value } from '@primeuix/themes/aura/knob'
+import type { UserType } from '~/types/account/UserType'
+
 export const GlobalStore = defineStore('global', () => {
   const loadEditor = ref(false)
   /// Limit only 4KB (4096 bytes)
-  const account = useCookie(CookieStorage.ACCOUNT, CookieStorage.OPTION)
-  const language = useCookie(CookieStorage.LANGUAGE, CookieStorage.OPTION)
-  const org = useCookie(CookieStorage.ORG, CookieStorage.OPTION)
+  const accessTokenUser = useCookie(
+    CookieCons.ACCESS_TOKEN_USER,
+    CookieCons.OPTION
+  )
+  const refreshTokenUser = useCookie(
+    CookieCons.ACCESS_TOKEN_USER,
+    CookieCons.OPTION
+  )
+  const user = useCookie<UserType>(CookieCons.USER, CookieCons.OPTION)
+  const language = useCookie(CookieCons.LANGUAGE, CookieCons.OPTION)
+  const org = useCookie(CookieCons.ORG, CookieCons.OPTION)
 
-  /// Set account
-  function setAccount(value: any) {
-    account.value = value
+  function setAccessTokenUser(value: string) {
+    accessTokenUser.value = value
   }
-  /// Get account
-  function getAccount() {
-    return account.value
+  function getAccessTokenUser(): string | null {
+    return accessTokenUser.value || null
+  }
+
+  function setUser(value: UserType) {
+    user.value = value
+  }
+
+  function getUser(): UserType | null {
+    return user.value
+  }
+
+  function setRefreshTokenUser(value: string) {
+    refreshTokenUser.value = value
+  }
+  function getRefreshTokenUser(): string | null {
+    return refreshTokenUser.value || null
   }
 
   /// Set org
@@ -47,7 +71,7 @@ export const GlobalStore = defineStore('global', () => {
     // removeItem(LocalStorage.ORGANIZATION)
     /// Not remove language
     // removeItem(LocalStorage.LANGUAGE)
-    account.value = null
+    // account.value = null
     org.value = null
   }
   /// Set status loaded of editor
@@ -60,8 +84,14 @@ export const GlobalStore = defineStore('global', () => {
   }
 
   return {
-    setAccount,
-    getAccount,
+    setAccessTokenUser,
+    getAccessTokenUser,
+
+    setRefreshTokenUser,
+    getRefreshTokenUser,
+    setUser,
+    getUser,
+
     signOut,
     setLanguage,
     getLanguage,

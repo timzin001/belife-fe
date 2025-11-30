@@ -25,7 +25,7 @@ const nameOfOrg = async (
   }
 
   if (instance.value.nameOfOrgAbort) {
-    instance.value.nameOfOrgAbort.abort(APIStatus.ABORT_API)
+    instance.value.nameOfOrgAbort.abort(APIStatusCons.ABORT_API)
   }
   instance.value.nameOfOrgAbort = new AbortController()
   const signal = instance.value.nameOfOrgAbort.signal
@@ -45,9 +45,9 @@ const nameOfOrg = async (
     false
   )
   instance.value.nameOfOrgAbort = null
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     const strError = error?.value?.message || ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
+    if (!strError.includes(APIStatusCons.ABORT_API)) {
       instance.value.nameOfOrgError = t('name_is_exist_in_system', {
         name: t('name'),
       })
@@ -140,7 +140,7 @@ const phoneNumberOfBranch = async (
   }
   const phoneNumber = `${instance.value.dialCode.code}${value}`
   if (instance.value.phoneNumberOfBranchAbort) {
-    instance.value.phoneNumberOfBranchAbort.abort(APIStatus.ABORT_API)
+    instance.value.phoneNumberOfBranchAbort.abort(APIStatusCons.ABORT_API)
   }
   instance.value.phoneNumberOfBranchAbort = new AbortController()
   const signal = instance.value.phoneNumberOfBranchAbort.signal
@@ -160,9 +160,9 @@ const phoneNumberOfBranch = async (
     false
   )
   instance.value.phoneNumberOfBranchAbort = null
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     const strError = error?.value?.message || ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
+    if (!strError.includes(APIStatusCons.ABORT_API)) {
       instance.value.phoneNumberOfBranchError = t('name_is_exist_in_system', {
         name: t('phone_number'),
       })
@@ -202,7 +202,7 @@ const emailOfBranch = async (
   }
 
   if (instance.value.emailOfBranchAbort) {
-    instance.value.emailOfBranchAbort.abort(APIStatus.ABORT_API)
+    instance.value.emailOfBranchAbort.abort(APIStatusCons.ABORT_API)
   }
   instance.value.emailOfBranchAbort = new AbortController()
   const signal = instance.value.emailOfBranchAbort.signal
@@ -221,12 +221,12 @@ const emailOfBranch = async (
     t,
     false
   )
-  instance.value.phoneNumberOfBranchAbort = null
-  if (status.value !== APIStatus.SUCCESS) {
+  instance.value.emailOfBranchAbort = null
+  if (status.value !== APIStatusCons.SUCCESS) {
     const strError = error?.value?.message || ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
-      instance.value.phoneNumberOfBranchError = t('name_is_exist_in_system', {
-        name: t('phone_number'),
+    if (!strError.includes(APIStatusCons.ABORT_API)) {
+      instance.value.emailOfBranchError = t('name_is_exist_in_system', {
+        name: t('email'),
       })
       return
     }
@@ -236,14 +236,12 @@ const emailOfBranch = async (
   const valueCont: any = data.value
   const result: any = valueCont.data
   if (result) {
-    instance.value.phoneNumberOfBranchError = t('name_is_exist_in_system', {
-      name: t('phone_number'),
+    instance.value.emailOfBranchError = t('name_is_exist_in_system', {
+      name: t('email'),
     })
   } else {
-    instance.value.phoneNumberOfBranchError = ''
+    instance.value.emailOfBranchError = ''
   }
-
-  instance.value.phoneNumberOfBranchError = ''
 }
 /// Validate address of branch
 const addressOfBranch = (instance: Ref<CreateOrgType>, t: any) => {

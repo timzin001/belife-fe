@@ -1,7 +1,3 @@
-// import type { UseFetchOptions } from 'nuxt/app'
-// import { GlobalStore } from '~/store/Global'
-// const store = GlobalStore()
-
 import type { ToastServiceMethods } from 'primevue'
 
 const CallAPI = (
@@ -9,15 +5,15 @@ const CallAPI = (
   options = {},
   toast: ToastServiceMethods,
   t: any,
-  isOrg = true,
+  beType: string,
   isMultipart = false
 ) => {
+  let baseURL
+
   const customFetch = $fetch.create({
-    // baseURL: 'https://soivip-api.com/api/v1/',
-    baseURL: 'http://localhost:3001/api/belife/v1',
-    // http://localhost:3001/api/belife/v1/account/update-avatar
+    baseURL: baseURL,
     onRequest({ options }) {
-      const language = useCookie(CookieStorage.LANGUAGE, CookieStorage.OPTION)
+      const language = useCookie(CookieCons.LANGUAGE, CookieCons.OPTION)
 
       let headers: any = {
         'Accept-Language': language.value ?? 'en',
@@ -28,17 +24,18 @@ const CallAPI = (
         delete headers['Content-Type']
         // headers['Content-Type'] = 'multipart/form-data'
       }
-      if (isOrg) {
-        const auth = useCookie(CookieStorage.ORG_AUTH, CookieStorage.OPTION)
-        if (auth.value && auth.value != '') {
-          headers.Authorization = `Bearer ${auth.value}`
-        }
-      } else {
-        const auth = useCookie(CookieStorage.USER_AUTH, CookieStorage.OPTION)
-        if (auth.value && auth.value != '') {
-          headers.Authorization = `Bearer ${auth.value}`
-        }
-      }
+      // if (beType == BETYPE.ACCOUNT) {
+      //   const refValue = useCookie(CookieCons.ACCOUNT, CookieCons.OPTION)
+      //   if (refValue.value && refValue.value != '') {
+      //     const account: any = refValue.value
+      //     headers.Authorization = `Bearer ${account.webAuth?.token}`
+      //   }
+      // } else if (beType == BETYPE.ORG) {
+      //   const auth = useCookie(CookieCons.ORG_AUTH, CookieCons.OPTION)
+      //   if (auth.value && auth.value != '') {
+      //     headers.Authorization = `Bearer ${auth.value}`
+      //   }
+      // }
       options.headers = headers
     },
     onResponse({ response }) {

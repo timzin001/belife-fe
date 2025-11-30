@@ -3,7 +3,7 @@ import Aura from '@primeuix/themes/aura'
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  preset: 'node-server',
+  // preset: 'node-server',
   ssr: true,
   modules: [
     '@pinia/nuxt',
@@ -56,6 +56,12 @@ export default defineNuxtConfig({
     CRYPTO_ALGORITHM: process.env.CRYPTO_ALGORITHM,
     CRYPTO_KEY: process.env.CRYPTO_KEY,
     CRYPTO_IV: process.env.CRYPTO_IV,
-    public: {},
+    public: {
+      /// Account
+      accountBaseUrl:
+        process.env.ACCOUNT_BASE_URL || 'http://localhost:8081/api/v1',
+      orgBaseUrl: process.env.ORG_BASE_URL || 'http://localhost:8082/api/v1',
+      chatBaseUrl: process.env.CHAT_BASE_URL || 'http://localhost:8083/api/v1',
+    },
   },
 })

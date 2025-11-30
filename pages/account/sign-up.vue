@@ -286,6 +286,7 @@ import { GlobalStore } from '~/store/Global'
 
 const store = GlobalStore()
 const primevue = usePrimeVue()
+const { $accountAPI } = useNuxtApp()
 
 /// Define
 const { $auth } = useNuxtApp()
@@ -314,7 +315,7 @@ const instance = ref(<SignUpType>{
 /// Function
 const clickSignUp = async () => {
   /// Validate all
-  const validate = SignUpValidate.all(instance, toast, t, abortController)
+  const validate = SignUpValidate.all(instance, t, $accountAPI, abortController)
   if (!validate) {
     return
   }
@@ -329,7 +330,7 @@ const clickSignUp = async () => {
   const gender = instance.value.gender
 
   const options: any = {
-    method: Method.POST,
+    method: MethodCons.POST,
     body: {
       phoneNumber: phoneNumber,
       password: password,
@@ -338,36 +339,26 @@ const clickSignUp = async () => {
       gender: gender,
     },
   }
-  const { data, error, status } = await CallAPI(
-    APIPathAccount.POST_SIGN_UP,
-    options,
-    toast,
-    t,
-    false
+  const response: any = await $accountAPI(
+    APIAccountAuthCons.POST_SIGN_UP,
+    options
   )
-  /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
-    toast.add({
-      severity: Toast.ERROR,
-      summary: t('error'),
-      detail: getErrorMessages(error, t),
-      life: Toast.DURATION,
-    })
-    return
-  }
-  const result: any = data.value
-  console.log(result)
+  console.log(response)
+  console.log(response.data)
+  const data = response.data
 
-  /// Save user
-  store.setAccount(result.data)
+  /// Save access token
+  store.setAccessTokenUser(data.accessToken)
+  store.setRefreshTokenUser(data.refreshToken)
+  store.setUser(data.user)
 
-  await navigateTo({
-    path: Path.HOME,
-    replace: true,
-  })
+  // await navigateTo({
+  //   path: PathCons.HOME,
+  //   replace: true,
+  // })
 }
 const clickMoveToSignIn = async () => {
-  await navigateTo({ path: PathAccount.SIGN_IN })
+  await navigateTo({ path: PathAccountCons.SIGN_IN })
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
@@ -375,7 +366,7 @@ const changeDialCode = async (evt: any) => {
 }
 /// Change phone number
 const changePhoneNumber = async (evt: any) => {
-  SignUpValidate.phoneNumber(instance, t, toast)
+  SignUpValidate.phoneNumber(instance, t, $accountAPI)
 }
 /// Enter on phone number
 const enterPhoneNumber = (evt: any) => {
@@ -409,12 +400,12 @@ const changeGender = async (evt: any) => {
 }
 const clickMoveToTerm = async () => {
   navigateTo({
-    path: PathTermPrivacy.TERM,
+    path: PathTermPrivacyCons.TERM,
   })
 }
 const clickMoveToPrivacy = async () => {
   navigateTo({
-    path: PathTermPrivacy.PRIVACY,
+    path: PathTermPrivacyCons.PRIVACY,
   })
 }
 const transitionError = () => {

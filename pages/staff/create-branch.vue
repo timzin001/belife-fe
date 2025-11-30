@@ -390,7 +390,7 @@ const clickSave = async (evt: any) => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   toast.add({

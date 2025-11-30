@@ -147,7 +147,7 @@ const clickSave = async () => {
   )
   instance.value.loading = false
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const contain: any = data.value

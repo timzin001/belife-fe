@@ -156,7 +156,7 @@ onMounted(() => {
   setLang(store.getLanguage())
 })
 const initData = () => {
-  if (locale.value === Locale.VI) {
+  if (locale.value === LocaleCons.VI) {
     instance.value.language = instance.value.listLanguages[1]
   } else {
     instance.value.language = instance.value.listLanguages[0]

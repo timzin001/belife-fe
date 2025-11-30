@@ -64,7 +64,7 @@ const validateNickName = async (
   }
 
   if (abortController.value) {
-    abortController.value.abort(APIStatus.ABORT_API)
+    abortController.value.abort(APIStatusCons.ABORT_API)
   }
   abortController.value = new AbortController()
   const options: any = {
@@ -82,9 +82,9 @@ const validateNickName = async (
     t,
     true
   )
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     const strError = error?.value?.message ?? ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
+    if (!strError.includes(APIStatusCons.ABORT_API)) {
       instance.value.nickNameError = t('name_is_exist_in_system', {
         name: t('nick_name').toLocaleLowerCase(),
       })
@@ -264,9 +264,9 @@ const validatePhoneNumber = async (instance: any, toast: any, t: any) => {
     t,
     false
   )
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     const strError = error?.value?.message ?? ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
+    if (!strError.includes(APIStatusCons.ABORT_API)) {
       instance.value.phoneNumberError = t('phone_number_is_exsit_in_system')
       return
     }

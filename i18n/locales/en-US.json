@@ -20,9 +20,6 @@
     "email": "Email",
     "hotline": "Hotline",
     "phone_number_is_exsit_in_system": "Phone number is exist in system",
-    "password_must_have_a_lowercase_letter": "Password must have a lowercase letter",
-    "password_must_have_a_uppercase_letter": "Password must have a uppercase letter",
-    "password_must_have_a_number": "Password must have number",
     "error": "Error",
     "success": "Success",
     "a_verification_code_has_been_sent_to_your_phone":"A verification code has been sent to your phone",
@@ -163,5 +160,11 @@
     "focus_on_developing":"focus on developing",
     "specializing_in_building_management_systems_for_organizations_to_help_optimize_management": "Specializing in building management systems for organizations, to help optimize management.",
     "easily_convey_your_organizations_information_through_our_system": "Easily convey your organization's information through our system.", 
-    "easily_source_quality_human_resources_for_the_organization":"Easily source quality human resources for the organization."
+    "easily_source_quality_human_resources_for_the_organization":"Easily source quality human resources for the organization.",
+
+    "name_must_contain_at_least_one_number":"{name} must contain at least one number.",
+    "name_must_contain_at_least_one_uppercase_letter":"{name} must contain at least one uppercase letter.",
+    "name_must_contain_at_least_one_lowercase_letter":"{name} must contain at least one lowercase letter.",
+    "name_must_contain_at_least_one_special_character":"{name} must contain at least one special character."
+
 }

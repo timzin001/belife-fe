@@ -637,7 +637,7 @@ const uploadImgDescription = async (file: any) => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   toast.add({
@@ -696,7 +696,7 @@ const uploadAvatar = async (file: any) => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   toast.add({
@@ -724,7 +724,7 @@ const initData = async () => {
     false
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const result: any = data.value

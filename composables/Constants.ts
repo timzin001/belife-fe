@@ -1,6 +1,11 @@
 export const DEFAULT_AVATAR = 'default-avatar.png'
 export const DEFAULT_PICTURE = 'default-picture.png'
-export const Layout = {
+export const APPTYPECons = {
+  ACCOUNT: 'account',
+  ORG: 'org',
+  CHAT: 'chat',
+}
+export const LayoutCons = {
   HIDE_MENU: 'hide-menu',
   SHOW_MENU: 'show-menu',
   NO_FULL_CONTAIN: 'no-full-contain',
@@ -15,19 +20,22 @@ export const Layout = {
   },
 }
 
-export const Locale = {
+export const LocaleCons = {
   EN_US: 'en-US',
   VI_VN: 'vi-VN',
   EN: 'en',
   VI: 'vi',
 }
 
-export const Method = {
+export const MethodCons = {
   POST: 'post',
   GET: 'get',
 }
 
-export const CookieStorage = {
+export const CookieCons = {
+  ACCESS_TOKEN_USER: 'accessTokenUser',
+  REFRESH_TOKEN_USER: 'refreshTokenUser',
+  USER: 'user',
   ACCOUNT: 'account',
   LANGUAGE: 'language',
   USER_AUTH: 'user_auth',
@@ -43,7 +51,7 @@ export const CookieStorage = {
   },
 }
 
-export const LocalStorage = {
+export const StorageCons = {
   TEM_SIGN_IN: 'tem_sign_in',
   TEM_SIGN_UP: 'tem_sign_up',
   USER: 'user',
@@ -54,25 +62,28 @@ export const LocalStorage = {
   LIST_ORGS: 'list_orgs',
 }
 
-export const Toast = {
+export const ToastCons = {
   DURATION: 4000,
   SUCCESS: 'success',
   ERROR: 'error',
 }
 
-export const APIStatus = {
+export const APIStatusCons = {
   SUCCESS: 'success',
   IDLE: 'idle',
   ABORT_API: 'belife_abort_api',
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
 }
 
-// export const APIPathAuth = {
-//   POST_SIGN_UP_AUTH: 'auth/post-sign-up',
-//   POST_SIGN_IN_AUTH: 'auth/post-sign-in',
-//   POST_SIGN_IN_ORG_AUTH: 'auth/post-sign-in-org',
-// }
+export const APIAccountAuthCons = {
+  POST_SIGN_UP: 'auth/sign-up',
+}
+export const APIAccountUserCons = {
+  GET_EXIST_PHONE_NUMBER: 'user/exist-phone-number',
+}
 
-export const APIPathAccount = {
+export const APIPathAccountCons = {
   GET_EXIST_PHONE_NUMBER: 'account/exist-phone-number',
   GET_EXIST_ACCOUNT: 'account/exist-account',
   POST_SIGN_IN: 'account/sign-in',
@@ -94,16 +105,16 @@ export const APIPathAccount = {
   POST_UPDATE_GENDER_USER: 'user/post-update-gender',
   POST_UPDATE_PHONE_NUMBER_USER: 'user/post-update-phone-number',
 }
-export const APIPathOrg = {
+export const APIPathOrgCons = {
   GET_EXIST_NAME_ORG: 'org/exist-name',
-  POST_CREATE_ORG: 'org/post-create',
+  POST_CREATE_ORG: 'org/create',
   POST_SET_LOGO_ORG: 'org/post-set-logo',
   BRANCH: {
-    GET_EXIST_PHONE_NUMBER_IN_SYSTEM: 'branch/exist-phone-number-in-system',
-    GET_EXIST_EMAIL_IN_SYSTEM: 'branch/exist-email-in-system',
+    GET_EXIST_PHONE_NUMBER_IN_SYSTEM: 'org/branch/exist-phone-number-in-system',
+    GET_EXIST_EMAIL_IN_SYSTEM: 'org/branch/exist-email-in-system',
   },
 }
-export const APIPathBranch = {
+export const APIPathBranchCons = {
   GET_LIST: 'branch/get-list',
   GET_EXIST_EMAIL: 'branch/exist-email',
   GET_EXIST_ADDRESS: 'branch/get-exist-address',
@@ -111,7 +122,7 @@ export const APIPathBranch = {
   POST_CREATE: 'branch/post-create',
 }
 
-export const APIPathEmployee = {
+export const APIPathEmployeeCons = {
   GET_LIST: 'employee/get-list',
   POST_CREATE: 'employee/post-create',
   GET_EXIST_EMPLOYEE_WITH_CODE: 'employee/get-exist-employee-with-code',
@@ -123,7 +134,7 @@ export const APIPathDepartment = {
   GET_LIST: 'department/get-list',
 }
 
-export const APIPathPosition = {
+export const APIPathPositionCons = {
   POST_SET_AVATAR: 'position/post-set-avatar',
   GET_EXIST_NAME: 'position/get-exist-name',
   POST_CREATE: 'position/post-create',
@@ -131,11 +142,11 @@ export const APIPathPosition = {
   GET_LIST: 'position/get-list',
 }
 
-export const APIPath = {
+export const APIPathCons = {
   POST_MULTIPLE_MEDIA_ORG: 'media/post-multiple-media',
   POST_SET_AVATAR_BRANCH_ORG: 'branch/post-set-avatar',
 }
-export const PathStaff = {
+export const PathStaffCons = {
   BRANCHES: '/staff/branches',
   EMPLOYEES: '/staff/employees',
   DEPARTMENTS: '/staff/departments',
@@ -146,20 +157,20 @@ export const PathStaff = {
   CREATE_POSITION: '/staff/create-position',
 }
 
-export const PathAccount = {
+export const PathAccountCons = {
   SIGN_IN: '/account/sign-in',
   SIGN_UP: '/account/sign-up',
 }
-export const PathTermPrivacy = {
+export const PathTermPrivacyCons = {
   TERM: '/term-privacy/term',
   PRIVACY: '/term-privacy/privacy',
 }
 
-export const PathOrg = {
+export const PathOrgCons = {
   CREATE_ORG: '/org/create-org',
 }
 
-export const Path = {
+export const PathCons = {
   HOME: '/',
   PROFILE: '/profile',
   INFORM: '/inform',

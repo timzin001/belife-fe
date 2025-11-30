@@ -120,41 +120,41 @@ const clickSignOut = async () => {
   /// Clear
   store.signOut()
   /// Move to login
-  await navigateTo({ path: PathAccount.SIGN_IN })
+  await navigateTo({ path: PathAccountCons.SIGN_IN })
 }
 /// Click proifle
 const clickProfile = async () => {
   /// Move to profile
-  await navigateTo({ path: Path.PROFILE })
+  await navigateTo({ path: PathCons.PROFILE })
 }
 /// Move to position org
 const clickPositionOrg = async () => {
-  await navigateTo({ path: PathStaff.POSITIONS })
+  await navigateTo({ path: PathStaffCons.POSITIONS })
 }
 /// Move to branches org
 const clickBranchesOrg = async () => {
-  await navigateTo({ path: PathStaff.BRANCHES })
+  await navigateTo({ path: PathStaffCons.BRANCHES })
 }
 const clickEmployeesOrg = async () => {
-  await navigateTo({ path: PathStaff.EMPLOYEES })
+  await navigateTo({ path: PathStaffCons.EMPLOYEES })
 }
 const clickDepartmentsOrg = async () => {
-  await navigateTo({ path: PathStaff.DEPARTMENTS })
+  await navigateTo({ path: PathStaffCons.DEPARTMENTS })
 }
 const clickInform = async () => {
-  await navigateTo({ path: Path.INFORM })
+  await navigateTo({ path: PathCons.INFORM })
 }
 
 const clickRecruit = async () => {
-  await navigateTo({ path: Path.RECRUIT })
+  await navigateTo({ path: PathCons.RECRUIT })
 }
 
 const clickEvent = async () => {
-  await navigateTo({ path: Path.EVENT })
+  await navigateTo({ path: PathCons.EVENT })
 }
 const clickCreateOrg = async () => {
   console.log(`clickCreateOrg`)
-  await navigateTo({ path: PathOrg.CREATE_ORG })
+  await navigateTo({ path: PathOrgCons.CREATE_ORG })
 }
 const clickClose = () => {
   emits('clickClose')
@@ -162,7 +162,7 @@ const clickClose = () => {
 /// Change org
 const changeOrg = async (evt: any) => {
   const options: any = {
-    method: Method.POST,
+    method: MethodCons.POST,
     body: {
       idOfOrg: evt._id,
     },
@@ -176,7 +176,7 @@ const changeOrg = async (evt: any) => {
   // )
 
   /// Check error
-  // if (status.value !== APIStatus.SUCCESS) {
+  // if (status.value !== APIStatusCons.SUCCESS) {
   //   return
   // }
   // const result: any = data.value
@@ -187,7 +187,7 @@ const changeOrg = async (evt: any) => {
   /// Move to
   /// Get user info
   await navigateTo({
-    path: Path.INFORM_OF_ORG,
+    path: PathCons.INFORM_OF_ORG,
   })
 }
 

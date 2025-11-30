@@ -204,12 +204,12 @@ const clickSignIn = async () => {
   )
 
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     toast.add({
-      severity: Toast.ERROR,
+      severity: ToastCons.ERROR,
       summary: t('error'),
       detail: getErrorMessages(error, t),
-      life: Toast.DURATION,
+      life: ToastCons.DURATION,
     })
     return
   }
@@ -220,14 +220,14 @@ const clickSignIn = async () => {
   store.setAccount(result.data)
 
   await navigateTo({
-    path: Path.HOME,
+    path: PathCons.HOME,
     replace: true,
   })
 }
 
 /// Move to sign up
 const clickMoveToSignUp = async () => {
-  await navigateTo({ path: PathAccount.SIGN_UP })
+  await navigateTo({ path: PathAccountCons.SIGN_UP })
 }
 
 /// Enter on phone number

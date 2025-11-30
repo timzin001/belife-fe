@@ -50,7 +50,7 @@ const validateName = async (
     toast,
     t
   )
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     instance.value.nameError = t(
       'name1_is_already_in_use_by_anthor_name2_in_organization',
       { name1: t('name'), name2: t('branch') }
@@ -102,7 +102,7 @@ const validateEmail = async (
     toast,
     t
   )
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     instance.value.emailError = t(
       'name1_is_already_in_use_by_anthor_name2_in_organization',
       { name1: t('email'), name2: t('branch').toLocaleLowerCase() }
@@ -153,7 +153,7 @@ const validateAddress = async (
     toast,
     t
   )
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     instance.value.nameError = t(
       'name1_is_already_in_use_by_anthor_name2_in_organization',
       { name1: t('address'), name2: t('branch').toLocaleLowerCase() }
@@ -234,7 +234,7 @@ const validatePhoneNumber = async (
     toast,
     t
   )
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     instance.value.phoneNumberError = t(
       'name1_is_already_in_use_by_anthor_name2_in_organization',
       { name1: t('phone_number'), name2: t('branch').toLocaleLowerCase() }

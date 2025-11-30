@@ -65,10 +65,10 @@ export const convertDateToString = (
     return ''
   }
   const dateValue = moment.utc(date).local()
-  if (language === Locale.EN) {
+  if (language === LocaleCons.EN) {
     return dateValue.format('YYYY/MM/DD')
   }
-  if (language === Locale.VI) {
+  if (language === LocaleCons.VI) {
     return dateValue.format('DD/MM/YYYY')
   }
   return ''
@@ -84,10 +84,10 @@ export const convertRanageDateToStringData = (
   }
   const dateValue = moment.utc(date).local()
   let str = ''
-  if (language === Locale.EN) {
+  if (language === LocaleCons.EN) {
     str = dateValue.format('YYYY-MM-DD')
   }
-  if (language === Locale.VI) {
+  if (language === LocaleCons.VI) {
     str = dateValue.format('DD-MM-YYYY')
   }
   return `${str} 00:00:00,${str} 23:59:59`
@@ -103,13 +103,13 @@ export const formatDateTimeFromString = (
     return ''
   }
   const dateValue = moment.utc(date).local()
-  if (language === Locale.EN) {
+  if (language === LocaleCons.EN) {
     if (onlyDate) {
       return dateValue.format('YYYY/MM/DD')
     }
     return dateValue.format('YYYY/MM/DD HH:mm:ss')
   }
-  if (language === Locale.VI) {
+  if (language === LocaleCons.VI) {
     if (onlyDate) {
       return dateValue.format('DD/MM/YYYY')
     }
@@ -154,10 +154,10 @@ export const convertDateRangeToStringData = (list: any, lang: any) => {
 
 export const getDateFormatPicker = (locale: any) => {
   let dateFormat = ''
-  if (locale === Locale.EN) {
+  if (locale === LocaleCons.EN) {
     dateFormat = 'yy/mm/dd'
   }
-  if (locale === Locale.VI) {
+  if (locale === LocaleCons.VI) {
     dateFormat = 'dd/mm/yy'
   }
   return dateFormat
@@ -165,10 +165,10 @@ export const getDateFormatPicker = (locale: any) => {
 
 export const getDateFormat = (locale: any) => {
   let dateFormat = ''
-  if (locale === Locale.EN) {
+  if (locale === LocaleCons.EN) {
     dateFormat = 'YYYY/MM/DD'
   }
-  if (locale === Locale.VI) {
+  if (locale === LocaleCons.VI) {
     dateFormat = 'DD/MM/YYYY'
   }
   return dateFormat

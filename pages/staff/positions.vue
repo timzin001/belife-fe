@@ -786,7 +786,7 @@ const getListData = async (query: any) => {
   )
 
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     /// Check abort
     return
   }
@@ -800,10 +800,10 @@ const getListData = async (query: any) => {
 /// Init data
 const initData = () => {
   console.log(`InitData = ${store.getLanguage()}`)
-  if (store.getLanguage() === Locale.EN) {
+  if (store.getLanguage() === LocaleCons.EN) {
     datePattern.value = 'yy/mm/dd'
   }
-  if (store.getLanguage() === Locale.VI) {
+  if (store.getLanguage() === LocaleCons.VI) {
     datePattern.value = 'dd/mm/yy'
   }
   const query = getSearchQuery()

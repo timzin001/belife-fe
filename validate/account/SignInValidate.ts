@@ -23,7 +23,7 @@ export const phoneNumber = async (
   }
   const phoneNumber = `${instance.value.dialCode.code}${value}`
   if (instance.value.phoneNumberAbort) {
-    instance.value.phoneNumberAbort.abort(APIStatus.ABORT_API)
+    instance.value.phoneNumberAbort.abort(APIStatusCons.ABORT_API)
   }
   instance.value.phoneNumberAbort = new AbortController()
   const signal = instance.value.phoneNumberAbort.signal
@@ -35,34 +35,35 @@ export const phoneNumber = async (
       phoneNumber: phoneNumber,
     },
   }
-  const { data, error, status } = await CallAPI(
-    APIPathAccount.GET_EXIST_PHONE_NUMBER,
-    options,
-    toast,
-    t,
-    false
-  )
-  instance.value.phoneNumberAbort = null
-  if (status.value !== APIStatus.SUCCESS) {
-    const strError = error?.value?.message ?? ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
-      instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
-        name: t('phone_number'),
-      })
-      return
-    }
-    /// Abort
-    return
-  }
-  const valueCont: any = data.value
-  const result: any = valueCont.data
-  if (!result) {
-    instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
-      name: t('phone_number'),
-    })
-  } else {
-    instance.value.phoneNumberError = ''
-  }
+
+  // const { data, error, status } = await CallAPI(
+  //   APIAccountUser.GET_EXIST_PHONE_NUMBER,
+  //   options,
+  //   toast,
+  //   t,
+  //   BETYPE.ACCOUNT
+  // )
+  // instance.value.phoneNumberAbort = null
+  // if (status.value !== APIStatusCons.SUCCESS) {
+  //   const strError = error?.value?.message ?? ''
+  //   if (!strError.includes(APIStatusCons.ABORT_API)) {
+  //     instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
+  //       name: t('phone_number'),
+  //     })
+  //     return
+  //   }
+  //   /// Abort
+  //   return
+  // }
+  // const valueCont: any = data.value
+  // const result: any = valueCont.data
+  // if (!result) {
+  //   instance.value.phoneNumberError = t('name_is_not_exist_in_system', {
+  //     name: t('phone_number'),
+  //   })
+  // } else {
+  //   instance.value.phoneNumberError = ''
+  // }
 }
 
 /// Validate password
@@ -110,7 +111,7 @@ const password = async (instance: Ref<SignInType>, t: any, toast: any) => {
   console.log('4')
   const password = instance.value.password
   if (instance.value.passwordAbort) {
-    instance.value.passwordAbort.abort(APIStatus.ABORT_API)
+    instance.value.passwordAbort.abort(APIStatusCons.ABORT_API)
   }
   instance.value.passwordAbort = new AbortController()
   const signal = instance.value.passwordAbort.signal
@@ -123,34 +124,38 @@ const password = async (instance: Ref<SignInType>, t: any, toast: any) => {
       password: password,
     },
   }
-  const { data, error, status } = await CallAPI(
-    APIPathAccount.GET_EXIST_ACCOUNT,
-    options,
-    toast,
-    t,
-    false
-  )
-  instance.value.passwordAbort = null
-  if (status.value !== APIStatus.SUCCESS) {
-    const strError = error?.value?.message ?? ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
-      instance.value.passwordError = t('name_is_not_correct', {
-        name: t('password'),
-      })
-      return
-    }
-    /// Abort
-    return
-  }
-  const valueCont: any = data.value
-  const result: any = valueCont.data
-  if (!result) {
-    instance.value.passwordError = t('name_is_not_correct', {
-      name: t('password'),
-    })
-  } else {
-    instance.value.passwordError = ''
-  }
+
+  // const response = await $userApiFetch('/create-user', customOptions)
+  // console.log('API Response:', response)
+
+  // const { data, error, status } = await CallAPI(
+  //   APIPathAccount.GET_EXIST_ACCOUNT,
+  //   options,
+  //   toast,
+  //   t,
+  //   false
+  // )
+  // instance.value.passwordAbort = null
+  // if (status.value !== APIStatusCons.SUCCESS) {
+  //   const strError = error?.value?.message ?? ''
+  //   if (!strError.includes(APIStatusCons.ABORT_API)) {
+  //     instance.value.passwordError = t('name_is_not_correct', {
+  //       name: t('password'),
+  //     })
+  //     return
+  //   }
+  //   /// Abort
+  //   return
+  // }
+  // const valueCont: any = data.value
+  // const result: any = valueCont.data
+  // if (!result) {
+  //   instance.value.passwordError = t('name_is_not_correct', {
+  //     name: t('password'),
+  //   })
+  // } else {
+  //   instance.value.passwordError = ''
+  // }
 }
 /// Change dial code
 const changeDialCode = async (evt: any, instance: Ref<SignInType>) => {

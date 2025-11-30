@@ -68,7 +68,7 @@ const validateName = async (
     t,
     true
   )
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     instance.value.nameError = t(
       'name1_is_already_in_use_by_anthor_name2_in_organization',
       { name1: t('name'), name2: t('department') }

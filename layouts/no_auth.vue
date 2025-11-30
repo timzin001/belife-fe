@@ -4,8 +4,8 @@
     <div class="flex flex-1 flex-col transition">
       <NoAuthHeader />
       <div class="page-contain">
-        <slot />
-        <Footer />
+        <slot></slot>
+        <Footer></Footer>
       </div>
     </div>
   </div>

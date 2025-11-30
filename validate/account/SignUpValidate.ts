@@ -1,11 +1,12 @@
 import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
 import type { SignUpType } from '~/types/account/SignUpType'
+
 /// Call API validate phone number
 const phoneNumber = async (
   instance: Ref<SignUpType>,
   t: any,
-  toast: ToastServiceMethods
+  $accountAPI: any
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
@@ -30,7 +31,7 @@ const phoneNumber = async (
 
   const phoneNumber = `${instance.value.dialCode.code}${value}`
   if (instance.value.phoneNumberAbort) {
-    instance.value.phoneNumberAbort.abort(APIStatus.ABORT_API)
+    instance.value.phoneNumberAbort.abort(APIStatusCons.ABORT_API)
   }
   instance.value.phoneNumberAbort = new AbortController()
   const signal = instance.value.phoneNumberAbort.signal
@@ -41,26 +42,12 @@ const phoneNumber = async (
       phoneNumber: phoneNumber,
     },
   }
-  const { data, error, status } = await CallAPI(
-    APIPathAccount.GET_EXIST_PHONE_NUMBER,
-    options,
-    toast,
-    t,
-    false
+  const response = await $accountAPI(
+    APIAccountUserCons.GET_EXIST_PHONE_NUMBER,
+    options
   )
-  instance.value.phoneNumberAbort = null
-  if (status.value !== APIStatus.SUCCESS) {
-    const strError = error?.value?.message ?? ''
-    if (!strError.includes(APIStatus.ABORT_API)) {
-      instance.value.phoneNumberError = t('phone_number_is_exsit_in_system')
-      return
-    }
-    /// Abort
-    return
-  }
-  const valueCont: any = data.value
-  const result: any = valueCont.data
-  if (result) {
+
+  if (response.data) {
     instance.value.phoneNumberError = t('phone_number_is_exsit_in_system')
   } else {
     instance.value.phoneNumberError = ''
@@ -85,16 +72,36 @@ const password = (instance: Ref<SignUpType>, t: any) => {
   }
 
   if (!/[a-z]/.test(instance.value.password)) {
-    instance.value.passwordError = t('password_must_have_a_lowercase_letter')
+    instance.value.passwordError = t(
+      'name_must_contain_at_least_one_lowercase_letter',
+      {
+        name: t('password'),
+      }
+    )
     return
   }
   if (!/[A-Z]/.test(instance.value.password)) {
-    instance.value.passwordError = t('password_must_have_a_uppercase_letter')
+    instance.value.passwordError = t(
+      'name_must_contain_at_least_one_uppercase_letter',
+      {
+        name: t('password'),
+      }
+    )
+
     return
   }
 
   if (!/\d/.test(instance.value.password)) {
-    instance.value.passwordError = t('password_must_have_a_number')
+    instance.value.passwordError = t('name_must_contain_at_least_one_number', {
+      name: t('password'),
+    })
+    return
+  }
+  if (!/[^a-zA-Z0-9\s]/.test(instance.value.password)) {
+    instance.value.passwordError = t(
+      'name_must_contain_at_least_one_special_character',
+      { name: t('password') }
+    )
     return
   }
 
@@ -174,12 +181,12 @@ const changeDialCode = async (evt: any, instance: Ref<SignUpType>) => {
 }
 const validateAll = (
   instance: Ref<SignUpType>,
-  toast: ToastServiceMethods,
   t: any,
+  $accountAPI: any,
   abortController: any
 ) => {
   const validate = Promise.all([
-    SignUpValidate.phoneNumber(instance, t, toast),
+    SignUpValidate.phoneNumber(instance, t, $accountAPI),
     SignUpValidate.password(instance, t),
     SignUpValidate.fullName(instance, t),
     SignUpValidate.gender(instance, t),

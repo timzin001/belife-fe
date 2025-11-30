@@ -3,23 +3,23 @@ export default defineNuxtPlugin((nuxtApp) => {
     provide: {
       auth: () => {
         const route = useRoute()
-        const str = getItem(LocalStorage.USER)
+        const str = getItem(StorageCons.USER)
 
         const path = route.fullPath
         if (
           !str &&
-          !path.includes(PathAccount.SIGN_IN) &&
-          !path.includes(PathAccount.SIGN_UP)
+          !path.includes(PathAccountCons.SIGN_IN) &&
+          !path.includes(PathAccountCons.SIGN_UP)
         ) {
-          navigateTo({ path: PathAccount.SIGN_IN })
+          navigateTo({ path: PathAccountCons.SIGN_IN })
           return
         }
         if (
           str &&
-          (path.includes(PathAccount.SIGN_IN) ||
-            path.includes(PathAccount.SIGN_UP))
+          (path.includes(PathAccountCons.SIGN_IN) ||
+            path.includes(PathAccountCons.SIGN_UP))
         ) {
-          navigateTo({ path: Path.HOME })
+          navigateTo({ path: PathCons.HOME })
           return
         }
       },

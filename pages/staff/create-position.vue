@@ -197,7 +197,7 @@ const clickSave = async (evt: any) => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     toast.add({
       severity: Toast.ERROR,
       summary: t('error'),

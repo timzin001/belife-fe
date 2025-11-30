@@ -104,13 +104,13 @@ const clickSave = async () => {
   instance.value.loading = true
   /// Update full name
   const options: any = {
-    method: Method.POST,
+    method: MethodCons.POST,
     body: {
       address: instance.value.address,
     },
   }
   const { data, error, status } = await CallAPI(
-    APIPathAccount.POST_UPDATE_ADDRESS_USER,
+    APIPathAccountCons.POST_UPDATE_ADDRESS_USER,
     options,
     toast,
     t,
@@ -118,16 +118,16 @@ const clickSave = async () => {
   )
   instance.value.loading = false
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const contain: any = data.value
   const result = contain.data
   toast.add({
-    severity: Toast.SUCCESS,
+    severity: ToastCons.SUCCESS,
     summary: t('success'),
     detail: t('address_updated_successful'),
-    life: Toast.DURATION,
+    life: ToastCons.DURATION,
   })
   emits('click-save', result)
 }

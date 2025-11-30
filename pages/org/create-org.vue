@@ -691,7 +691,7 @@ const callAPICreateOrg = async (): Promise<boolean> => {
   )
 
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return false
   }
   const result: any = data.value
@@ -714,7 +714,7 @@ const callAPIOrgsOfUser = async () => {
     false
   )
 
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return []
   }
 
@@ -748,10 +748,10 @@ const clickSave = async (evt: any) => {
 const setFormatNumber = (lang: string) => {
   /// Set format number
   if (!lang || lang == 'en') {
-    instance.value.locale = Locale.EN_US
+    instance.value.locale = LocaleCons.EN_US
     instance.value.minFractionDigits = 0
   } else {
-    instance.value.locale = Locale.VI_VN
+    instance.value.locale = LocaleCons.VI_VN
     instance.value.minFractionDigits = 0
   }
 }

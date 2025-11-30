@@ -887,7 +887,7 @@ const clickSave = async () => {
     t
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
 }
@@ -905,7 +905,7 @@ const getListPositions = async (query: any) => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const value: any = data.value
@@ -940,7 +940,7 @@ const getListDepartments = async (query: any) => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const value: any = data.value
@@ -977,7 +977,7 @@ const clickSelectAllDepartment = async () => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const value: any = data.value
@@ -1010,7 +1010,7 @@ const clickSelectAllPosition = async () => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const value: any = data.value
@@ -1044,7 +1044,7 @@ const clickSelectAllBranch = async () => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const value: any = data.value
@@ -1074,7 +1074,7 @@ const getListBranches = async (query: any) => {
     true
   )
   /// Check error
-  if (status.value !== APIStatus.SUCCESS) {
+  if (status.value !== APIStatusCons.SUCCESS) {
     return
   }
   const value: any = data.value
