@@ -6,7 +6,7 @@ import type { CreateOrgType } from '~/types/org/CreateOrgType'
 const nameOfOrg = async (
   instance: Ref<CreateOrgType>,
   t: any,
-  toast: ToastServiceMethods
+  $orgAPI: any
 ) => {
   let nameOfOrg = instance.value.nameOfOrg
   if (!nameOfOrg) {

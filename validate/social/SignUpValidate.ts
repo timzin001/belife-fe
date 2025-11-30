@@ -6,7 +6,7 @@ import type { SignUpType } from '~/types/account/SignUpType'
 const phoneNumber = async (
   instance: Ref<SignUpType>,
   t: any,
-  $accountAPI: any
+  $socialAPI: any
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
@@ -36,8 +36,8 @@ const phoneNumber = async (
       phoneNumber: phoneNumber,
     },
   }
-  const response = await $accountAPI(
-    APIAccountUserCons.GET_EXIST_PHONE_NUMBER,
+  const response = await $socialAPI(
+    APISocialUserCons.EXIST_PHONE_NUMBER,
     options
   )
 
@@ -173,14 +173,13 @@ const changeDialCode = async (evt: any, instance: Ref<SignUpType>) => {
   /// Clear data
   instance.value.phoneNumber = ''
 }
-const validateAll = (
+const validateAll = async (
   instance: Ref<SignUpType>,
   t: any,
-  $accountAPI: any,
-  abortController: any
+  $socialAPI: any
 ) => {
-  const validate = Promise.all([
-    SignUpValidate.phoneNumber(instance, t, $accountAPI),
+  const validate = await Promise.all([
+    SignUpValidate.phoneNumber(instance, t, $socialAPI),
     SignUpValidate.password(instance, t),
     SignUpValidate.fullName(instance, t),
     SignUpValidate.gender(instance, t),

@@ -8,16 +8,16 @@ export default defineNuxtPlugin((nuxtApp) => {
         const path = route.fullPath
         if (
           !str &&
-          !path.includes(PathAccountSignInCons.SIGN_IN) &&
-          !path.includes(PathAccountSignUpCons.SIGN_UP)
+          !path.includes(PathSocialSignInCons.SIGN_IN) &&
+          !path.includes(PathSocialSignUpCons.SIGN_UP)
         ) {
-          navigateTo({ path: PathAccountSignInCons.SIGN_IN })
+          navigateTo({ path: PathSocialSignInCons.SIGN_IN })
           return
         }
         if (
           str &&
-          (path.includes(PathAccountSignInCons.SIGN_IN) ||
-            path.includes(PathAccountSignUpCons.SIGN_UP))
+          (path.includes(PathSocialSignInCons.SIGN_IN) ||
+            path.includes(PathSocialSignUpCons.SIGN_UP))
         ) {
           navigateTo({ path: PathCons.HOME })
           return

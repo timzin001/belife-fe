@@ -120,7 +120,7 @@ const clickSignOut = async () => {
   /// Clear
   store.signOut()
   /// Move to login
-  await navigateTo({ path: PathAccountSignInCons.SIGN_IN })
+  await navigateTo({ path: PathSocialSignInCons.SIGN_IN })
 }
 /// Click proifle
 const clickProfile = async () => {

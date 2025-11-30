@@ -36,10 +36,11 @@ export const CookieCons = {
   ACCESS_TOKEN_USER: 'accessTokenUser',
   REFRESH_TOKEN_USER: 'refreshTokenUser',
   USER: 'user',
-  ACCOUNT: 'account',
+
+  ACCESS_TOKEN_ORG: 'accessTokenUser',
+  REFRESH_TOKEN_ORG: 'refreshTokenUser',
+
   LANGUAGE: 'language',
-  USER_AUTH: 'user_auth',
-  ORG_AUTH: 'org_auth',
   ORG: 'org',
   LIST_ORGS: 'list_orgs',
 
@@ -56,8 +57,6 @@ export const StorageCons = {
   TEM_SIGN_UP: 'tem_sign_up',
   USER: 'user',
   LANGUAGE: 'language',
-  USER_AUTH: 'user_auth',
-  ORG_AUTH: 'org_auth',
   ORG: 'org',
   LIST_ORGS: 'list_orgs',
 }
@@ -78,12 +77,16 @@ export const APIStatusCons = {
 
 /// BACKEND
 
-export const APIAccountAuthCons = {
+export const APISocailAuthCons = {
   SIGN_UP: 'auth/sign-up',
   SIGN_IN: 'auth/sign-in',
 }
-export const APIAccountUserCons = {
-  GET_EXIST_PHONE_NUMBER: 'user/exist-phone-number',
+export const APISocialUserCons = {
+  EXIST_PHONE_NUMBER: 'user/exist-phone-number',
+}
+
+export const APIOrgTenantCons = {
+  EXIST_NAME: 'tenant/exist-name',
 }
 
 export const APIPathAccountCons = {
@@ -152,16 +155,29 @@ export const APIPathCons = {
 
 /// FRONT END
 
-export const PathAccountSignInCons = {
-  SIGN_IN: '/account/sign-in',
+export const PathSocialSignInCons = {
+  SIGN_IN: '/social/sign-in',
 }
 
-export const PathAccountSignUpCons = {
-  SIGN_UP: '/account/sign-up',
+export const PathSocialSignUpCons = {
+  SIGN_UP: '/social/sign-up',
 }
-
 export const PathSocialHomeCons = {
   HOME: '/',
+}
+
+export const PathSocialTermCons = {
+  TERM: '/social/term',
+}
+export const PathSocialPrivacyCons = {
+  PRIVACY: '/social/privacy',
+}
+
+export const PathOrgTermCons = {
+  TERM: '/term-privacy/term',
+}
+export const PathOrgPrivacyCons = {
+  PRIVACY: '/term-privacy/privacy',
 }
 
 export const PathStaffCons = {
@@ -173,11 +189,6 @@ export const PathStaffCons = {
   CREATE_DEPARTMENT: '/staff/create-department',
   CREATE_EMPLOYEE: '/staff/create-employee',
   CREATE_POSITION: '/staff/create-position',
-}
-
-export const PathTermPrivacyCons = {
-  TERM: '/term-privacy/term',
-  PRIVACY: '/term-privacy/privacy',
 }
 
 export const PathOrgCons = {

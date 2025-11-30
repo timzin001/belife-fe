@@ -527,6 +527,7 @@ import { useToast } from 'primevue/usetoast'
 /// Define
 const store = GlobalStore()
 const toast = useToast()
+const { $orgAPI } = useNuxtApp()
 
 const { t } = useI18n()
 const instance = ref(<CreateOrgType>{
@@ -555,17 +556,17 @@ const instance = ref(<CreateOrgType>{
 
 const clickMoveToTerm = async () => {
   navigateTo({
-    path: PathTermPrivacy.TERM,
+    path: PathOrgTermCons.TERM,
   })
 }
 const clickMoveToPrivacy = async () => {
   navigateTo({
-    path: PathTermPrivacy.PRIVACY,
+    path: PathOrgPrivacyCons.PRIVACY,
   })
 }
 /// Change name of org
 const changeNameOfOrg = async (evt: any) => {
-  CreateOrgValidate.nameOfOrg(instance, t, toast)
+  CreateOrgValidate.nameOfOrg(instance, t)
 }
 /// Change name of org
 const changeSloganOfOrg = async (evt: any) => {

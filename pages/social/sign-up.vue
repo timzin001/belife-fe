@@ -281,11 +281,11 @@ import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
 import type { SignUpType } from '~/types/account/SignUpType'
-import { SignUpValidate } from '~/validate/account/SignUpValidate'
+import { SignUpValidate } from '~/validate/social/SignUpValidate'
 import { GlobalStore } from '~/store/Global'
 
 const store = GlobalStore()
-const { $accountAPI } = useNuxtApp()
+const { $socialAPI } = useNuxtApp()
 
 /// Define
 const { $auth } = useNuxtApp()
@@ -314,12 +314,7 @@ const instance = ref(<SignUpType>{
 /// Function
 const clickSignUp = async () => {
   /// Validate all
-  const validate = await SignUpValidate.all(
-    instance,
-    t,
-    $accountAPI,
-    abortController
-  )
+  const validate = await SignUpValidate.all(instance, t, $socialAPI)
   if (!validate) {
     return
   }
@@ -343,9 +338,7 @@ const clickSignUp = async () => {
       gender: gender,
     },
   }
-  const response: any = await $accountAPI(APIAccountAuthCons.SIGN_UP, options)
-  console.log(response)
-  console.log(response.data)
+  const response: any = await $socialAPI(APISocailAuthCons.SIGN_UP, options)
   const data = response.data
 
   /// Save access token
@@ -359,7 +352,7 @@ const clickSignUp = async () => {
   })
 }
 const clickMoveToSignIn = async () => {
-  await navigateTo({ path: PathAccountSignInCons.SIGN_IN })
+  await navigateTo({ path: PathSocialSignInCons.SIGN_IN })
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
@@ -367,7 +360,7 @@ const changeDialCode = async (evt: any) => {
 }
 /// Change phone number
 const changePhoneNumber = async (evt: any) => {
-  SignUpValidate.phoneNumber(instance, t, $accountAPI)
+  SignUpValidate.phoneNumber(instance, t, $socialAPI)
 }
 /// Enter on phone number
 const enterPhoneNumber = (evt: any) => {
@@ -401,17 +394,17 @@ const changeGender = async (evt: any) => {
 }
 const clickMoveToTerm = async () => {
   navigateTo({
-    path: PathTermPrivacyCons.TERM,
+    path: PathSocialTermCons.TERM,
   })
 }
 const clickMoveToPrivacy = async () => {
   navigateTo({
-    path: PathTermPrivacyCons.PRIVACY,
+    path: PathSocialPrivacyCons.PRIVACY,
   })
 }
 const transitionError = () => {
   if (instance.value.phoneNumberError) {
-    SignUpValidate.phoneNumber(instance, t, $accountAPI)
+    SignUpValidate.phoneNumber(instance, t, $socialAPI)
   }
   if (instance.value.passwordError) {
     SignUpValidate.password(instance, t)

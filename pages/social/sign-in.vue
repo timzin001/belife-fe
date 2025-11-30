@@ -145,10 +145,10 @@ import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
 import type { SignInType } from '~/types/account/SignInType'
-import { SignInValidate } from '~/validate/account/SignInValidate'
+import { SignInValidate } from '~/validate/social/SignInValidate'
 import { GlobalStore } from '~/store/Global'
 const store = GlobalStore()
-const { $accountAPI } = useNuxtApp()
+const { $socialAPI } = useNuxtApp()
 
 /// Define
 const { $auth } = useNuxtApp()
@@ -195,9 +195,7 @@ const clickSignIn = async () => {
       password: password,
     },
   }
-  const response: any = await $accountAPI(APIAccountAuthCons.SIGN_IN, options)
-  console.log(response)
-  console.log(response.data)
+  const response: any = await $socialAPI(APISocailAuthCons.SIGN_IN, options)
   const data = response.data
 
   /// Save access token
@@ -213,7 +211,7 @@ const clickSignIn = async () => {
 
 /// Move to sign up
 const clickMoveToSignUp = async () => {
-  await navigateTo({ path: PathAccountSignUpCons.SIGN_UP })
+  await navigateTo({ path: PathSocialSignUpCons.SIGN_UP })
 }
 
 /// Enter on phone number
