@@ -112,6 +112,7 @@ import ArrowLeft from '~/assets/icons/arrow-left.svg'
 import Save from '~/assets/icons/save.svg'
 import { CreatePositionValidate } from '~/validate/org/CreatePositionValidate'
 const { t, locale } = useI18n()
+const { $orgAPI, $socialAPI } = useNuxtApp()
 const props = defineProps({
   title: {
     type: String,
@@ -130,7 +131,6 @@ const props = defineProps({
 
 const instance = ref<CreatePositionType>({
   visible: false,
-
   name: {
     vi: '',
     en: '',
@@ -147,6 +147,7 @@ const instance = ref<CreatePositionType>({
   heightAvatar: null,
   avatarError: null,
   position: null,
+  nameAbort: null,
 })
 const emits = defineEmits(['click-close', 'click-ok'])
 /// Update visible
@@ -160,7 +161,7 @@ const updateVisible = (value: any) => {
 
 /// Change name
 const changeName = (evt: any) => {
-  CreatePositionValidate.name(instance, t, toast, locale.value)
+  CreatePositionValidate.name(instance, t, $orgAPI, locale.value)
 }
 
 /// Select avatar
