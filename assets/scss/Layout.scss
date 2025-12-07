@@ -139,6 +139,375 @@ input::-webkit-credentials-auto-fill-button {
     border-top-right-radius: 5px !important;
     border-bottom-left-radius: 5px !important;
 }
+.p-dialog {
+     max-height: 90%;
+     max-width: 600px;
+     min-width: 330px;
+ }
+
+/// Override datepicker
+.p-datepicker-panel {
+    border-radius: unset !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.p-datepicker-month {
+    font-size: 14px !important;
+}
+
+.p-datepicker-select-year {
+    font-size: 14px !important;
+}
+
+.p-datepicker-year {
+    font-size: 14px !important;
+}
+
+.p-datepicker-decade {
+    font-size: 14px !important;
+}
+
+.p-datepicker-select-year {
+    font-size: 14px !important;
+}
+
+.p-datepicker-select-month {
+    font-size: 14px !important;
+}
+
+.p-datepicker-weekday {
+    font-size: 14px !important;
+}
+
+.p-datepicker-day {
+    font-size: 14px !important;
+}
+
+/// Override input
+.p-inputtext {
+    font-size: 14px !important;
+    height: 30px !important;
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border: 1px solid $border-color !important;
+
+    ton &:hover {
+        border: 1px solid $primary-color !important;
+    }
+
+    &:focus {
+        border: 1px solid $primary-color !important;
+    }
+}
+
+/// Overrdie button
+.p-button {
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    // border: 1px solid $border-color !important;
+
+    // &:hover {
+    //     border: 1px solid $primary-color !important;
+    // }
+}
+
+.p-button-label {
+    font-size: 14px !important;
+    ;
+    font-weight: unset !important;
+}
+
+
+/// Override message
+.p-message-text {
+    font-weight: unset !important;
+    font-size: 12px !important;
+}
+
+/// Override toast
+.p-toast {
+    width: 350px !important;
+}
+
+.p-toast-message-text {
+    gap: 0px !important;
+}
+
+.p-toast-summary {
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
+
+.p-toast-detail {
+    font-weight: normal !important;
+    font-size: 14px !important;
+}
+
+.p-toast-close-button {
+    width: 25px;
+    height: 25px;
+    padding: 7px;
+}
+
+.p-toast-message-icon {
+    display: none !important;
+}
+
+/// Override table
+.p-datatable-selectable-row {
+    &:hover {
+        background-color: $hover-item-color !important;
+    }
+}
+
+/// Override password
+.p-password-input {
+    width: 100% !important;
+}
+
+.p-password-toggle-mask-icon {
+    margin-top: -6px !important;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+/// Override dialog
+.p-dialog-content {
+    padding: unset !important;
+}
+
+.p-dialog-header {
+    padding: unset !important;
+    font-size: 14px !important;
+}
+
+/// Override icon
+.p-icon {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.pi {
+    font-size: 13px !important;
+}
+
+/// Override tinymce
+.tox-tinymce {
+    border: 1px solid #eee !important;
+    border-radius: unset !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.tox-statusbar__right-container {
+    display: none !important;
+}
+
+.tox-promotion {
+    display: none !important;
+}
+
+.tox-edit-area::before {
+    border: 1px solid #10b981 !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 9px !important;
+    border-bottom-right-radius: 9px !important;
+}
+
+.tox .tox-tbtn {
+    transform: scale(0.8) !important;
+    /* you can set the scale that you want */
+    height: unset !important;
+    width: unset !important;
+}
+
+.tox .tox-tbtn--bespoke .tox-tbtn__select-label {
+    width: unset !important;
+}
+
+/// Override multiselect
+.p-multiselect-option {
+    font-size: 14px !important;
+    height: 32px !important;
+}
+
+.p-multiselect-label .p-chip {
+    padding-block-start: unset !important;
+    padding-block-end: unset !important;
+}
+
+.p-multiselect-label {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+}
+
+.p-button-link {
+    padding: unset !important;
+}
+
+/// Override textarea
+.p-textarea {
+    font-size: 14px !important;
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border: 1px solid $border-color !important;
+
+    &:hover {
+        border: 1px solid $primary-color !important;
+    }
+}
+
+/// Override dialog
+.p-dialog {
+    border-radius: unset !important;
+    border-bottom-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+/// Override tag
+.p-tag {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 5px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+
+/// Scrollbar
+
+/* Works on Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #dddddd transparent;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 20px;
+    border: 3px solid #dddddd;
+}
+
+
+/// Loading
+/// Mini
+.spinner-mini {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 0.5px;
+    background: conic-gradient(#0000 10%, $primary-color) content-box;
+    -webkit-mask: repeating-conic-gradient(#0000 0deg,
+            #000 1deg 20deg,
+            #0000 21deg 36deg),
+        radial-gradient(farthest-side,
+            #0000 calc(100% - 3.8px),
+            #000 calc(100% - 3.8px));
+    -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+    animation: spinner-d55elj 1s infinite steps(10);
+}
+
+.spinner-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0.8px;
+    background: conic-gradient(#0000 10%, $primary-color) content-box;
+    -webkit-mask: repeating-conic-gradient(#0000 0deg,
+            #000 1deg 20deg,
+            #0000 21deg 36deg),
+        radial-gradient(farthest-side,
+            #0000 calc(100% - 6.4px),
+            #000 calc(100% - 6.4px));
+    -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+    animation: spinner-d55elj 1s infinite steps(10);
+}
+
+.spinner-medium {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 1.1px;
+    background: conic-gradient(#0000 10%, $primary-color) content-box;
+    -webkit-mask: repeating-conic-gradient(#0000 0deg,
+            #000 1deg 20deg,
+            #0000 21deg 36deg),
+        radial-gradient(farthest-side,
+            #0000 calc(100% - 9px),
+            #000 calc(100% - 9px));
+    -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+    animation: spinner-d55elj 1s infinite steps(10);
+}
+
+@keyframes spinner-d55elj {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+:root {
+    --p-checkbox-width: 15px !important;
+    --p-checkbox-height: 15px !important;
+}
+
+//// Overide drop down
+.p-select {
+    height: 30px !important;
+    position: unset !important;
+    font-size: 14px !important; // if is not set import then get font-size default after set font size override then ui big after small
+    border-radius: unset !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border: 1px solid $border-color !important;
+
+    &:hover {
+        border: 1px solid $primary-color !important;
+    }
+
+    .p-select-label {
+        padding: unset !important;
+    }
+
+}
+
+.p-select-clear-icon {
+    margin-top: -6px;
+}
+
+.p-select-list-container {
+    .p-select-option {
+        border-radius: unset !important;
+        padding: unset !important;
+        height: 30px !important;
+        border-top-right-radius: 5px !important;
+        border-bottom-left-radius: 5px !important;
+    }
+
+}
+
+
+
 
  /// Tablet
  @media screen and (min-width: $tablet-min) and (max-width: $tablet-max){
@@ -254,6 +623,8 @@ input::-webkit-credentials-auto-fill-button {
     .p-dialog {
         width: 95%;
         max-height: 90%;
+        max-width: 600px;
+        min-width: 330px;;
     }
     /// Overidde table paging
     .p-paginator-page,
@@ -311,343 +682,3 @@ input::-webkit-credentials-auto-fill-button {
         }
     }
 }
-
-/// Loading
-/// Mini
-.spinner-mini {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    padding: 0.5px;
-    background: conic-gradient(#0000 10%, $primary-color) content-box;
-    -webkit-mask: repeating-conic-gradient(#0000 0deg,
-            #000 1deg 20deg,
-            #0000 21deg 36deg),
-        radial-gradient(farthest-side,
-            #0000 calc(100% - 3.8px),
-            #000 calc(100% - 3.8px));
-    -webkit-mask-composite: destination-in;
-    mask-composite: intersect;
-    animation: spinner-d55elj 1s infinite steps(10);
-}
-
-.spinner-small {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    padding: 0.8px;
-    background: conic-gradient(#0000 10%, $primary-color) content-box;
-    -webkit-mask: repeating-conic-gradient(#0000 0deg,
-            #000 1deg 20deg,
-            #0000 21deg 36deg),
-        radial-gradient(farthest-side,
-            #0000 calc(100% - 6.4px),
-            #000 calc(100% - 6.4px));
-    -webkit-mask-composite: destination-in;
-    mask-composite: intersect;
-    animation: spinner-d55elj 1s infinite steps(10);
-}
-
-.spinner-medium {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    padding: 1.1px;
-    background: conic-gradient(#0000 10%, $primary-color) content-box;
-    -webkit-mask: repeating-conic-gradient(#0000 0deg,
-            #000 1deg 20deg,
-            #0000 21deg 36deg),
-        radial-gradient(farthest-side,
-            #0000 calc(100% - 9px),
-            #000 calc(100% - 9px));
-    -webkit-mask-composite: destination-in;
-    mask-composite: intersect;
-    animation: spinner-d55elj 1s infinite steps(10);
-}
-
-@keyframes spinner-d55elj {
-    to {
-        transform: rotate(1turn);
-    }
-}
-
-:root {
-    --p-checkbox-width: 15px !important;
-    --p-checkbox-height: 15px !important;
-}
-
- //// Overide drop down
- .p-select{
-    height: 30px !important;
-    position: unset !important;
-    font-size: 14px !important; // if is not set import then get font-size default after set font size override then ui big after small
-    border-radius: unset !important;
-    border-top-right-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
-    border: 1px solid $border-color !important;
-    &:hover{
-        border: 1px solid $primary-color !important;
-    }
-
-    .p-select-label {
-        padding: unset !important;
-    }
-
- }
-
-.p-select-clear-icon {
-    margin-top: -6px;
-}
- .p-select-list-container{
-    .p-select-option {
-        border-radius: unset !important;
-        padding: unset !important;
-        height: 30px !important;
-        border-top-right-radius: 5px !important;
-        border-bottom-left-radius: 5px !important;
-    }
-    
- }
-
-/// Override datepicker
- .p-datepicker-panel{
-    border-radius: unset !important;
-    border-top-right-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
- }
- .p-datepicker-month {
-     font-size: 14px !important;
- }
-
- .p-datepicker-select-year {
-     font-size: 14px !important;
- }
-
- .p-datepicker-year {
-     font-size: 14px !important;
- }
-
- .p-datepicker-decade {
-     font-size: 14px !important;
- }
-
- .p-datepicker-select-year {
-     font-size: 14px !important;
- }
-
- .p-datepicker-select-month {
-     font-size: 14px !important;
- }
-
- .p-datepicker-weekday {
-     font-size: 14px !important;
- }
-
- .p-datepicker-day {
-     font-size: 14px !important;
- }
-
- /// Override input
-.p-inputtext {
-    font-size: 14px !important;
-    height: 30px !important;
-    border-radius: unset !important;
-    border-top-right-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
-    border: 1px solid $border-color !important;ton
-
-    &:hover{
-        border: 1px solid $primary-color !important;
-    }
-    &:focus{
-        border: 1px solid $primary-color !important;
-    }
-}
-
-/// Overrdie button
-.p-button{
-    border-radius: unset !important;
-    border-top-right-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
-    // border: 1px solid $border-color !important;
-    
-    // &:hover {
-    //     border: 1px solid $primary-color !important;
-    // }
-}
-.p-button-label{
-    font-size: 14px !important;;
-    font-weight: unset !important;
-}
-
-
-/// Override message
-.p-message-text {
-    font-weight: unset !important;
-    font-size: 12px !important;
-}
-/// Override toast
-.p-toast{
-    width: 350px !important;
-}
-.p-toast-message-text{
-    gap: 0px !important;
-}
-.p-toast-summary{
-    font-weight: bold !important;
-    font-size: 16px !important;
-}
-.p-toast-detail{
-    font-weight: normal !important;
-    font-size: 14px !important;
-}
-.p-toast-close-button{
-    width: 25px;
-    height: 25px;
-    padding: 7px;
-}
-.p-toast-message-icon{
-    display: none !important;
-}
-
-/// Override table
-.p-datatable-selectable-row {
-    &:hover {
-        background-color: $hover-item-color !important;
-    }
-}
-
-/// Override password
-.p-password-input {
-    width: 100% !important;
-}
-
-.p-password-toggle-mask-icon {
-    margin-top: -6px !important;
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-/// Override dialog
-.p-dialog-content{
-    padding: unset !important;
-}
-.p-dialog-header{
-    padding: unset !important;
-    font-size: 14px !important;
-}
-
-/// Override icon
-.p-icon {
-    width: 12px !important;
-    height: 12px !important;
-}
-
-.pi {
-    font-size: 13px !important;
-}
-
-/// Override tinymce
-.tox-tinymce {
-    border: 1px solid #eee !important;
-    border-radius: unset !important;
-    border-top-right-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
-}
-
-.tox-statusbar__right-container {
-    display: none !important;
-}
-
-.tox-promotion {
-    display: none !important;
-}
-
-.tox-edit-area::before {
-    border: 1px solid #10b981 !important;
-    border-top-left-radius: 0px !important;
-    border-top-right-radius: 0px !important;
-    border-bottom-left-radius: 9px !important;
-    border-bottom-right-radius: 9px !important;
-}
-.tox .tox-tbtn {
-    transform: scale(0.8) !important;
-    /* you can set the scale that you want */
-    height: unset !important;
-    width: unset !important;
-}
-.tox .tox-tbtn--bespoke .tox-tbtn__select-label {
-    width: unset !important;
-}
-/// Override multiselect
-.p-multiselect-option {
-    font-size: 14px !important;
-    height: 32px !important;
-}
-
-.p-multiselect-label .p-chip {
-    padding-block-start: unset !important;
-    padding-block-end: unset !important;
-}
-
-.p-multiselect-label {
-    padding: 5px 10px !important;
-    font-size: 14px !important;
-}
-
-.p-button-link {
-    padding: unset !important;
-}
-
-/// Override textarea
-.p-textarea{
-    font-size: 14px !important;
-    border-radius: unset !important;
-    border-top-right-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
-    border: 1px solid $border-color !important;
-    &:hover {
-        border: 1px solid $primary-color !important;
-    }
-}
-
-/// Override dialog
-.p-dialog{
-    border-radius: unset !important;
-    border-bottom-left-radius: 15px !important;
-    border-top-right-radius: 15px !important;
-}
-
-/// Override tag
-.p-tag {
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    padding: 5px !important;
-    padding-top: 2px !important;
-    padding-bottom: 2px !important;
-    border-radius: unset !important;
-    border-top-right-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
-}
-/// Scrollbar
-
-/* Works on Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: #dddddd transparent;
-}
-
-/* Works on Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-    width: 8px;
-}
-
-*::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 20px;
-    border: 3px solid #dddddd; }

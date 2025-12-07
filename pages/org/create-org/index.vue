@@ -135,8 +135,7 @@
                   id="org-size"
                   class="flex-1"
                   v-model="instance.sizeOfOrg"
-                  @value-change="changeSizeOfOrg"
-                  @blur="changeSizeOfOrg"
+                  @input="changeSizeOfOrg"
                   :placeholder="
                     $t('please_enter_name', {
                       name: $t('size').toLocaleLowerCase(),
@@ -516,7 +515,7 @@
 <script setup lang="ts">
 /// Import
 import { ref } from 'vue'
-import type { CreateOrgType } from '~/types/org/CreateOrgType'
+import type { CreateOrgType } from '~/types/org/create-org/CreateOrgType'
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import Add from '~/assets/icons/add.svg'
@@ -524,10 +523,11 @@ import DefaultAvatar from '~/assets/images/default-avatar.png'
 import { CreateOrgValidate } from '~/validate/org/CreateOrgValidate'
 import { GlobalStore } from '~/store/Global'
 import { useToast } from 'primevue/usetoast'
+import { header } from '@primeuix/themes/aura/accordion'
 /// Define
 const store = GlobalStore()
 const toast = useToast()
-const { $orgAPI } = useNuxtApp()
+const { $orgAPI, $socialAPI } = useNuxtApp()
 
 const { t } = useI18n()
 const instance = ref(<CreateOrgType>{
@@ -566,7 +566,7 @@ const clickMoveToPrivacy = async () => {
 }
 /// Change name of org
 const changeNameOfOrg = async (evt: any) => {
-  CreateOrgValidate.nameOfOrg(instance, t)
+  CreateOrgValidate.nameOfOrg(instance, t, $orgAPI)
 }
 /// Change name of org
 const changeSloganOfOrg = async (evt: any) => {
@@ -575,6 +575,7 @@ const changeSloganOfOrg = async (evt: any) => {
 
 /// Change size of org
 const changeSizeOfOrg = async (evt: any) => {
+  instance.value.sizeOfOrg = evt.value
   CreateOrgValidate.sizeOfOrg(instance, t)
 }
 
@@ -588,7 +589,7 @@ const changeNameOfBranch = async (evt: any) => {
 }
 /// Change email of branch
 const changeEmailOfBranch = async (evt: any) => {
-  CreateOrgValidate.emailOfBranch(instance, t, toast)
+  CreateOrgValidate.emailOfBranch(instance, t, $orgAPI)
 }
 
 /// Change address of branch
@@ -599,7 +600,7 @@ const changeAddressOfBranch = async (evt: any) => {
 /// Change phone number of branch
 const changePhoneNumberOfBranch = async (evt: any) => {
   // validatePhoneNumberWithExist(instance, t, abortController)
-  CreateOrgValidate.phoneNumberOfBranch(instance, t, toast)
+  CreateOrgValidate.phoneNumberOfBranch(instance, t, $orgAPI)
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
@@ -648,8 +649,12 @@ const onFileSelectBranch = (event: any) => {
   reader.readAsDataURL(file)
 }
 
-/// Create org
-const callAPICreateOrg = async (): Promise<boolean> => {
+/// Create save org
+const clickSave = async (evt: any) => {
+  const validate = await CreateOrgValidate.allValidate(instance, t, $orgAPI)
+  if (!validate) {
+    return
+  }
   /// Create org
   const nameOfOrg = instance.value.nameOfOrg ?? ''
   const sloganOfOrg = instance.value.sloganOfOrg ?? ''
@@ -665,8 +670,8 @@ const callAPICreateOrg = async (): Promise<boolean> => {
   const descriptionOfBranch = instance.value.descriptionOfBranch ?? ''
 
   const formData = new FormData()
-  formData.append('files', instance.value.avatarFileOfOrg)
-  formData.append('files', instance.value.avatarFileOfBranch)
+  formData.append('avatarOfOrg', instance.value.avatarFileOfOrg)
+  formData.append('avatarOfBranch', instance.value.avatarFileOfBranch)
   formData.append('nameOfOrg', nameOfOrg)
   formData.append('sloganOfOrg', sloganOfOrg)
   formData.append('fieldsOfOrg', fieldsOfOrg)
@@ -679,70 +684,29 @@ const callAPICreateOrg = async (): Promise<boolean> => {
   formData.append('descriptionOfBranch', descriptionOfBranch)
 
   const options: any = {
-    method: Method.POST,
+    method: MethodCons.POST,
     body: formData,
+    headers: { 'Content-Type': 'no-content-type' },
   }
-  const { data, error, status } = await CallAPI(
-    APIPathOrg.POST_CREATE_ORG,
-    options,
-    toast,
-    t,
-    false,
-    true
-  )
+  const response: any = await $orgAPI(APIOrgAuthCons.SIGN_UP, options)
+  const data = response.data
+  /// Save access token
+  store.setAccessTokenUser(data.accessToken)
+  store.setRefreshTokenUser(data.refreshToken)
+  store.setUser(data.user)
 
-  /// Check error
-  if (status.value !== APIStatusCons.SUCCESS) {
-    return false
+  const optionsUser: any = {
+    method: MethodCons.GET,
+    query: {
+      refresh: true,
+    },
   }
-  const result: any = data.value
-  instance.value.org = result.data.org
-  /// Save auth
-  // store.setOrgAuth(result.data.auth)
-  return true
-}
-
-/// Get orgs of user
-const callAPIOrgsOfUser = async () => {
-  const options: any = {
-    method: Method.GET,
-  }
-  const { data, error, status } = await CallAPI(
-    APIPathAccount.GET_ORGANIZATION_OF_USER,
-    options,
-    toast,
-    t,
-    false
-  )
-
-  if (status.value !== APIStatusCons.SUCCESS) {
-    return []
-  }
-
-  const result: any = data.value
-  return result.data
-}
-
-/// Create save org
-const clickSave = async (evt: any) => {
-  const validate = await CreateOrgValidate.allValidate(instance, t, toast)
-  if (!validate) {
-    return
-  }
-  /// Create org
-  const create = await callAPICreateOrg()
-  if (!create) {
-    return
-  }
-
-  const orgs = await callAPIOrgsOfUser()
-
-  /// Set org to store
-  // store.setListOrgs(orgs)
-  /// Move to information of org
-  /// Go to information of org
+  const resUser: any = await $socialAPI(APISocialAuthCons.VERIFY, options)
+  const dataUser = resUser.data
+  store.setUser(dataUser)
   await navigateTo({
-    path: Path.INFORM_OF_ORG,
+    path: PathSocialHomeCons.HOME,
+    replace: true,
   })
 }
 

@@ -1,0 +1,51 @@
+.create-position {
+    flex: 1;
+    padding: 30px;
+    min-width: 600px;
+
+    .contain {
+        display: flex;
+        flex-direction: column;
+
+        .inner {
+            width: 100%;
+            max-width: 700px;
+            border: 1px solid $border-color;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            padding: 30px;
+        }
+    }
+
+    .label {
+        width: 110px;
+
+        span {
+            margin-left: 2px;
+            color: red;
+        }
+    }
+
+    .icon {
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+    }
+
+    .avatar-des {
+        margin-left: 110px;
+    }
+
+    .line {
+        border-radius: 5px;
+        border-bottom: 1px dashed $border-color;
+    }
+
+    .image {
+        margin-left: 50px;
+        width: 50px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-color: $second-color;
+        border-style: solid;
+        border-width: 1px;
+    }
+}

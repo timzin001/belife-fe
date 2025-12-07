@@ -195,7 +195,7 @@ const clickSignIn = async () => {
       password: password,
     },
   }
-  const response: any = await $socialAPI(APISocailAuthCons.SIGN_IN, options)
+  const response: any = await $socialAPI(APISocialAuthCons.SIGN_IN, options)
   const data = response.data
 
   /// Save access token
@@ -267,5 +267,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import url('~/assets/scss/account/SignIn.scss');
+@import url('~/assets/scss/social/SignIn.scss');
 </style>

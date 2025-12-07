@@ -114,7 +114,7 @@ import { ref } from 'vue'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
 import ArrowLeft from '~/assets/icons/arrow-left.svg'
 import Save from '~/assets/icons/save.svg'
-import { CreatePositionValidate } from '~/validate/staff/CreatePositionValidate'
+import { CreatePositionValidate } from '~/validate/org/CreatePositionValidate'
 import type { CreatePositionType } from '~/types/staff/CreatePositionType'
 import { GlobalStore } from '~/store/Global'
 import { useToast } from 'primevue/usetoast'
@@ -169,15 +169,6 @@ const clickBack = () => {
 
 /// Create save position
 const clickSave = async (evt: any) => {
-  // const validate = await CreatePositionValidate.all(
-  //   instance,
-  //   t,
-  //   toast,
-  //   locale.value
-  // )
-  // if (!validate) {
-  //   return
-  // }
   const name = instance.value.name || {}
   const description = instance.value.description || {}
   let formData = new FormData()
@@ -185,7 +176,7 @@ const clickSave = async (evt: any) => {
   formData.append('name', JSON.stringify(name))
   formData.append('description', JSON.stringify(description))
   const options: any = {
-    method: Method.POST,
+    method: MethodCons.POST,
     body: formData,
   }
   const { data, error, status } = await CallAPI(

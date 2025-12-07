@@ -1,4 +1,4 @@
-import type { CreatePositionType } from '~/types/staff/CreatePositionType'
+import type { CreatePositionType } from '~/types/org/create-position/CreatePositionType'
 import { type Ref } from 'vue'
 import type { ToastServiceMethods } from 'primevue'
 /// Validate avatar
@@ -20,7 +20,7 @@ const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
 const validateName = async (
   instance: Ref<CreatePositionType>,
   t: any,
-  toast: ToastServiceMethods,
+  $orgAPI: any,
   locale: string
 ) => {
   let nameObject: any = instance.value.name
@@ -53,34 +53,27 @@ const validateName = async (
     return
   }
 
+  if (instance.value.nameAbort) {
+    instance.value.nameAbort.abort(APIStatusCons.ABORT_API)
+  }
+  instance.value.nameAbort = new AbortController()
+  const signal = instance.value.nameAbort.signal
+
   const options: any = {
-    method: Method.GET,
+    method: MethodCons.GET,
+    signal: signal,
     query: {
       name: name,
     },
   }
-
-  const { data, error, status } = await CallAPI(
-    APIPathPosition.GET_EXIST_NAME,
-    options,
-    toast,
-    t,
-    true
-  )
-
-  if (status.value !== APIStatusCons.SUCCESS) {
+  const result = await $orgAPI(APIOrgPositionCons.EXIST_NAME, options)
+  if (result.data) {
     instance.value.nameError = t(
       'name1_is_already_in_use_by_anthor_name2_in_organization',
-      { name1: t('name'), name2: t('position').toLocaleLowerCase() }
-    )
-    return
-  }
-  const valueCont: any = data.value
-  const result: any = valueCont.data
-  if (result) {
-    instance.value.nameError = t(
-      'name1_is_already_in_use_by_anthor_name2_in_organization',
-      { name1: t('name'), name2: t('position').toLocaleLowerCase() }
+      {
+        name1: t('name'),
+        name2: t('position').toLocaleLowerCase(),
+      }
     )
   } else {
     instance.value.nameError = ''

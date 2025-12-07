@@ -37,8 +37,9 @@ export const CookieCons = {
   REFRESH_TOKEN_USER: 'refreshTokenUser',
   USER: 'user',
 
-  ACCESS_TOKEN_ORG: 'accessTokenUser',
-  REFRESH_TOKEN_ORG: 'refreshTokenUser',
+  ACCESS_TOKEN_EMPLOYEE: 'accessTokenEmployee',
+  REFRESH_TOKEN_EMPLOYEE: 'refreshTokenEmployee',
+  EMPLOYEE: 'employee',
 
   LANGUAGE: 'language',
   ORG: 'org',
@@ -77,16 +78,26 @@ export const APIStatusCons = {
 
 /// BACKEND
 
-export const APISocailAuthCons = {
+export const APISocialAuthCons = {
   SIGN_UP: 'auth/sign-up',
   SIGN_IN: 'auth/sign-in',
+  VERIFY: 'auth/verify',
 }
 export const APISocialUserCons = {
   EXIST_PHONE_NUMBER: 'user/exist-phone-number',
 }
-
+export const APIOrgAuthCons = {
+  SIGN_UP: 'auth/sign-up',
+}
 export const APIOrgTenantCons = {
   EXIST_NAME: 'tenant/exist-name',
+}
+export const APIOrgPositionCons = {
+  EXIST_NAME: 'position/exist-name',
+}
+export const APIOrgBranchCons = {
+  EXIST_PHONE_NUMBER_IN_SYSTEM: 'branch/exist-phone-number-in-system',
+  EXIST_EMAIL_IN_SYSTEM: 'branch/exist-email-in-system',
 }
 
 export const APIPathAccountCons = {

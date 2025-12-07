@@ -1,6 +1,7 @@
+import { header } from '@primeuix/themes/aura/accordion'
 import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
-import type { CreateOrgType } from '~/types/org/CreateOrgType'
+import type { CreateOrgType } from '~/types/org/create-org/CreateOrgType'
 
 /// Validate name of org
 const nameOfOrg = async (
@@ -19,7 +20,7 @@ const nameOfOrg = async (
   if (nameOfOrg.length < 3) {
     instance.value.nameOfOrgError = t(
       'name1_must_be_greater_than_name2_characters',
-      { name: t('name'), name2: 2 }
+      { name1: t('name'), name2: 2 }
     )
     return
   }
@@ -30,35 +31,15 @@ const nameOfOrg = async (
   instance.value.nameOfOrgAbort = new AbortController()
   const signal = instance.value.nameOfOrgAbort.signal
   const options = {
-    method: 'get',
+    method: MethodCons.GET,
     signal: signal,
     query: {
       name: nameOfOrg,
     },
   }
 
-  const { data, error, status } = await CallAPI(
-    APIPathOrg.GET_EXIST_NAME_ORG,
-    options,
-    toast,
-    t,
-    false
-  )
-  instance.value.nameOfOrgAbort = null
-  if (status.value !== APIStatusCons.SUCCESS) {
-    const strError = error?.value?.message || ''
-    if (!strError.includes(APIStatusCons.ABORT_API)) {
-      instance.value.nameOfOrgError = t('name_is_exist_in_system', {
-        name: t('name'),
-      })
-      return
-    }
-    /// Abort
-    return
-  }
-  const valueCont: any = data.value
-  const result: any = valueCont.data
-  if (result) {
+  const result = await $orgAPI(APIOrgTenantCons.EXIST_NAME, options)
+  if (result.data) {
     instance.value.nameOfOrgError = t('name_is_exist_in_system', {
       name: t('name'),
     })
@@ -107,7 +88,7 @@ const sizeOfOrg = (instance: Ref<CreateOrgType>, t: any) => {
   let sizeOfOrganization = instance.value.sizeOfOrg
   if (!sizeOfOrganization) {
     instance.value.sizeOfOrgError = t('please_enter_name', {
-      name: t('size'),
+      name: t('size').toLocaleLowerCase(),
     })
     return
   }
@@ -118,7 +99,7 @@ const sizeOfOrg = (instance: Ref<CreateOrgType>, t: any) => {
 const phoneNumberOfBranch = async (
   instance: Ref<CreateOrgType>,
   t: any,
-  toast: ToastServiceMethods
+  $orgAPI: any
 ) => {
   let phoneNumberStr = `${instance.value.phoneNumberOfBranch ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
@@ -145,35 +126,19 @@ const phoneNumberOfBranch = async (
   instance.value.phoneNumberOfBranchAbort = new AbortController()
   const signal = instance.value.phoneNumberOfBranchAbort.signal
   const options = {
-    method: 'get',
+    method: MethodCons.GET,
     signal: signal,
     query: {
       phoneNumber: phoneNumber,
     },
   }
 
-  const { data, error, status } = await CallAPI(
-    APIPathOrg.BRANCH.GET_EXIST_PHONE_NUMBER_IN_SYSTEM,
-    options,
-    toast,
-    t,
-    false
+  const response = await $orgAPI(
+    APIOrgBranchCons.EXIST_PHONE_NUMBER_IN_SYSTEM,
+    options
   )
-  instance.value.phoneNumberOfBranchAbort = null
-  if (status.value !== APIStatusCons.SUCCESS) {
-    const strError = error?.value?.message || ''
-    if (!strError.includes(APIStatusCons.ABORT_API)) {
-      instance.value.phoneNumberOfBranchError = t('name_is_exist_in_system', {
-        name: t('phone_number'),
-      })
-      return
-    }
-    /// Abort
-    return
-  }
-  const valueCont: any = data.value
-  const result: any = valueCont.data
-  if (result) {
+
+  if (response.data) {
     instance.value.phoneNumberOfBranchError = t('name_is_exist_in_system', {
       name: t('phone_number'),
     })
@@ -185,7 +150,7 @@ const phoneNumberOfBranch = async (
 const emailOfBranch = async (
   instance: Ref<CreateOrgType>,
   t: any,
-  toast: ToastServiceMethods
+  $orgAPI: any
 ) => {
   const emailOfBranch = instance.value.emailOfBranch
   if (!emailOfBranch) {
@@ -207,35 +172,18 @@ const emailOfBranch = async (
   instance.value.emailOfBranchAbort = new AbortController()
   const signal = instance.value.emailOfBranchAbort.signal
   const options = {
-    method: 'get',
+    method: MethodCons.GET,
     signal: signal,
     query: {
       email: emailOfBranch,
     },
   }
 
-  const { data, error, status } = await CallAPI(
-    APIPathOrg.BRANCH.GET_EXIST_PHONE_NUMBER_IN_SYSTEM,
-    options,
-    toast,
-    t,
-    false
+  const response = await $orgAPI(
+    APIOrgBranchCons.EXIST_EMAIL_IN_SYSTEM,
+    options
   )
-  instance.value.emailOfBranchAbort = null
-  if (status.value !== APIStatusCons.SUCCESS) {
-    const strError = error?.value?.message || ''
-    if (!strError.includes(APIStatusCons.ABORT_API)) {
-      instance.value.emailOfBranchError = t('name_is_exist_in_system', {
-        name: t('email'),
-      })
-      return
-    }
-    /// Abort
-    return
-  }
-  const valueCont: any = data.value
-  const result: any = valueCont.data
-  if (result) {
+  if (response.data) {
     instance.value.emailOfBranchError = t('name_is_exist_in_system', {
       name: t('email'),
     })
@@ -311,18 +259,18 @@ const nameOfBranch = async (instance: Ref<CreateOrgType>, t: any) => {
 const allValidate = async (
   instance: Ref<CreateOrgType>,
   t: any,
-  toast: ToastServiceMethods
+  $orgAPI: any
 ) => {
   await Promise.all([
     avatarOfOrg(instance, t),
-    nameOfOrg(instance, t, toast),
+    nameOfOrg(instance, t, $orgAPI),
     sloganOfOrg(instance, t),
     fieldsOfOrg(instance, t),
     sizeOfOrg(instance, t),
     avatarOfBranch(instance, t),
     nameOfBranch(instance, t),
-    emailOfBranch(instance, t, toast),
-    phoneNumberOfBranch(instance, t, toast),
+    emailOfBranch(instance, t, $orgAPI),
+    phoneNumberOfBranch(instance, t, $orgAPI),
     addressOfBranch(instance, t),
   ])
 

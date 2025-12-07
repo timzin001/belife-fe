@@ -22,7 +22,7 @@
     </div>
     <div class="w-full pl-[10px] pr-[10px]">
       <Select
-        v-if="instance.listOrgs.length"
+        v-if="false"
         v-model="instance.selectOrg"
         :options="instance.listOrgs"
         optionLabel="name"
@@ -94,9 +94,7 @@ const { t, locale } = useI18n()
 
 const instance = ref<LeftMenuType>({
   menus: [],
-  org: store.getOrg(),
-  selectOrg: null,
-  listOrgs: [],
+  employee: store.getEmployee(),
   user: store.getUser(),
 })
 
@@ -192,18 +190,18 @@ const changeOrg = async (evt: any) => {
 }
 
 const initMenu = () => {
-  console.log(instance.value.user)
-  console.log(instance.value.org)
-  if (instance.value.org) {
-    return menuOrganization({
-      signOut: clickSignOut,
-      positionsOrg: clickPositionOrg,
-      branchesOrg: clickBranchesOrg,
-      departmentsOrg: clickDepartmentsOrg,
-      employeesOrg: clickEmployeesOrg,
-      profile: clickProfile,
-    })
-  }
+  // console.log(instance.value.user)
+  // console.log(instance.value.org)
+  // if (instance.value.org) {
+  //   return menuOrganization({
+  //     signOut: clickSignOut,
+  //     positionsOrg: clickPositionOrg,
+  //     branchesOrg: clickBranchesOrg,
+  //     departmentsOrg: clickDepartmentsOrg,
+  //     employeesOrg: clickEmployeesOrg,
+  //     profile: clickProfile,
+  //   })
+  // }
   if (instance.value.user) {
     return menuAccount({
       createOrg: clickCreateOrg,

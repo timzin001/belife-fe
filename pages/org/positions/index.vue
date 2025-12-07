@@ -504,6 +504,12 @@
           :rowsPerPageOptions="[10, 20, 30]"
         ></Paginator>
       </div>
+      <CreateUpdateDialog
+        :title="instance.titleDialog"
+        :visible="instance.visibleDialog"
+        @click-ok="clickOkDialog"
+        @click-close="clickCloseDialog"
+      />
     </div>
   </div>
 </template>
@@ -519,7 +525,9 @@ import Trash from '~/assets/icons/trash.svg'
 import Search from '~/assets/icons/search.svg'
 import Times from '~/assets/icons/times.svg'
 import type { PositionFilterType } from '~/types/staff/PositionType'
+import type { PositionsType } from '~/types/org/positions/PositionsType'
 import type { HeaderColumnType } from '~/types/common/HeaderColumnType'
+import CreateUpdateDialog from '../create-update-position/create-update-dialog.vue'
 
 /// Define
 const store = GlobalStore()
@@ -532,7 +540,9 @@ const createdAtViewFilter = ref()
 const createdAtViewStatus = ref()
 const updatedAtViewFilter = ref()
 const updatedAtViewStatus = ref()
-const instance = ref({
+const instance = ref<PositionsType>({
+  visibleDialog: false,
+  titleDialog: '',
   list: [],
   total: 0,
   limit: 10,
@@ -736,7 +746,8 @@ const clickEdit = (data: any) => {
 /// Click create employee
 const clickCreate = async () => {
   /// Move to add
-  await navigateTo({ path: PathStaff.CREATE_POSITION })
+  // await navigateTo({ path: PathStaff.CREATE_POSITION })
+  instance.value.visibleDialog = true
 }
 /// Get search query
 const getSearchQuery = () => {
@@ -773,28 +784,26 @@ const getSearchQuery = () => {
 }
 /// Get list data
 const getListData = async (query: any) => {
-  const options: any = {
-    method: 'get',
-    query: query,
-  }
-  const { data, error, status } = await CallAPI(
-    APIPathPosition.GET_LIST,
-    options,
-    toast,
-    t,
-    true
-  )
-
-  /// Check error
-  if (status.value !== APIStatusCons.SUCCESS) {
-    /// Check abort
-    return
-  }
-  const value: any = data.value
-  const result = value.data
-
-  instance.value.list = mapNoToList(result.list, result.paginator.offset)
-  instance.value.total = result.paginator.total
+  // const options: any = {
+  //   method: 'get',
+  //   query: query,
+  // }
+  // const { data, error, status } = await CallAPI(
+  //   APIPathPosition.GET_LIST,
+  //   options,
+  //   toast,
+  //   t,
+  //   true
+  // )
+  // /// Check error
+  // if (status.value !== APIStatusCons.SUCCESS) {
+  //   /// Check abort
+  //   return
+  // }
+  // const value: any = data.value
+  // const result = value.data
+  // instance.value.list = mapNoToList(result.list, result.paginator.offset)
+  // instance.value.total = result.paginator.total
 }
 
 /// Init data
@@ -904,6 +913,22 @@ const inputUpdatedAt = (evt: any) => {
   }, 10)
 }
 
+const clickOkDialog = () => {
+  // if (instance.value.informTrack.type === 'branch') {
+  //   handleDeleteBranch(instance.value.informTrack.data)
+  // } else if (instance.value.informTrack.type === 'department') {
+  //   handleDeleteDepartment(instance.value.informTrack.data)
+  // } else if (instance.value.informTrack.type === 'position') {
+  //   handleDeletePosition(instance.value.informTrack.data)
+  // }
+  // clearInform()
+  instance.value.visibleDialog = false
+}
+
+const clickCloseDialog = () => {
+  // clearInform()
+  instance.value.visibleDialog = false
+}
 /// Get data
 initData()
 

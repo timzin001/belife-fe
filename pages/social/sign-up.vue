@@ -338,7 +338,7 @@ const clickSignUp = async () => {
       gender: gender,
     },
   }
-  const response: any = await $socialAPI(APISocailAuthCons.SIGN_UP, options)
+  const response: any = await $socialAPI(APISocialAuthCons.SIGN_UP, options)
   const data = response.data
 
   /// Save access token
@@ -452,5 +452,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import url('~/assets/scss/account/SignUp.scss');
+@import url('~/assets/scss/social/SignUp.scss');
 </style>

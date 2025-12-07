@@ -2,8 +2,6 @@ import type { MenuItem } from 'primevue/menuitem'
 import type { UserType } from '../account/UserType'
 export interface LeftMenuType {
   menus: MenuItem[]
-  org: any
-  selectOrg: any
-  listOrgs: []
+  employee: any
   user: UserType | null
 }

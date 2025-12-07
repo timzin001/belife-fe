@@ -9,18 +9,33 @@ export const GlobalStore = defineStore('global', () => {
     CookieCons.OPTION
   )
   const refreshTokenUser = useCookie(
-    CookieCons.ACCESS_TOKEN_USER,
+    CookieCons.REFRESH_TOKEN_USER,
     CookieCons.OPTION
   )
-  const user = useCookie<UserType>(CookieCons.USER, CookieCons.OPTION)
+  const accessTokenEmployee = useCookie(
+    CookieCons.ACCESS_TOKEN_EMPLOYEE,
+    CookieCons.OPTION
+  )
+  const refreshTokenEmployee = useCookie(
+    CookieCons.REFRESH_TOKEN_EMPLOYEE,
+    CookieCons.OPTION
+  )
+  const user = useCookie<UserType | null>(CookieCons.USER, CookieCons.OPTION)
   const language = useCookie(CookieCons.LANGUAGE, CookieCons.OPTION)
-  const org = useCookie(CookieCons.ORG, CookieCons.OPTION)
+  const employee = useCookie(CookieCons.EMPLOYEE, CookieCons.OPTION)
 
   function setAccessTokenUser(value: string) {
     accessTokenUser.value = value
   }
   function getAccessTokenUser(): string | null {
     return accessTokenUser.value || null
+  }
+
+  function setRefreshTokenUser(value: string) {
+    refreshTokenUser.value = value
+  }
+  function getRefreshTokenUser(): string | null {
+    return refreshTokenUser.value || null
   }
 
   function setUser(value: UserType) {
@@ -31,20 +46,25 @@ export const GlobalStore = defineStore('global', () => {
     return user.value
   }
 
-  function setRefreshTokenUser(value: string) {
-    refreshTokenUser.value = value
+  function setAccessTokenEmployee(value: string) {
+    accessTokenEmployee.value = value
   }
-  function getRefreshTokenUser(): string | null {
+  function getAccessTokenEmployee(): string | null {
+    return accessTokenEmployee.value || null
+  }
+
+  function setRefreshTokenEmployee(value: string) {
+    refreshTokenEmployee.value = value
+  }
+  function getRefreshTokenEmployee(): string | null {
     return refreshTokenUser.value || null
   }
 
-  /// Set org
-  function setOrg(value: any) {
-    org.value = value
+  function setEmployee(value: any) {
+    employee.value = value
   }
-  /// Get org
-  function getOrg() {
-    return org.value
+  function getEmployee() {
+    return employee.value
   }
 
   /// Set language
@@ -72,7 +92,8 @@ export const GlobalStore = defineStore('global', () => {
     /// Not remove language
     // removeItem(LocalStorage.LANGUAGE)
     // account.value = null
-    org.value = null
+    employee.value = null
+    user.value = null
   }
   /// Set status loaded of editor
   function setLoadEditor(value: boolean) {
@@ -86,18 +107,22 @@ export const GlobalStore = defineStore('global', () => {
   return {
     setAccessTokenUser,
     getAccessTokenUser,
-
     setRefreshTokenUser,
     getRefreshTokenUser,
     setUser,
     getUser,
+
+    setAccessTokenEmployee,
+    getAccessTokenEmployee,
+    setRefreshTokenEmployee,
+    getRefreshTokenEmployee,
+    getEmployee,
+    setEmployee,
 
     signOut,
     setLanguage,
     getLanguage,
     setLoadEditor,
     getLoadEditor,
-    getOrg,
-    setOrg,
   }
 })
