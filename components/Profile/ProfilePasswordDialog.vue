@@ -104,7 +104,7 @@
 
 <script setup lang="ts">
 /// Import
-import type { UpdatePasswordData } from '~/types/account/ProfileType'
+import type { UpdatePasswordData } from '~/types/social/ProfileType'
 import { ProfileValidate } from '~/validate/ProfileValidate'
 /// Define
 const toast = useToast()

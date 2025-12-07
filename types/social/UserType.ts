@@ -11,5 +11,5 @@ export interface UserType {
   updateAt: ObjectType | null
   role: string
   avatar: MediaType | null
-  orgs: Map<KeyType, String>
+  // orgs: Map<KeyType, String>
 }

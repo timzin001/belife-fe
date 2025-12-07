@@ -23,8 +23,8 @@
     <div class="w-full pl-[10px] pr-[10px]">
       <Select
         v-if="false"
-        v-model="instance.selectOrg"
-        :options="instance.listOrgs"
+        v-model="instance.org"
+        :options="instance.listOrgs || []"
         optionLabel="name"
         @value-change="changeOrg"
         :placeholder="$t('choose_organization')"
@@ -96,6 +96,8 @@ const instance = ref<LeftMenuType>({
   menus: [],
   employee: store.getEmployee(),
   user: store.getUser(),
+  org: store.getOrg(),
+  listOrgs: store.getListOrgs(),
 })
 
 /// Function

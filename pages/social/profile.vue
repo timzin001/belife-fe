@@ -360,7 +360,7 @@ import Pencil from '~/assets/icons/pencil.svg'
 import { ref } from 'vue'
 import DefaultPicture from '~/assets/images/default-picture.png'
 import { useToast } from 'primevue/usetoast'
-import type { ProfileType } from '~/types/account/ProfileType'
+import type { ProfileType } from '~/types/social/ProfileType'
 
 /// Define
 const instance = ref(<ProfileType>{})

@@ -144,7 +144,8 @@ definePageMeta({
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
-import type { SignInType } from '~/types/account/SignInType'
+import type { SignInType } from '~/types/social/SignInType'
+import type { OrgType } from '~/types/org/org/OrgType'
 import { SignInValidate } from '~/validate/social/SignInValidate'
 import { GlobalStore } from '~/store/Global'
 const store = GlobalStore()
@@ -197,11 +198,32 @@ const clickSignIn = async () => {
   }
   const response: any = await $socialAPI(APISocialAuthCons.SIGN_IN, options)
   const data = response.data
+  let user = data.user
+  const mapOrgs = user.orgs
+
+  let listOrgs: OrgType[] = []
+  Object.keys(mapOrgs).forEach((key) => {
+    const value = mapOrgs[key]
+    const object = JSON.parse(value)
+    object.name = JSON.parse(object.name)
+    object.slogan = JSON.parse(object.slogan)
+    object.fields = JSON.parse(object.fields)
+    object.active = JSON.parse(object.active)
+    if (object.avatar) {
+      object.avatar = JSON.parse(object.avatar)
+    }
+    object.createdAt = JSON.parse(object.createdAt)
+    if (object.updatedAt) {
+      object.updatedAt = JSON.parse(object.updatedAt)
+    }
+    listOrgs.push(object)
+  })
 
   /// Save access token
   store.setAccessTokenUser(data.accessToken)
   store.setRefreshTokenUser(data.refreshToken)
   store.setUser(data.user)
+  store.setListOrgs(listOrgs)
 
   await navigateTo({
     path: PathSocialHomeCons.HOME,

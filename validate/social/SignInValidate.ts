@@ -1,6 +1,6 @@
 import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
-import type { SignInType } from '~/types/account/SignInType'
+import type { SignInType } from '~/types/social/SignInType'
 /// Call API validate phone number
 export const phoneNumber = async (instance: Ref<SignInType>, t: any) => {
   let phoneNumberStr = `${instance.value.phoneNumber ?? ''}`

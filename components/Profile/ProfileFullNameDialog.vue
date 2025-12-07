@@ -72,7 +72,7 @@
 
 <script setup lang="ts">
 /// Import
-import type { UpdateFullNameData } from '~/types/account/ProfileType'
+import type { UpdateFullNameData } from '~/types/social/ProfileType'
 import { ProfileValidate } from '~/validate/ProfileValidate'
 /// Define
 const toast = useToast()

@@ -1,5 +1,6 @@
 import { value } from '@primeuix/themes/aura/knob'
-import type { UserType } from '~/types/account/UserType'
+import type { OrgType } from '~/types/org/org/OrgType'
+import type { UserType } from '~/types/social/UserType'
 
 export const GlobalStore = defineStore('global', () => {
   const loadEditor = ref(false)
@@ -21,8 +22,13 @@ export const GlobalStore = defineStore('global', () => {
     CookieCons.OPTION
   )
   const user = useCookie<UserType | null>(CookieCons.USER, CookieCons.OPTION)
-  const language = useCookie(CookieCons.LANGUAGE, CookieCons.OPTION)
+  const language = useCookie<string>(CookieCons.LANGUAGE, CookieCons.OPTION)
   const employee = useCookie(CookieCons.EMPLOYEE, CookieCons.OPTION)
+  const org = useCookie<OrgType | null>(CookieCons.ORG, CookieCons.OPTION)
+  const listOrgs = useCookie<OrgType[] | null>(
+    CookieCons.LIST_ORGS,
+    CookieCons.OPTION
+  )
 
   function setAccessTokenUser(value: string) {
     accessTokenUser.value = value
@@ -44,6 +50,22 @@ export const GlobalStore = defineStore('global', () => {
 
   function getUser(): UserType | null {
     return user.value
+  }
+
+  function setOrg(value: OrgType) {
+    org.value = value
+  }
+
+  function getOrg(): OrgType | null {
+    return org.value
+  }
+
+  function setListOrgs(value: any) {
+    listOrgs.value = value
+  }
+
+  function getListOrgs(): any | null {
+    return listOrgs.value
   }
 
   function setAccessTokenEmployee(value: string) {
@@ -118,6 +140,11 @@ export const GlobalStore = defineStore('global', () => {
     getRefreshTokenEmployee,
     getEmployee,
     setEmployee,
+
+    setOrg,
+    getOrg,
+    setListOrgs,
+    getListOrgs,
 
     signOut,
     setLanguage,

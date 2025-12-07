@@ -280,7 +280,7 @@ definePageMeta({
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
-import type { SignUpType } from '~/types/account/SignUpType'
+import type { SignUpType } from '~/types/social/SignUpType'
 import { SignUpValidate } from '~/validate/social/SignUpValidate'
 import { GlobalStore } from '~/store/Global'
 
