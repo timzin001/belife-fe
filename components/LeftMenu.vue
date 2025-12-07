@@ -22,7 +22,7 @@
     </div>
     <div class="w-full pl-[10px] pr-[10px]">
       <Select
-        v-if="false"
+        v-if="instance.listOrgs"
         v-model="instance.org"
         :options="instance.listOrgs || []"
         optionLabel="name"
@@ -84,13 +84,12 @@ import { GlobalStore } from '~/store/Global'
 import DefaultAvarar from '~/assets/images/default-avatar.png'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
-
+const { $orgAPI } = useNuxtApp()
 /// Define
 const emits = defineEmits(['clickClose'])
 const store = GlobalStore()
 const toast = useToast()
 const { t, locale } = useI18n()
-// const account = ref(store.getAccount())
 
 const instance = ref<LeftMenuType>({
   menus: [],
@@ -99,7 +98,7 @@ const instance = ref<LeftMenuType>({
   org: store.getOrg(),
   listOrgs: store.getListOrgs(),
 })
-
+console.log(store.getListOrgs())
 /// Function
 const getFullNameOfUser = () => {
   const user: any = instance.value.user
@@ -161,12 +160,18 @@ const clickClose = () => {
 }
 /// Change org
 const changeOrg = async (evt: any) => {
+  console.log('------changeOrg--------')
+  console.log(evt)
   const options: any = {
     method: MethodCons.POST,
     body: {
-      idOfOrg: evt._id,
+      employeeId: evt.employeeId,
     },
   }
+
+  const response: any = await $orgAPI(APIOrgAuthCons.SIGN_IN, options)
+  const data = response.data
+
   // const { data, error, status } = await CallAPI(
   //   APIPathAccount.POST_SIGN_IN_ORG_AUTH,
   //   options,

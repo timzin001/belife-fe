@@ -88,6 +88,7 @@ export const APISocialUserCons = {
 }
 export const APIOrgAuthCons = {
   SIGN_UP: 'auth/sign-up',
+  SIGN_IN: 'auth/sign-in',
 }
 export const APIOrgTenantCons = {
   EXIST_NAME: 'tenant/exist-name',

@@ -340,11 +340,12 @@ const clickSignUp = async () => {
   }
   const response: any = await $socialAPI(APISocialAuthCons.SIGN_UP, options)
   const data = response.data
-
+  let user = data.user
+  delete user.orgs
   /// Save access token
   store.setAccessTokenUser(data.accessToken)
   store.setRefreshTokenUser(data.refreshToken)
-  store.setUser(data.user)
+  store.setUser(user)
 
   await navigateTo({
     path: PathSocialHomeCons.HOME,

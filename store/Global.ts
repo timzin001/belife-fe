@@ -90,12 +90,12 @@ export const GlobalStore = defineStore('global', () => {
   }
 
   /// Set language
-  function setLanguage(value: any) {
+  function setLanguage(value: string) {
     language.value = value
   }
   /// Get language
-  function getLanguage() {
-    return language.value ?? 'en'
+  function getLanguage(): string {
+    return language.value || 'en'
   }
 
   /// Sign out clear data

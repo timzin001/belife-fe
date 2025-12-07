@@ -524,6 +524,7 @@ import { CreateOrgValidate } from '~/validate/org/CreateOrgValidate'
 import { GlobalStore } from '~/store/Global'
 import { useToast } from 'primevue/usetoast'
 import { header } from '@primeuix/themes/aura/accordion'
+import type { OrgType } from '~/types/org/org/OrgType'
 /// Define
 const store = GlobalStore()
 const toast = useToast()
@@ -651,63 +652,83 @@ const onFileSelectBranch = (event: any) => {
 
 /// Create save org
 const clickSave = async (evt: any) => {
-  const validate = await CreateOrgValidate.allValidate(instance, t, $orgAPI)
-  if (!validate) {
-    return
-  }
-  /// Create org
-  const nameOfOrg = instance.value.nameOfOrg ?? ''
-  const sloganOfOrg = instance.value.sloganOfOrg ?? ''
-  const fieldsOfOrg = instance.value.fieldsOfOrg ?? ''
-  const sizeOfOrg = instance.value.sizeOfOrg ?? 0
-  const descriptionOfOrg = instance.value.descriptionOfOrg ?? ''
-  const nameOfBranch = instance.value.nameOfBranch ?? ''
-  const emailOfBranch = instance.value.emailOfBranch ?? ''
-  const addressOfBranch = instance.value.addressOfBranch ?? ''
-  const phoneNumberOfBranch = `${instance.value.dialCode?.code ?? ''}${(
-    instance.value.phoneNumberOfBranch ?? ''
-  ).replaceAll('-', '')}`
-  const descriptionOfBranch = instance.value.descriptionOfBranch ?? ''
+  // const validate = await CreateOrgValidate.allValidate(instance, t, $orgAPI)
+  // if (!validate) {
+  //   return
+  // }
+  // /// Create org
+  // const nameOfOrg = instance.value.nameOfOrg ?? ''
+  // const sloganOfOrg = instance.value.sloganOfOrg ?? ''
+  // const fieldsOfOrg = instance.value.fieldsOfOrg ?? ''
+  // const sizeOfOrg = instance.value.sizeOfOrg ?? 0
+  // const descriptionOfOrg = instance.value.descriptionOfOrg ?? ''
+  // const nameOfBranch = instance.value.nameOfBranch ?? ''
+  // const emailOfBranch = instance.value.emailOfBranch ?? ''
+  // const addressOfBranch = instance.value.addressOfBranch ?? ''
+  // const phoneNumberOfBranch = `${instance.value.dialCode?.code ?? ''}${(
+  //   instance.value.phoneNumberOfBranch ?? ''
+  // ).replaceAll('-', '')}`
+  // const descriptionOfBranch = instance.value.descriptionOfBranch ?? ''
 
-  const formData = new FormData()
-  formData.append('avatarOfOrg', instance.value.avatarFileOfOrg)
-  formData.append('avatarOfBranch', instance.value.avatarFileOfBranch)
-  formData.append('nameOfOrg', nameOfOrg)
-  formData.append('sloganOfOrg', sloganOfOrg)
-  formData.append('fieldsOfOrg', fieldsOfOrg)
-  formData.append('sizeOfOrg', `${sizeOfOrg}`)
-  formData.append('descriptionOfOrg', descriptionOfOrg)
-  formData.append('nameOfBranch', nameOfBranch)
-  formData.append('emailOfBranch', emailOfBranch)
-  formData.append('addressOfBranch', addressOfBranch)
-  formData.append('phoneNumberOfBranch', phoneNumberOfBranch)
-  formData.append('descriptionOfBranch', descriptionOfBranch)
+  // const formData = new FormData()
+  // formData.append('avatarOfOrg', instance.value.avatarFileOfOrg)
+  // formData.append('avatarOfBranch', instance.value.avatarFileOfBranch)
+  // formData.append('nameOfOrg', nameOfOrg)
+  // formData.append('sloganOfOrg', sloganOfOrg)
+  // formData.append('fieldsOfOrg', fieldsOfOrg)
+  // formData.append('sizeOfOrg', `${sizeOfOrg}`)
+  // formData.append('descriptionOfOrg', descriptionOfOrg)
+  // formData.append('nameOfBranch', nameOfBranch)
+  // formData.append('emailOfBranch', emailOfBranch)
+  // formData.append('addressOfBranch', addressOfBranch)
+  // formData.append('phoneNumberOfBranch', phoneNumberOfBranch)
+  // formData.append('descriptionOfBranch', descriptionOfBranch)
+
+  // const options: any = {
+  //   method: MethodCons.POST,
+  //   body: formData,
+  //   headers: { 'Content-Type': 'no-content-type' },
+  // }
+  // const response: any = await $orgAPI(APIOrgAuthCons.SIGN_UP, options)
+  // const data = response.data
+  // let employee = data.employee
+  // let org = employee.org
+  // delete employee.org
+  // /// Save access token
+  // store.setAccessTokenEmployee(data.accessToken)
+  // store.setRefreshTokenEmployee(data.refreshToken)
+  // store.setEmployee(employee)
+  // store.setOrg(org)
 
   const options: any = {
-    method: MethodCons.POST,
-    body: formData,
-    headers: { 'Content-Type': 'no-content-type' },
-  }
-  const response: any = await $orgAPI(APIOrgAuthCons.SIGN_UP, options)
-  const data = response.data
-  /// Save access token
-  store.setAccessTokenUser(data.accessToken)
-  store.setRefreshTokenUser(data.refreshToken)
-  store.setUser(data.user)
-
-  const optionsUser: any = {
     method: MethodCons.GET,
     query: {
       refresh: true,
     },
   }
+
+  // const result = await $orgAPI(APIOrgTenantCons.EXIST_NAME, options)
+
+  // const optionsUser: any = {
+  //   method: MethodCons.GET,
+  //   // query: {
+  //   //   refresh: true,
+  //   // },
+  // }
   const resUser: any = await $socialAPI(APISocialAuthCons.VERIFY, options)
+
   const dataUser = resUser.data
-  store.setUser(dataUser)
-  await navigateTo({
-    path: PathSocialHomeCons.HOME,
-    replace: true,
-  })
+  console.log('----dataUser-----')
+  let user = dataUser.user
+  const listOrgs: OrgType[] = parseListOrg(dataUser.orgs)
+  delete user.orgs
+  store.setUser(user)
+  store.setListOrgs(listOrgs)
+
+  // await navigateTo({
+  //   path: PathSocialHomeCons.HOME,
+  //   replace: true,
+  // })
 }
 
 const setFormatNumber = (lang: string) => {

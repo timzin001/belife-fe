@@ -199,26 +199,8 @@ const clickSignIn = async () => {
   const response: any = await $socialAPI(APISocialAuthCons.SIGN_IN, options)
   const data = response.data
   let user = data.user
-  const mapOrgs = user.orgs
-
-  let listOrgs: OrgType[] = []
-  Object.keys(mapOrgs).forEach((key) => {
-    const value = mapOrgs[key]
-    const object = JSON.parse(value)
-    object.name = JSON.parse(object.name)
-    object.slogan = JSON.parse(object.slogan)
-    object.fields = JSON.parse(object.fields)
-    object.active = JSON.parse(object.active)
-    if (object.avatar) {
-      object.avatar = JSON.parse(object.avatar)
-    }
-    object.createdAt = JSON.parse(object.createdAt)
-    if (object.updatedAt) {
-      object.updatedAt = JSON.parse(object.updatedAt)
-    }
-    listOrgs.push(object)
-  })
-
+  const listOrgs: OrgType[] = parseListOrg(user.orgs)
+  delete user.orgs
   /// Save access token
   store.setAccessTokenUser(data.accessToken)
   store.setRefreshTokenUser(data.refreshToken)

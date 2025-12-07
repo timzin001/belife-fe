@@ -20,7 +20,10 @@ export default defineNuxtPlugin((nuxtApp) => {
       onRequest({ options }) {
         console.log(JSON.stringify(options))
 
-        const language = useCookie(CookieCons.LANGUAGE, CookieCons.OPTION)
+        const language = useCookie<string>(
+          CookieCons.LANGUAGE,
+          CookieCons.OPTION
+        )
         let defHeaders: any = options.headers || {}
         let contentType = defHeaders['Content-Type']
 
