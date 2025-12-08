@@ -12,6 +12,14 @@
         border-style: solid;
         border-width: 1px;
     }
+    .org-avatar {
+        box-shadow: $left-menu-box-shadow;
+        border-top-right-radius: 3px !important;
+        border-bottom-left-radius: 3px !important;
+        border-color: $second-color;
+        border-style: solid;
+        border-width: 1px;
+    }
 
     .menu-close {
         display: none;

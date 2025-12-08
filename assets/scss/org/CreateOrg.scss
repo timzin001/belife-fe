@@ -48,7 +48,19 @@
         .term-group{
             padding-left: 8px;
             padding-right: 8px;
+            .term-privacy{
+                margin-right: 5px;
+                margin-top: 4px;
+            }
+            :deep(.p-message-text) {
+                padding-left: unset;
+            }
+            :deep(.p-message-content){
+                align-items: center;
+                justify-content: center;
+            }
         }
+        
     }
 
     .about-group {

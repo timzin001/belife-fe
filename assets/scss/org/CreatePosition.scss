@@ -1,3 +1,7 @@
+:deep(.p-textarea) {
+    font-size: 14px;
+}
+
 .create-position {
     flex: 1;
     padding: 30px;
@@ -47,5 +51,8 @@
         border-color: $second-color;
         border-style: solid;
         border-width: 1px;
+    }
+    :deep(.p-message-text) {
+        padding-left: 110px;
     }
 }

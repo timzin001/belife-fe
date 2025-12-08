@@ -255,6 +255,22 @@ const nameOfBranch = async (instance: Ref<CreateOrgType>, t: any) => {
   instance.value.nameOfBranchError = ''
 }
 
+const validateTermsAndPrivacy = (instance: Ref<CreateOrgType>, t: any) => {
+  if (
+    !instance.value.termsPrivacy ||
+    Object.keys(instance.value.termsPrivacy).length == 0
+  ) {
+    instance.value.termsPrivacyError = t('please_select_name', {
+      name: `${t('agree_to')} ${t('terms_of_service')} ${t(
+        'and'
+      ).toLocaleLowerCase()} ${t('privacy_policy')}`,
+    })
+    return
+  }
+
+  instance.value.termsPrivacyError = ''
+}
+
 /// All validate
 const allValidate = async (
   instance: Ref<CreateOrgType>,
@@ -262,16 +278,17 @@ const allValidate = async (
   $orgAPI: any
 ) => {
   await Promise.all([
-    avatarOfOrg(instance, t),
-    nameOfOrg(instance, t, $orgAPI),
-    sloganOfOrg(instance, t),
-    fieldsOfOrg(instance, t),
-    sizeOfOrg(instance, t),
-    avatarOfBranch(instance, t),
-    nameOfBranch(instance, t),
-    emailOfBranch(instance, t, $orgAPI),
-    phoneNumberOfBranch(instance, t, $orgAPI),
-    addressOfBranch(instance, t),
+    CreateOrgValidate.avatarOfOrg(instance, t),
+    CreateOrgValidate.nameOfOrg(instance, t, $orgAPI),
+    CreateOrgValidate.sloganOfOrg(instance, t),
+    CreateOrgValidate.fieldsOfOrg(instance, t),
+    CreateOrgValidate.sizeOfOrg(instance, t),
+    CreateOrgValidate.avatarOfBranch(instance, t),
+    CreateOrgValidate.nameOfBranch(instance, t),
+    CreateOrgValidate.emailOfBranch(instance, t, $orgAPI),
+    CreateOrgValidate.phoneNumberOfBranch(instance, t, $orgAPI),
+    CreateOrgValidate.addressOfBranch(instance, t),
+    CreateOrgValidate.termsAndPrivacy(instance, t),
   ])
 
   if (
@@ -284,7 +301,8 @@ const allValidate = async (
     instance.value.nameOfBranchError ||
     instance.value.emailOfBranchError ||
     instance.value.phoneNumberOfBranchError ||
-    instance.value.addressOfBranchError
+    instance.value.addressOfBranchError ||
+    instance.value.termsPrivacyError
   ) {
     return false
   }
@@ -304,4 +322,5 @@ export const CreateOrgValidate = {
   addressOfBranch: addressOfBranch,
   avatarOfBranch: avatarOfBranch,
   allValidate: allValidate,
+  termsAndPrivacy: validateTermsAndPrivacy,
 }

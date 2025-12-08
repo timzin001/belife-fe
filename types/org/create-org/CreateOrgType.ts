@@ -41,6 +41,8 @@ export interface CreateOrgType {
   nameOfOrgAbort: AbortController | null
   phoneNumberOfBranchAbort: AbortController | null
   emailOfBranchAbort: AbortController | null
+  termsPrivacyError: string
+  termsPrivacy: any
 
   // const controller = new AbortController();
 }

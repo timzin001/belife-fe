@@ -424,41 +424,54 @@
                       name: $t('description').toLocaleLowerCase(),
                     })
                   "
-                />
+                ></Textarea>
               </div>
             </div>
           </div>
         </div>
         <div class="line2 h-[1px] mb-[20px]"></div>
-        <div class="flex items-center justify-center term-group">
-          <div class="flex items-start gap-2">
-            <Checkbox
-              v-model="instance.agree"
-              inputId="ingredient1"
-              name="pizza"
-              value="Cheese"
-              class="mt-[4px]"
-            />
-            <label for="ingredient1">
-              {{ $t('agree_to') }}
-              <Button
-                :label="$t('terms_of_service')"
-                variant="link"
-                @click="clickMoveToTerm()"
-                class="link"
-              />
-              {{ $t('and').toLocaleLowerCase() }}
-              <Button
-                :label="$t('privacy_policy')"
-                variant="link"
-                @click="clickMoveToPrivacy()"
-                class="link"
-              />
-            </label>
-          </div>
-        </div>
+        <!-- <div class="flex items-center justify-center term-group">
+          <div class="flex items-start gap-2"> -->
         <div
-          class="w-full flex items-center justify-center mb-[20px] mt-[20px] ml-[20px] mr-[20px]"
+          class="flex flex-col mt-[10px] term-group items-center justify-center"
+        >
+          <div class="flex flex-col justify-start">
+            <div class="flex">
+              <Checkbox
+                v-model="instance.termsPrivacy"
+                inputId="term-privacy"
+                @value-change="changeTermsPrivacy"
+                name="term-privacy"
+                class="term-privacy"
+                value="agree"
+              />
+              <label for="term-privacy">
+                {{ $t('agree_to') }}
+                <Button
+                  :label="$t('terms_of_service')"
+                  variant="link"
+                  @click="clickMoveToTerm()"
+                ></Button>
+                {{ $t('and').toLocaleLowerCase() }}
+                <Button
+                  :label="$t('privacy_policy')"
+                  variant="link"
+                  @click="clickMoveToPrivacy()"
+                ></Button>
+              </label>
+            </div>
+          </div>
+          <Message
+            v-if="instance.termsPrivacyError"
+            severity="error"
+            size="small"
+            variant="simple"
+            >{{ instance.termsPrivacyError }}</Message
+          >
+        </div>
+
+        <div
+          class="w-full flex items-center justify-center mb-[20px] mt-[20px]"
         >
           <Button :label="$t('start_now')" class="register" @click="clickSave">
             <template #icon> <img :src="Add" class="w-[18px] icon" /> </template
@@ -531,7 +544,7 @@ const store = GlobalStore()
 const toast = useToast()
 const { $orgAPI, $socialAPI } = useNuxtApp()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const instance = ref(<CreateOrgType>{
   avatarOfOrg: DefaultAvatar,
   avatarOfBranch: DefaultAvatar,
@@ -650,6 +663,9 @@ const onFileSelectBranch = (event: any) => {
   }
   reader.readAsDataURL(file)
 }
+const changeTermsPrivacy = (evt: any) => {
+  CreateOrgValidate.termsAndPrivacy(instance, t)
+}
 
 /// Create save org
 const clickSave = async (evt: any) => {
@@ -716,6 +732,15 @@ const clickSave = async (evt: any) => {
   store.setUser(parseUser)
   store.setListOrgs(parseListOrgs)
 
+  toast.add({
+    severity: ToastCons.SUCCESS,
+    summary: t('success'),
+    detail: t('organization_name_has_been_created_successfully', {
+      name: instance.value.nameOfOrg,
+    }),
+    life: ToastCons.DURATION,
+  })
+
   await navigateTo({
     path: PathSocialHomeCons.HOME,
     replace: true,
@@ -733,10 +758,50 @@ const setFormatNumber = (lang: string) => {
   }
 }
 
+const transitionError = () => {
+  if (instance.value.avatarOfOrgError) {
+    CreateOrgValidate.avatarOfOrg(instance, t)
+  }
+  if (instance.value.nameOfOrgError) {
+    CreateOrgValidate.nameOfOrg(instance, t, $orgAPI)
+  }
+  if (instance.value.sloganOfOrgError) {
+    CreateOrgValidate.sloganOfOrg(instance, t)
+  }
+  if (instance.value.fieldsOfOrgError) {
+    CreateOrgValidate.fieldsOfOrg(instance, t)
+  }
+  if (instance.value.sizeOfOrgError) {
+    CreateOrgValidate.sizeOfOrg(instance, t)
+  }
+  if (instance.value.avatarOfBranchError) {
+    CreateOrgValidate.avatarOfBranch(instance, t)
+  }
+  if (instance.value.nameOfBranchError) {
+    CreateOrgValidate.nameOfBranch(instance, t)
+  }
+  if (instance.value.emailOfBranchError) {
+    CreateOrgValidate.emailOfBranch(instance, t, $orgAPI)
+  }
+  if (instance.value.phoneNumberOfBranchError) {
+    CreateOrgValidate.phoneNumberOfBranch(instance, t, $orgAPI)
+  }
+  if (instance.value.addressOfBranchError) {
+    CreateOrgValidate.addressOfBranch(instance, t)
+  }
+  if (instance.value.termsPrivacyError) {
+    CreateOrgValidate.termsAndPrivacy(instance, t)
+  }
+}
+
 watch(
   () => store.getLanguage(),
   (value) => {
     setFormatNumber(value)
+    /// Set language
+    setTimeout(() => {
+      transitionError()
+    }, 100)
   }
 )
 onMounted(() => {

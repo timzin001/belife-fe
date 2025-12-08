@@ -37,9 +37,9 @@
           >
             <img
               :alt="slotProps.value.name"
-              :src="slotProps.value.logo?.location || DefaultAvarar"
+              :src="slotProps.value.avatar?.location || DefaultAvarar"
               style="width: 18px"
-              class="rounded-[3px]"
+              class="org-avatar w-[18px] h-[18px]"
             />
             <div class="text-[14px] ml-[5px]">
               {{ slotProps.value.name[locale] }}
@@ -56,9 +56,8 @@
           <div class="flex items-center justify-center pl-[10px] h-[32px]">
             <img
               :alt="slotProps.option.name"
-              :src="slotProps.option.logo?.location || DefaultAvarar"
-              style="width: 18px"
-              class="rounded-[3px]"
+              :src="slotProps.option.avatar?.location || DefaultAvarar"
+              class="org-avatar w-[18px] h-[18px]"
             />
             <div class="text-[14px] ml-[5px]">
               {{ slotProps.option.name[locale] }}
@@ -98,10 +97,6 @@ const instance = ref<LeftMenuType>({
   org: store.getOrg(),
   listOrgs: store.getListOrgs(),
 })
-console.log('---------getListOrgs---------')
-console.log(store.getListOrgs())
-console.log('----------Org-------')
-console.log(store.getOrg())
 /// Function
 const getFullNameOfUser = () => {
   const user: any = instance.value.user
@@ -169,10 +164,20 @@ const changeOrg = async (evt: any) => {
       employeeId: evt.employeeId,
     },
   }
-  console.log(evt)
 
   const response: any = await $orgAPI(APIOrgAuthCons.SIGN_IN, options)
   const data = response.data
+  console.log(data)
+  let employee = data.employee
+  let org = employee.org
+  org.employeeId = employee.id
+  const parseOrg = parseOrgCookie(org)
+  const parseEmployee = parseEmployeeCookie(employee)
+  /// Save access token
+  store.setAccessTokenEmployee(data.accessToken)
+  store.setRefreshTokenEmployee(data.refreshToken)
+  store.setEmployee(parseEmployee)
+  store.setOrg(parseOrg)
   toast.add({
     severity: ToastCons.SUCCESS,
     summary: t('success'),
@@ -189,17 +194,16 @@ const changeOrg = async (evt: any) => {
 
 const initMenu = () => {
   // console.log(instance.value.user)
-  // console.log(instance.value.org)
-  // if (instance.value.org) {
-  //   return menuOrganization({
-  //     signOut: clickSignOut,
-  //     positionsOrg: clickPositionOrg,
-  //     branchesOrg: clickBranchesOrg,
-  //     departmentsOrg: clickDepartmentsOrg,
-  //     employeesOrg: clickEmployeesOrg,
-  //     profile: clickProfile,
-  //   })
-  // }
+  if (instance.value.org) {
+    return menuOrganization({
+      signOut: clickSignOut,
+      positionsOrg: clickPositionOrg,
+      branchesOrg: clickBranchesOrg,
+      departmentsOrg: clickDepartmentsOrg,
+      employeesOrg: clickEmployeesOrg,
+      profile: clickProfile,
+    })
+  }
   if (instance.value.user) {
     return menuAccount({
       createOrg: clickCreateOrg,
@@ -221,13 +225,13 @@ const initData = () => {
   instance.value.menus = initMenu()
 }
 
-// watch(
-//   () => store.getAccount(),
-//   (value) => {
-//     /// Set org
-//     account.value = value
-//   }
-// )
+watch(
+  () => store.getOrg(),
+  (value) => {
+    /// Set org
+    instance.value.org = value
+  }
+)
 watch(
   () => store.getListOrgs(),
   (value) => {

@@ -15,7 +15,7 @@
         <div>{{ props.message }}</div>
         <div class="line h-[2px] rouned-[5px] mt-[15px]"></div>
       </div>
-      <div class="footer flex item-center justify-end">
+      <div class="footer flex items-center justify-end">
         <Button
           class="h-[32px] w-[90px]"
           type="button"

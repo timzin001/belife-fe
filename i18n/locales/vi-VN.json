@@ -165,5 +165,6 @@
     "name_must_contain_at_least_one_uppercase_letter":"{name} phải chứa ít nhất một chữ hoa.",
     "name_must_contain_at_least_one_lowercase_letter":"{name} phải chứa ít nhất một chữ thường.",
     "name_must_contain_at_least_one_special_character":"{name} phải chứa ít nhất môt ký tự đặc biệt.",
-    "successfully_signed_in_to_name_organization": "Đăng nhập vào tổ chức {name} thành công."
+    "successfully_signed_in_to_name_organization": "Đăng nhập vào tổ chức {name} thành công.",
+    "organization_name_has_been_created_successfully": "Tổ chức {name} đã được tạo thành công."
 }
