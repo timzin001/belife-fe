@@ -163,37 +163,25 @@ const clickClose = () => {
 }
 /// Change org
 const changeOrg = async (evt: any) => {
-  console.log('------changeOrg--------')
-  console.log(evt)
   const options: any = {
     method: MethodCons.POST,
     body: {
       employeeId: evt.employeeId,
     },
   }
+  console.log(evt)
 
   const response: any = await $orgAPI(APIOrgAuthCons.SIGN_IN, options)
   const data = response.data
+  toast.add({
+    severity: ToastCons.SUCCESS,
+    summary: t('success'),
+    detail: t('successfully_signed_in_to_name_organization', {
+      name: evt.name[locale.value],
+    }),
+    life: ToastCons.DURATION,
+  })
 
-  // const { data, error, status } = await CallAPI(
-  //   APIPathAccount.POST_SIGN_IN_ORG_AUTH,
-  //   options,
-  //   toast,
-  //   t,
-  //   false
-  // )
-
-  /// Check error
-  // if (status.value !== APIStatusCons.SUCCESS) {
-  //   return
-  // }
-  // const result: any = data.value
-  // /// Save auth
-  // store.setOrgAuth(result.data.auth)
-  // /// Save org
-  // store.setOrg(result.data.org)
-  /// Move to
-  /// Get user info
   await navigateTo({
     path: PathCons.INFORM_OF_ORG,
   })

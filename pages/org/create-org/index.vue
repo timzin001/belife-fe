@@ -694,6 +694,7 @@ const clickSave = async (evt: any) => {
   const data = response.data
   let employee = data.employee
   let org = employee.org
+  org.employeeId = employee.id
   const parseOrg = parseOrgCookie(org)
   const parseEmployee = parseEmployeeCookie(employee)
   /// Save access token

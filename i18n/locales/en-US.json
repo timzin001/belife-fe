@@ -165,6 +165,7 @@
     "name_must_contain_at_least_one_number":"{name} must contain at least one number.",
     "name_must_contain_at_least_one_uppercase_letter":"{name} must contain at least one uppercase letter.",
     "name_must_contain_at_least_one_lowercase_letter":"{name} must contain at least one lowercase letter.",
-    "name_must_contain_at_least_one_special_character":"{name} must contain at least one special character."
+    "name_must_contain_at_least_one_special_character":"{name} must contain at least one special character.",
+    "successfully_signed_in_to_name_organization": "Successfully signed in to {name} organization."
 
 }

@@ -12,6 +12,7 @@ export const parseListOrgCookie = (mapOrgs: any) => {
     newObj.id = object.id
     newObj.name = JSON.parse(object.name)
     newObj.active = JSON.parse(object.active)
+    newObj.employeeId = object.employeeId
     if (object.avatar) {
       const avatar = JSON.parse(object.avatar)
       newObj.avatar = { location: avatar.location }
@@ -43,6 +44,7 @@ export const parseOrgCookie = (object: any) => {
   newObj.id = object.id
   newObj.name = object.name
   newObj.active = object.active
+  newObj.employeeId = object.employeeId
   if (object.avatar) {
     const avatar = object.avatar
     newObj.avatar = { location: avatar.location }

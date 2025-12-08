@@ -164,5 +164,6 @@
     "name_must_contain_at_least_one_number":"{name} phải chứa ít nhất một số.",
     "name_must_contain_at_least_one_uppercase_letter":"{name} phải chứa ít nhất một chữ hoa.",
     "name_must_contain_at_least_one_lowercase_letter":"{name} phải chứa ít nhất một chữ thường.",
-    "name_must_contain_at_least_one_special_character":"{name} phải chứa ít nhất môt ký tự đặc biệt."
+    "name_must_contain_at_least_one_special_character":"{name} phải chứa ít nhất môt ký tự đặc biệt.",
+    "successfully_signed_in_to_name_organization": "Đăng nhập vào tổ chức {name} thành công."
 }
