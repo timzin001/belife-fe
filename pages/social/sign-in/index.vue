@@ -144,10 +144,11 @@ definePageMeta({
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
-import type { SignInType } from '~/types/social/SignInType'
+import type { SignInType } from '~/types/social/sign-in/SignInType'
 import type { OrgType } from '~/types/org/org/OrgType'
 import { SignInValidate } from '~/validate/social/SignInValidate'
 import { GlobalStore } from '~/store/Global'
+import type { UserType } from '~/types/social/UserType'
 const store = GlobalStore()
 const { $socialAPI } = useNuxtApp()
 
@@ -198,14 +199,16 @@ const clickSignIn = async () => {
   }
   const response: any = await $socialAPI(APISocialAuthCons.SIGN_IN, options)
   const data = response.data
-  let user = data.user
-  const listOrgs: OrgType[] = parseListOrg(user.orgs)
-  delete user.orgs
+  const user = data.user
+
   /// Save access token
   store.setAccessTokenUser(data.accessToken)
   store.setRefreshTokenUser(data.refreshToken)
-  store.setUser(data.user)
-  store.setListOrgs(listOrgs)
+  const parseUser: UserType = parseUserCookie(user)
+  const parseListOrgs: OrgType[] = parseListOrgCookie(user.orgs)
+  store.setUser(parseUser)
+  store.setListOrgs(parseListOrgs)
+  store.setOrg(null)
 
   await navigateTo({
     path: PathSocialHomeCons.HOME,

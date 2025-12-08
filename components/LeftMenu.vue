@@ -22,7 +22,7 @@
     </div>
     <div class="w-full pl-[10px] pr-[10px]">
       <Select
-        v-if="instance.listOrgs"
+        v-if="instance.listOrgs && instance.listOrgs.length"
         v-model="instance.org"
         :options="instance.listOrgs || []"
         optionLabel="name"
@@ -98,7 +98,10 @@ const instance = ref<LeftMenuType>({
   org: store.getOrg(),
   listOrgs: store.getListOrgs(),
 })
+console.log('---------getListOrgs---------')
 console.log(store.getListOrgs())
+console.log('----------Org-------')
+console.log(store.getOrg())
 /// Function
 const getFullNameOfUser = () => {
   const user: any = instance.value.user
@@ -237,13 +240,15 @@ const initData = () => {
 //     account.value = value
 //   }
 // )
-// watch(
-//   () => store.getOrg(),
-//   (value) => {
-//     /// Set org
-//     org.value = value
-//   }
-// )
+watch(
+  () => store.getListOrgs(),
+  (value) => {
+    /// Set org
+    console.log('set org')
+    console.log(value)
+    instance.value.listOrgs = value
+  }
+)
 initData()
 </script>
 <style scoped lang="scss">

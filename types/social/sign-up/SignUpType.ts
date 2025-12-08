@@ -1,4 +1,4 @@
-import type { PhoneNumberType } from '../common/PhoneNumberType'
+import type { PhoneNumberType } from '../../common/PhoneNumberType'
 
 export interface SignUpType {
   phoneNumber: string

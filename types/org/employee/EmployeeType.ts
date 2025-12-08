@@ -1,7 +1,7 @@
-import type { MediaType } from '../obj/MediaType'
-import type { ObjectType } from '../obj/ObjectType'
+import type { ObjectType } from 'typescript'
+import type { MediaType } from '~/types/obj/MediaType'
 
-export interface UserType {
+export interface EmployeeType {
   id: number
   phoneNumber: string
   nickName: string

@@ -52,7 +52,7 @@ export const GlobalStore = defineStore('global', () => {
     return user.value
   }
 
-  function setOrg(value: OrgType) {
+  function setOrg(value: OrgType | null) {
     org.value = value
   }
 
@@ -60,11 +60,13 @@ export const GlobalStore = defineStore('global', () => {
     return org.value
   }
 
-  function setListOrgs(value: any) {
+  function setListOrgs(value: OrgType[] | null) {
+    console.log('setListOrgs')
+    console.log(value)
     listOrgs.value = value
   }
 
-  function getListOrgs(): any | null {
+  function getListOrgs(): OrgType[] | null {
     return listOrgs.value
   }
 

@@ -280,9 +280,10 @@ definePageMeta({
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import HowlingWolves from '~/assets/images/howling-wolves.jpg'
-import type { SignUpType } from '~/types/social/SignUpType'
+import type { SignUpType } from '~/types/social/sign-up/SignUpType'
 import { SignUpValidate } from '~/validate/social/SignUpValidate'
 import { GlobalStore } from '~/store/Global'
+import type { UserType } from '~/types/social/UserType'
 
 const store = GlobalStore()
 const { $socialAPI } = useNuxtApp()
@@ -325,6 +326,7 @@ const clickSignUp = async () => {
   const password = instance.value.password
   const fullName = instance.value.fullName
   const objDateOfBirth: any = instance.value.dateOfBirth
+
   const dateOfBirth = objDateOfBirth.toISOString() ?? ''
   const gender = instance.value.gender
 
@@ -340,12 +342,13 @@ const clickSignUp = async () => {
   }
   const response: any = await $socialAPI(APISocialAuthCons.SIGN_UP, options)
   const data = response.data
-  let user = data.user
-  delete user.orgs
+  const user = data.user
+  const parseUser: UserType = parseUserCookie(user)
   /// Save access token
   store.setAccessTokenUser(data.accessToken)
   store.setRefreshTokenUser(data.refreshToken)
-  store.setUser(user)
+  store.setUser(parseUser)
+  store.setOrg(null)
 
   await navigateTo({
     path: PathSocialHomeCons.HOME,

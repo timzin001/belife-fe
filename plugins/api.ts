@@ -18,8 +18,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     const api = $fetch.create({
       baseURL: `${config.public.accountBaseUrl || ''}`,
       onRequest({ options }) {
-        console.log(JSON.stringify(options))
-
         const language = useCookie<string>(
           CookieCons.LANGUAGE,
           CookieCons.OPTION
