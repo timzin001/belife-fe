@@ -1,16 +1,25 @@
 <template>
   <Dialog
     modal
-    :dismissableMask="true"
+    :dismissableMask="false"
     v-model:visible="instance.visible"
     @update:visible="updateVisible"
   >
     <template #container>
       <div class="create-position">
-        <div
-          class="text-[20px] font-bold ml-[0px] mb-[20px] w-full flex items-center justify-center"
-        >
-          {{ $t('create_name', { name: $t('position').toLocaleLowerCase() }) }}
+        <div class="mb-[20px] w-full flex relative">
+          <div
+            class="text-[20px] w-full font-bold flex items-center justify-center"
+          >
+            {{
+              $t('create_name', { name: $t('position').toLocaleLowerCase() })
+            }}
+          </div>
+          <img
+            :src="Times"
+            class="w-[20px] close absolute right-0"
+            @click="clickClose"
+          />
         </div>
         <div class="contain items-center justify-center">
           <div class="inner">
@@ -89,14 +98,6 @@
                 <label for="department-name" class="label"
                   >{{ $t('active') }}<span>*</span></label
                 >
-                <!-- <Checkbox
-                  v-model="instance.active"
-                  inputId="active"
-                  @value-change="changeActive"
-                  binary
-                  name="active"
-                  class="active"
-                /> -->
                 <Checkbox v-model="instance.active" binary />
               </div>
             </div>
@@ -121,15 +122,13 @@
 </template>
 <script setup lang="ts">
 import type { CreatePositionType } from '~/types/org/create-position/CreatePositionType'
-import Check from '~/assets/icons/check.svg'
-import Times from '~/assets/icons/times.svg'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
-import ArrowLeft from '~/assets/icons/arrow-left.svg'
+import Times from '~/assets/icons/times.svg'
 import Save from '~/assets/icons/save.svg'
 import { CreatePositionValidate } from '~/validate/org/CreatePositionValidate'
 const { t, locale } = useI18n()
 const toast = useToast()
-const { $orgAPI, $socialAPI } = useNuxtApp()
+const { $orgAPI } = useNuxtApp()
 const props = defineProps({
   title: {
     type: String,
@@ -174,9 +173,9 @@ const changeName = (evt: any) => {
   CreatePositionValidate.name(instance, t, $orgAPI)
 }
 
-const changeActive = (evt: any) => {
-  console.log(evt)
-  // CreatePositionValidate.active(instance, t)
+/// click close
+const clickClose = () => {
+  emits('click-close')
 }
 
 /// Select avatar
