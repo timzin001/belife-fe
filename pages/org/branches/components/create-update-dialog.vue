@@ -7,13 +7,14 @@
   >
     <template #container>
       <div class="create-position">
-        <div class="mb-[20px] w-full flex relative">
+        <div class="header w-full flex relative">
           <div
             class="text-[20px] w-full font-bold flex items-center justify-center"
           >
-            {{
-              $t('create_name', { name: $t('position').toLocaleLowerCase() })
-            }}
+            {{ $t('create_name', { name: $t('branch').toLocaleLowerCase() }) }}
+            <div class="flex-1 flex ml-[10px]">
+              <div class="spinner-mini" v-if="instance.loading"></div>
+            </div>
           </div>
           <img
             :src="Times"
@@ -52,11 +53,11 @@
             </div>
             <div class="mt-[10px]">
               <div class="flex items-center justify-start w-full">
-                <label for="department-name" class="label"
+                <label for="name" class="label"
                   >{{ $t('name') }}<span>*</span></label
                 >
                 <InputText
-                  id="title"
+                  id="name"
                   v-model="instance.name"
                   class="flex-auto"
                   @value-change="changeName"
@@ -78,6 +79,100 @@
               >
             </div>
             <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="email" class="label"
+                  >{{ $t('email') }}<span>*</span></label
+                >
+                <InputText
+                  id="email"
+                  v-model="instance.name"
+                  class="flex-auto"
+                  @value-change="changeName"
+                  autocomplete="off"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('name').toLocaleLowerCase(),
+                    })
+                  "
+                />
+              </div>
+
+              <Message
+                v-if="instance.emailError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.emailError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label class="label" for="branch-phone-number"
+                  >{{ $t('phone_number') }}<span>*</span></label
+                >
+                <Select
+                  v-model="instance.dialCode"
+                  :options="instance.countries"
+                  optionLabel="name"
+                  :autoOptionFocus="true"
+                  @change="changeDialCode"
+                  class="w-[110px] h-[30px] mr-[5px]"
+                >
+                  <template #value="slotProps">
+                    <div
+                      v-if="slotProps.value"
+                      class="flex items-center justify-center h-[100%] pl-[10px]"
+                    >
+                      <img
+                        :alt="slotProps.value.code"
+                        :src="slotProps.value.icon"
+                        style="width: 18px"
+                      />
+                      <div class="text-[14px] ml-[5px]">
+                        {{ slotProps.value.code }}
+                      </div>
+                    </div>
+                    <span v-else>
+                      {{ slotProps.placeholder }}
+                    </span>
+                  </template>
+                  <template #option="slotProps">
+                    <div
+                      class="flex items-center justify-center pl-[10px] h-[30px]"
+                    >
+                      <img
+                        :alt="slotProps.option.code"
+                        :src="slotProps.option.icon"
+                        style="width: 18px"
+                      />
+                      <div class="text-[14px] ml-[5px]">
+                        {{ slotProps.option.code }}
+                      </div>
+                    </div>
+                  </template>
+                </Select>
+                <InputMask
+                  class="h-[30px] flex-1"
+                  autocomplete="off"
+                  id="branch-phone-number"
+                  ref="inputMaskRef"
+                  @value-change="changePhoneNumber"
+                  @blur="changePhoneNumber"
+                  v-model="instance.phoneNumber"
+                  :mask="instance.phoneNumberPattern"
+                  :placeholder="instance.phoneNumberPlaceHolder"
+                  fluid
+                />
+              </div>
+              <Message
+                v-if="instance.phoneNumberError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.phoneNumberError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
               <div class="flex items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
                 <Textarea
@@ -90,7 +185,7 @@
                       name: $t('description').toLocaleLowerCase(),
                     })
                   "
-                />
+                ></Textarea>
               </div>
             </div>
             <div class="mt-[10px]">
@@ -102,7 +197,7 @@
               </div>
             </div>
             <div class="w-full line h-[1px] mt-[20px]"></div>
-            <div class="w-full flex items-center justify-center mt-[30px]">
+            <div class="w-full flex items-center justify-center footer">
               <Button
                 severity="success"
                 :label="$t('save')"
@@ -121,11 +216,13 @@
   </Dialog>
 </template>
 <script setup lang="ts">
-import type { CreatePositionType } from '~/types/org/create-position/CreatePositionType'
+import SingaporeFlag from '~/assets/flags/singapore.svg'
+import VietNamFlag from '~/assets/flags/vietnam.svg'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
 import Times from '~/assets/icons/times.svg'
 import Save from '~/assets/icons/save.svg'
 import { CreatePositionValidate } from '~/validate/org/CreatePositionValidate'
+import type { CreateBranchType } from '~/types/org/branches/CreateBranchType'
 const { t, locale } = useI18n()
 const toast = useToast()
 const { $orgAPI } = useNuxtApp()
@@ -144,10 +241,13 @@ const props = defineProps({
     required: false,
   },
 })
-const instance = ref<CreatePositionType>({
+const instance = ref<CreateBranchType>({
   visible: false,
+  loading: false,
   name: '',
   nameError: null,
+  email: '',
+  emailError: null,
   description: '',
   active: true,
   avatar: DefaultAvatar,
@@ -155,8 +255,27 @@ const instance = ref<CreatePositionType>({
   widthAvatar: null,
   heightAvatar: null,
   avatarError: null,
-  position: null,
+  branch: null,
   nameAbort: null,
+  phoneNumberAbort: null,
+  emailAbort: null,
+  phoneNumberPattern: '999-999-999',
+  // +65 XXXX XXXX
+  phoneNumberPlaceHolder: '123-345-789',
+  dialCode: {
+    code: '(+84)',
+    icon: VietNamFlag,
+  },
+  countries: [
+    {
+      code: '(+84)',
+      icon: VietNamFlag,
+    },
+    {
+      code: '(+65)',
+      icon: SingaporeFlag,
+    },
+  ],
 })
 const emits = defineEmits(['click-close', 'click-ok'])
 /// Update visible
@@ -166,6 +285,14 @@ const updateVisible = (value: any) => {
     instance.value.visible = props.visible
     emits('click-close')
   }
+}
+/// Change phone number of branch
+const changePhoneNumber = async (evt: any) => {
+  CreateOrgValidate.phoneNumber(instance, t, $orgAPI)
+}
+/// Change dial code
+const changeDialCode = async (evt: any) => {
+  CreateOrgValidate.changeDialCode(evt, instance)
 }
 
 /// Change name
@@ -205,6 +332,7 @@ const clickSave = async (evt: any) => {
   if (!validate) {
     return
   }
+  instance.value.loading = true
   let formData = new FormData()
   formData.append('avatar', instance.value.avatarFile)
   formData.append('name', instance.value.name || '')
@@ -216,7 +344,7 @@ const clickSave = async (evt: any) => {
     headers: { 'Content-Type': 'no-content-type' },
   }
   const response: any = await $orgAPI(APIOrgPositionCons.CREATE, options)
-
+  instance.value.loading = false
   toast.add({
     severity: ToastCons.SUCCESS,
     summary: t('success'),
@@ -235,6 +363,7 @@ watch(
     instance.value.name = null
     instance.value.description = null
     instance.value.active = true
+    instance.value.loading = false
     instance.value.avatar = DefaultAvatar
   }
 )

@@ -268,60 +268,6 @@
                 <label class="label" for="branch-phone-number"
                   >{{ $t('phone_number') }}<span>*</span></label
                 >
-                <!-- <Select
-                  v-model="instance.dialCode"
-                  :options="instance.countries"
-                  optionLabel="name"
-                  @change="changeDialCode"
-                  placeholder="Select a Country"
-                  class="w-[110px] h-[30px] mr-[5px]"
-                >
-                  <template #value="slotProps">
-                    <div
-                      v-if="slotProps.value"
-                      class="flex items-center justify-center h-[30px] pl-[10px]"
-                    >
-                      <img
-                        :alt="slotProps.value.code"
-                        :src="slotProps.value.icon"
-                        style="width: 18px"
-                      />
-                      <div class="text-[14px] ml-[5px]">
-                        {{ slotProps.value.code }}
-                      </div>
-                    </div>
-                    <span v-else>
-                      {{ slotProps.placeholder }}
-                    </span>
-                  </template>
-                  <template #option="slotProps">
-                    <div
-                      class="flex items-center justify-center pl-[10px] h-[30px]"
-                    >
-                      <img
-                        :alt="slotProps.option.code"
-                        :src="slotProps.option.icon"
-                        style="width: 18px"
-                      />
-                      <div class="text-[14px] ml-[5px]">
-                        {{ slotProps.option.code }}
-                      </div>
-                    </div>
-                  </template>
-                </Select>
-                <InputMask
-                  class="h-[30px] flex-1"
-                  autocomplete="off"
-                  id="branch-phone-number"
-                  @value-change="changePhoneNumberOfBranch"
-                  @blur="changePhoneNumberOfBranch"
-                  v-model="instance.phoneNumberOfBranch"
-                  :mask="instance.phoneNumberOfBranchPattern"
-                  :placeholder="instance.phoneNumberOBranchPlaceHolder"
-                  fluid
-                />
-              </div> -->
-
                 <Select
                   v-model="instance.dialCode"
                   :options="instance.countries"
@@ -528,7 +474,7 @@
 <script setup lang="ts">
 /// Import
 import { ref } from 'vue'
-import type { CreateOrgType } from '~/types/org/create-org/CreateOrgType'
+import type { CreateOrgType } from '~/types/org/org/CreateOrgType'
 import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import Add from '~/assets/icons/add.svg'
@@ -614,7 +560,6 @@ const changeAddressOfBranch = async (evt: any) => {
 
 /// Change phone number of branch
 const changePhoneNumberOfBranch = async (evt: any) => {
-  // validatePhoneNumberWithExist(instance, t, abortController)
   CreateOrgValidate.phoneNumberOfBranch(instance, t, $orgAPI)
 }
 /// Change dial code

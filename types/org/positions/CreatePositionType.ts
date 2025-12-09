@@ -1,5 +1,6 @@
 export interface CreatePositionType {
   visible: boolean
+  loading: boolean
   name: string | null
   nameError: string | null
   description: string | null

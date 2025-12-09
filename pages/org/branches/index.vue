@@ -56,7 +56,7 @@
                 :label="$t('create')"
                 class="w-[90px] h-[32px] ml-[10px]"
                 icon="pi pi-plus"
-              />
+              ></Button>
             </div>
           </div>
         </template>
@@ -214,34 +214,39 @@
               rounded
               class="mr-2"
               @click="editProduct(slotProps.data)"
-            />
+            ></Button>
             <Button
               icon="pi pi-trash"
               outlined
               rounded
               severity="danger"
               @click="confirmDeleteProduct(slotProps.data)"
-            />
+            ></Button>
           </template>
         </Column>
       </DataTable>
     </div>
+    <CreateUpdateDialog
+      :title="instance.titleDialog"
+      :visible="instance.visibleDialog"
+      @click-ok="clickOkDialog"
+      @click-close="clickCloseDialog"
+    />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /// Import
 import { ref, onMounted } from 'vue'
 import { CustomerService } from '@/service/CustomerService'
 import { FilterMatchMode } from '@primevue/core/api'
-// import BranchesDialog from '~/components/BranchesOfOrg/BranchesDialog.vue'
+import type { BranchesType } from '~/types/org/branches/BranchesType'
+import CreateUpdateDialog from './components/create-update-dialog.vue'
 /// Define
 const { t } = useI18n()
-const instance = ref({
-  addOrUpdateDialogVisible: false,
-  addOrUpdateDialogStatus: '',
-  list: [],
-  paginator: null,
+const instance = ref<BranchesType>({
+  visibleDialog: false,
+  titleDialog: '',
 })
 const columns = [
   { field: 'createdAt', header: t('created_date') },
@@ -269,21 +274,33 @@ const formatCurrency = (value) => {
 }
 
 /// Click close
-const clickCloseDialog = () => {
-  instance.value.addOrUpdateDialogVisible = false
-  getListData()
-}
+// const clickCloseDialog = () => {
+//   instance.value.addOrUpdateDialogVisible = false
+//   getListData()
+// }
 /// Click save
-const clickSaveDialog = () => {
-  instance.value.addOrUpdateDialogVisible = false
-}
-/// Click create branch
-const clickCreate = async () => {
-  // instance.value.addOrUpdateDialogVisible = true
-  // instance.value.addOrUpdateDialogStatus = 'add'
+// const clickSaveDialog = () => {
+//   instance.value.addOrUpdateDialogVisible = false
+// }
+// /// Click create branch
+// const clickCreate = async () => {
+//   // instance.value.addOrUpdateDialogVisible = true
+//   // instance.value.addOrUpdateDialogStatus = 'add'
 
-  /// Move to add
-  await navigateTo({ path: PathStaff.CREATE_BRANCH })
+//   /// Move to add
+//   await navigateTo({ path: PathStaff.CREATE_BRANCH })
+// }
+
+/// Click create employee
+const clickCreate = async () => {
+  instance.value.visibleDialog = true
+}
+const clickOkDialog = () => {
+  instance.value.visibleDialog = false
+}
+
+const clickCloseDialog = () => {
+  instance.value.visibleDialog = false
 }
 </script>
 <style></style>

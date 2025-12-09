@@ -1,4 +1,4 @@
-import type { CreatePositionType } from '~/types/org/create-position/CreatePositionType'
+import type { CreatePositionType } from '~/types/org/positions/CreatePositionType'
 import { type Ref } from 'vue'
 import type { ToastServiceMethods } from 'primevue'
 /// Validate avatar

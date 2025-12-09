@@ -1,7 +1,7 @@
 import { header } from '@primeuix/themes/aura/accordion'
 import type { ToastServiceMethods } from 'primevue'
 import { type Ref } from 'vue'
-import type { CreateOrgType } from '~/types/org/create-org/CreateOrgType'
+import type { CreateOrgType } from '~/types/org/org/CreateOrgType'
 
 /// Validate name of org
 const nameOfOrg = async (

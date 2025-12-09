@@ -527,7 +527,7 @@ import Times from '~/assets/icons/times.svg'
 import type { PositionFilterType } from '~/types/staff/PositionType'
 import type { PositionsType } from '~/types/org/positions/PositionsType'
 import type { HeaderColumnType } from '~/types/common/HeaderColumnType'
-import CreateUpdateDialog from '../create-update-position/create-update-dialog.vue'
+import CreateUpdateDialog from './components/create-update-dialog.vue'
 
 /// Define
 const store = GlobalStore()
@@ -743,7 +743,7 @@ const clearFilterCreator = () => {
 const clickEdit = (data: any) => {
   selectedData.value = data
 }
-/// Click create employee
+/// Click create position
 const clickCreate = async () => {
   /// Move to add
   // await navigateTo({ path: PathStaff.CREATE_POSITION })
@@ -914,19 +914,10 @@ const inputUpdatedAt = (evt: any) => {
 }
 
 const clickOkDialog = () => {
-  // if (instance.value.informTrack.type === 'branch') {
-  //   handleDeleteBranch(instance.value.informTrack.data)
-  // } else if (instance.value.informTrack.type === 'department') {
-  //   handleDeleteDepartment(instance.value.informTrack.data)
-  // } else if (instance.value.informTrack.type === 'position') {
-  //   handleDeletePosition(instance.value.informTrack.data)
-  // }
-  // clearInform()
   instance.value.visibleDialog = false
 }
 
 const clickCloseDialog = () => {
-  // clearInform()
   instance.value.visibleDialog = false
 }
 /// Get data
