@@ -5,7 +5,9 @@ import type { ToastServiceMethods } from 'primevue'
 const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
   const avatar = instance.value.avatar || ''
   if (avatar.endsWith(DEFAULT_AVATAR)) {
-    instance.value.avatarError = t('please_choose_avatar')
+    instance.value.avatarError = t('please_select_name', {
+      name: t('avatar').toLocaleLowerCase(),
+    })
     return
   }
   if (instance.value.widthAvatar !== instance.value.heightAvatar) {
@@ -20,36 +22,20 @@ const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
 const validateName = async (
   instance: Ref<CreatePositionType>,
   t: any,
-  $orgAPI: any,
-  locale: string
+  $orgAPI: any
 ) => {
-  let nameObject: any = instance.value.name
-
-  if (!nameObject || !nameObject[locale]) {
-    instance.value.nameError = t('please_enter_name', {
-      name: t('name').toLocaleLowerCase(),
-    })
-    return
-  }
-  let name = nameObject[locale] || ''
-  if (!name) {
+  if (!instance.value.name) {
     instance.value.nameError = t('please_enter_name', {
       name: t('name').toLocaleLowerCase(),
     })
     return
   }
 
-  if (name.length < 3) {
+  if (instance.value.name.length < 3) {
     instance.value.nameError = instance.value.nameError = t(
       'name1_must_be_greater_than_name2_characters',
       { name1: t('name'), name2: 2 }
     )
-    return
-  }
-  if (
-    instance.value.position &&
-    instance.value.position.name[locale] === name
-  ) {
     return
   }
 
@@ -63,13 +49,13 @@ const validateName = async (
     method: MethodCons.GET,
     signal: signal,
     query: {
-      name: name,
+      name: instance.value.name,
     },
   }
   const result = await $orgAPI(APIOrgPositionCons.EXIST_NAME, options)
   if (result.data) {
     instance.value.nameError = t(
-      'name1_is_already_in_use_by_anthor_name2_in_organization',
+      'name1_is_already_in_use_by_another_name2_in_organization',
       {
         name1: t('name'),
         name2: t('position').toLocaleLowerCase(),
@@ -84,13 +70,11 @@ const validateName = async (
 const validateAll = async (
   instance: Ref<CreatePositionType>,
   t: any,
-  toast: ToastServiceMethods,
-  locale: string,
-  position: any = null
+  $orgAPI: any
 ) => {
   await Promise.all([
     validateAvatar(instance, t),
-    validateName(instance, t, toast, locale),
+    validateName(instance, t, $orgAPI),
   ])
 
   if (instance.value.avatarError || instance.value.nameError) {

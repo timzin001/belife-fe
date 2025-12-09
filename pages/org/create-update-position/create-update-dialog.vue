@@ -48,7 +48,7 @@
                 >
                 <InputText
                   id="title"
-                  v-model="instance.name[locale]"
+                  v-model="instance.name"
                   class="flex-auto"
                   @value-change="changeName"
                   autocomplete="off"
@@ -75,13 +75,29 @@
                   class="flex-1"
                   autocomplete="off"
                   rows="2"
-                  v-model="instance.description[locale]"
+                  v-model="instance.description"
                   :placeholder="
                     $t('please_enter_name', {
                       name: $t('description').toLocaleLowerCase(),
                     })
                   "
                 />
+              </div>
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="department-name" class="label"
+                  >{{ $t('active') }}<span>*</span></label
+                >
+                <!-- <Checkbox
+                  v-model="instance.active"
+                  inputId="active"
+                  @value-change="changeActive"
+                  binary
+                  name="active"
+                  class="active"
+                /> -->
+                <Checkbox v-model="instance.active" binary />
               </div>
             </div>
             <div class="w-full line h-[1px] mt-[20px]"></div>
@@ -112,6 +128,7 @@ import ArrowLeft from '~/assets/icons/arrow-left.svg'
 import Save from '~/assets/icons/save.svg'
 import { CreatePositionValidate } from '~/validate/org/CreatePositionValidate'
 const { t, locale } = useI18n()
+const toast = useToast()
 const { $orgAPI, $socialAPI } = useNuxtApp()
 const props = defineProps({
   title: {
@@ -128,18 +145,11 @@ const props = defineProps({
     required: false,
   },
 })
-
 const instance = ref<CreatePositionType>({
   visible: false,
-  name: {
-    vi: '',
-    en: '',
-  },
+  name: '',
   nameError: null,
-  description: {
-    vi: '',
-    en: '',
-  },
+  description: '',
   active: true,
   avatar: DefaultAvatar,
   avatarFile: null,
@@ -161,7 +171,12 @@ const updateVisible = (value: any) => {
 
 /// Change name
 const changeName = (evt: any) => {
-  CreatePositionValidate.name(instance, t, $orgAPI, locale.value)
+  CreatePositionValidate.name(instance, t, $orgAPI)
+}
+
+const changeActive = (evt: any) => {
+  console.log(evt)
+  // CreatePositionValidate.active(instance, t)
 }
 
 /// Select avatar
@@ -184,11 +199,44 @@ const onFileSelectAvatar = (event: any) => {
   }
   reader.readAsDataURL(file)
 }
+
+/// Create save position
+const clickSave = async (evt: any) => {
+  const validate = await CreatePositionValidate.all(instance, t, $orgAPI)
+  if (!validate) {
+    return
+  }
+  let formData = new FormData()
+  formData.append('avatar', instance.value.avatarFile)
+  formData.append('name', instance.value.name || '')
+  formData.append('description', instance.value.description || '')
+  formData.append('active', JSON.stringify(instance.value.active))
+  const options: any = {
+    method: MethodCons.POST,
+    body: formData,
+    headers: { 'Content-Type': 'no-content-type' },
+  }
+  const response: any = await $orgAPI(APIOrgPositionCons.CREATE, options)
+
+  toast.add({
+    severity: ToastCons.SUCCESS,
+    summary: t('success'),
+    detail: t('name_of_organization_has_been_created_successfully', {
+      name: t('position'),
+    }),
+    life: ToastCons.DURATION,
+  })
+  emits('click-ok')
+}
 watch(
   () => props.visible,
   (value) => {
     /// Update show or hide from parent
     instance.value.visible = props.visible
+    instance.value.name = null
+    instance.value.description = null
+    instance.value.active = true
+    instance.value.avatar = DefaultAvatar
   }
 )
 </script>

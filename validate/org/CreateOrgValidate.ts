@@ -207,7 +207,9 @@ const addressOfBranch = (instance: Ref<CreateOrgType>, t: any) => {
 const avatarOfOrg = (instance: Ref<CreateOrgType>, t: any) => {
   const logoOfOrganization = instance.value.avatarOfOrg || ''
   if (logoOfOrganization.endsWith(DEFAULT_AVATAR)) {
-    instance.value.avatarOfOrgError = t('please_choose_avatar')
+    instance.value.avatarOfOrgError = t('please_select_name', {
+      name: t('avatar_of_org').toLocaleLowerCase(),
+    })
     return
   }
   if (instance.value.widthAvatarOfOrg !== instance.value.heightAvatarOfOrg) {
@@ -222,7 +224,9 @@ const avatarOfOrg = (instance: Ref<CreateOrgType>, t: any) => {
 const avatarOfBranch = (instance: Ref<CreateOrgType>, t: any) => {
   const avatarOfBranch = instance.value.avatarOfBranch || ''
   if (avatarOfBranch.endsWith(DEFAULT_AVATAR)) {
-    instance.value.avatarOfBranchError = t('please_choose_avatar')
+    instance.value.avatarOfBranchError = t('please_select_name', {
+      name: t('avatar_of_branch').toLocaleLowerCase(),
+    })
     return
   }
   if (
@@ -321,6 +325,6 @@ export const CreateOrgValidate = {
   phoneNumberOfBranch: phoneNumberOfBranch,
   addressOfBranch: addressOfBranch,
   avatarOfBranch: avatarOfBranch,
-  allValidate: allValidate,
+  all: allValidate,
   termsAndPrivacy: validateTermsAndPrivacy,
 }

@@ -52,7 +52,6 @@
     "ratio_of_logo_is_not_1x1": "Ratio of logo is not 1x1",
     "ratio_of_avatar_is_not_1x1": "Ratio of avatar is not 1x1",
     "please_choose_logo_of_organization": "Please choose logo of organization",
-    "please_choose_avatar": "Please choose avatar",
     "create": "Create",
     "slogan": "Slogan",
     "choose_organization": "Choose organization", 
@@ -147,7 +146,7 @@
     "name_is_not_exist_in_system": "{name} is not exsit in system",
     "name_created_successfully": "{name} created successfully",
     "user": "User",
-    "name1_is_already_in_use_by_anthor_name2_in_organization":"{name1} is already in use by anthor {name2} in organization",
+    "name1_is_already_in_use_by_another_name2_in_organization":"{name1} is already in use by another {name2} in organization.",
     "name_is_not_correct": "{name} is not correct",
     "manager": "Manager",
     "start_now": "Start now",
@@ -167,6 +166,9 @@
     "name_must_contain_at_least_one_lowercase_letter":"{name} must contain at least one lowercase letter.",
     "name_must_contain_at_least_one_special_character":"{name} must contain at least one special character.",
     "successfully_signed_in_to_name_organization": "Successfully signed in to {name} organization.",
-    "organization_name_has_been_created_successfully": "Organization {name} has been created successfully."
+    "organization_name_has_been_created_successfully": "Organization {name} has been created successfully.",
+    "name_of_organization_has_been_created_successfully": "{name} of organization has been created successfully.",
+    "avatar_of_branch":"Avatar of branch",
+    "avatar_of_organization": "Avatar of organization"
 
 }

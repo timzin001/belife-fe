@@ -95,7 +95,9 @@ export const APIOrgTenantCons = {
 }
 export const APIOrgPositionCons = {
   EXIST_NAME: 'position/exist-name',
+  CREATE: 'position/create',
 }
+
 export const APIOrgBranchCons = {
   EXIST_PHONE_NUMBER_IN_SYSTEM: 'branch/exist-phone-number-in-system',
   EXIST_EMAIL_IN_SYSTEM: 'branch/exist-email-in-system',

@@ -1,15 +1,8 @@
 export interface CreatePositionType {
   visible: boolean
-
-  name: {
-    en: string
-    vi: string
-  }
+  name: string | null
   nameError: string | null
-  description: {
-    en: string
-    vi: string
-  }
+  description: string | null
   active: boolean
   avatar: any | null
   avatarFile: any | null

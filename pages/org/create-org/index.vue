@@ -669,7 +669,7 @@ const changeTermsPrivacy = (evt: any) => {
 
 /// Create save org
 const clickSave = async (evt: any) => {
-  const validate = await CreateOrgValidate.allValidate(instance, t, $orgAPI)
+  const validate = await CreateOrgValidate.all(instance, t, $orgAPI)
   if (!validate) {
     return
   }
