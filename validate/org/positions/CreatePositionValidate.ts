@@ -1,6 +1,5 @@
 import type { CreatePositionType } from '~/types/org/positions/CreatePositionType'
 import { type Ref } from 'vue'
-import type { ToastServiceMethods } from 'primevue'
 /// Validate avatar
 const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
   const avatar = instance.value.avatar || ''
@@ -54,13 +53,9 @@ const validateName = async (
   }
   const result = await $orgAPI(APIOrgPositionCons.EXIST_NAME, options)
   if (result.data) {
-    instance.value.nameError = t(
-      'name1_is_already_in_use_by_another_name2_in_organization',
-      {
-        name1: t('name'),
-        name2: t('position').toLocaleLowerCase(),
-      }
-    )
+    instance.value.nameError = t('name_is_exist_in_organization', {
+      name1: t('name'),
+    })
   } else {
     instance.value.nameError = ''
   }

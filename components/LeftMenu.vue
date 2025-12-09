@@ -162,6 +162,7 @@ const changeOrg = async (evt: any) => {
     method: MethodCons.POST,
     body: {
       employeeId: evt.employeeId,
+      orgId: evt.id,
     },
   }
 

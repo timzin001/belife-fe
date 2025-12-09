@@ -128,7 +128,7 @@ import type { CreatePositionType } from '~/types/org/positions/CreatePositionTyp
 import DefaultAvatar from '~/assets/images/default-avatar.png'
 import Times from '~/assets/icons/times.svg'
 import Save from '~/assets/icons/save.svg'
-import { CreatePositionValidate } from '~/validate/org/CreatePositionValidate'
+import { CreatePositionValidate } from '~/validate/org/positions/CreatePositionValidate'
 const { t, locale } = useI18n()
 const toast = useToast()
 const { $orgAPI } = useNuxtApp()

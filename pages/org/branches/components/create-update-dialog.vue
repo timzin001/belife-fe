@@ -6,7 +6,7 @@
     @update:visible="updateVisible"
   >
     <template #container>
-      <div class="create-position">
+      <div class="create-branch">
         <div class="header w-full flex relative">
           <div
             class="text-[20px] w-full font-bold flex items-center justify-center"
@@ -85,13 +85,13 @@
                 >
                 <InputText
                   id="email"
-                  v-model="instance.name"
+                  v-model="instance.email"
                   class="flex-auto"
-                  @value-change="changeName"
+                  @value-change="changeEmail"
                   autocomplete="off"
                   :placeholder="
                     $t('please_enter_name', {
-                      name: $t('name').toLocaleLowerCase(),
+                      name: $t('email').toLocaleLowerCase(),
                     })
                   "
                 />
@@ -173,6 +173,33 @@
               >
             </div>
             <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="address" class="label"
+                  >{{ $t('address') }}<span>*</span></label
+                >
+                <InputText
+                  id="address"
+                  class="flex-1"
+                  autocomplete="off"
+                  @blur="changeAddress"
+                  @value-change="changeAddress"
+                  v-model="instance.address"
+                  :placeholder="
+                    $t('please_enter_name', {
+                      name: $t('address').toLocaleLowerCase(),
+                    })
+                  "
+                />
+              </div>
+              <Message
+                v-if="instance.addressError"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ instance.addressError }}</Message
+              >
+            </div>
+            <div class="mt-[10px]">
               <div class="flex items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
                 <Textarea
@@ -221,7 +248,7 @@ import VietNamFlag from '~/assets/flags/vietnam.svg'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
 import Times from '~/assets/icons/times.svg'
 import Save from '~/assets/icons/save.svg'
-import { CreatePositionValidate } from '~/validate/org/CreatePositionValidate'
+import { CreateBranchValidate } from '~/validate/org/branches/CreateBranchValidate'
 import type { CreateBranchType } from '~/types/org/branches/CreateBranchType'
 const { t, locale } = useI18n()
 const toast = useToast()
@@ -262,6 +289,10 @@ const instance = ref<CreateBranchType>({
   phoneNumberPattern: '999-999-999',
   // +65 XXXX XXXX
   phoneNumberPlaceHolder: '123-345-789',
+  phoneNumberError: null,
+  phoneNumber: '',
+  addressError: null,
+  address: '',
   dialCode: {
     code: '(+84)',
     icon: VietNamFlag,
@@ -288,16 +319,25 @@ const updateVisible = (value: any) => {
 }
 /// Change phone number of branch
 const changePhoneNumber = async (evt: any) => {
-  CreateOrgValidate.phoneNumber(instance, t, $orgAPI)
+  CreateBranchValidate.phoneNumber(instance, t, $orgAPI)
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
-  CreateOrgValidate.changeDialCode(evt, instance)
+  CreateBranchValidate.changeDialCode(evt, instance)
 }
 
 /// Change name
 const changeName = (evt: any) => {
-  CreatePositionValidate.name(instance, t, $orgAPI)
+  CreateBranchValidate.name(instance, t, $orgAPI)
+}
+/// Change email
+const changeEmail = (evt: any) => {
+  CreateBranchValidate.email(instance, t, $orgAPI)
+}
+
+/// Change address
+const changeAddress = async (evt: any) => {
+  CreateBranchValidate.address(instance, t)
 }
 
 /// click close
@@ -320,7 +360,7 @@ const onFileSelectAvatar = (event: any) => {
       const width = image.width
       instance.value.widthAvatar = width
       instance.value.heightAvatar = height
-      CreatePositionValidate.avatar(instance, t)
+      CreateBranchValidate.avatar(instance, t)
     }
   }
   reader.readAsDataURL(file)
@@ -328,14 +368,22 @@ const onFileSelectAvatar = (event: any) => {
 
 /// Create save position
 const clickSave = async (evt: any) => {
-  const validate = await CreatePositionValidate.all(instance, t, $orgAPI)
+  const validate = await CreateBranchValidate.all(instance, t, $orgAPI)
   if (!validate) {
     return
   }
   instance.value.loading = true
   let formData = new FormData()
+
+  const phoneNumber = `${instance.value.dialCode?.code ?? ''}${(
+    instance.value.phoneNumber ?? ''
+  ).replaceAll('-', '')}`
+
   formData.append('avatar', instance.value.avatarFile)
   formData.append('name', instance.value.name || '')
+  formData.append('email', instance.value.email || '')
+  formData.append('phoneNumber', phoneNumber)
+  formData.append('address', instance.value.address || '')
   formData.append('description', instance.value.description || '')
   formData.append('active', JSON.stringify(instance.value.active))
   const options: any = {
@@ -343,7 +391,7 @@ const clickSave = async (evt: any) => {
     body: formData,
     headers: { 'Content-Type': 'no-content-type' },
   }
-  const response: any = await $orgAPI(APIOrgPositionCons.CREATE, options)
+  const response: any = await $orgAPI(APIOrgBranchCons.CREATE, options)
   instance.value.loading = false
   toast.add({
     severity: ToastCons.SUCCESS,
@@ -362,12 +410,16 @@ watch(
     instance.value.visible = props.visible
     instance.value.name = null
     instance.value.description = null
+    instance.value.email = null
+    instance.value.address = null
+    instance.value.phoneNumber = null
     instance.value.active = true
     instance.value.loading = false
+    instance.value.dialCode = instance.value.countries[0]
     instance.value.avatar = DefaultAvatar
   }
 )
 </script>
 <style scoped lang="scss">
-@import url('~/assets/scss/org/CreatePosition.scss');
+@import url('~/assets/scss/org/CreateBranch.scss');
 </style>

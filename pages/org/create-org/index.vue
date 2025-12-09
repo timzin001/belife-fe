@@ -479,7 +479,7 @@ import SingaporeFlag from '~/assets/flags/singapore.svg'
 import VietNamFlag from '~/assets/flags/vietnam.svg'
 import Add from '~/assets/icons/add.svg'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
-import { CreateOrgValidate } from '~/validate/org/CreateOrgValidate'
+import { CreateOrgValidate } from '~/validate/org/org/CreateOrgValidate'
 import { GlobalStore } from '~/store/Global'
 import { useToast } from 'primevue/usetoast'
 import { header } from '@primeuix/themes/aura/accordion'
@@ -550,7 +550,7 @@ const changeNameOfBranch = async (evt: any) => {
 }
 /// Change email of branch
 const changeEmailOfBranch = async (evt: any) => {
-  CreateOrgValidate.emailOfBranch(instance, t, $orgAPI)
+  CreateOrgValidate.emailOfBranch(instance, t)
 }
 
 /// Change address of branch
@@ -560,7 +560,7 @@ const changeAddressOfBranch = async (evt: any) => {
 
 /// Change phone number of branch
 const changePhoneNumberOfBranch = async (evt: any) => {
-  CreateOrgValidate.phoneNumberOfBranch(instance, t, $orgAPI)
+  CreateOrgValidate.phoneNumberOfBranch(instance, t)
 }
 /// Change dial code
 const changeDialCode = async (evt: any) => {
@@ -726,10 +726,10 @@ const transitionError = () => {
     CreateOrgValidate.nameOfBranch(instance, t)
   }
   if (instance.value.emailOfBranchError) {
-    CreateOrgValidate.emailOfBranch(instance, t, $orgAPI)
+    CreateOrgValidate.emailOfBranch(instance, t)
   }
   if (instance.value.phoneNumberOfBranchError) {
-    CreateOrgValidate.phoneNumberOfBranch(instance, t, $orgAPI)
+    CreateOrgValidate.phoneNumberOfBranch(instance, t)
   }
   if (instance.value.addressOfBranchError) {
     CreateOrgValidate.addressOfBranch(instance, t)

@@ -96,11 +96,7 @@ const sizeOfOrg = (instance: Ref<CreateOrgType>, t: any) => {
 }
 
 /// Validate phone number of branch
-const phoneNumberOfBranch = async (
-  instance: Ref<CreateOrgType>,
-  t: any,
-  $orgAPI: any
-) => {
+const phoneNumberOfBranch = async (instance: Ref<CreateOrgType>, t: any) => {
   let phoneNumberStr = `${instance.value.phoneNumberOfBranch ?? ''}`
   let value = phoneNumberStr.replaceAll('_', '')
   value = value.replaceAll('-', '')
@@ -119,39 +115,10 @@ const phoneNumberOfBranch = async (
   if (pattern.length !== value.length) {
     return
   }
-  const phoneNumber = `${instance.value.dialCode.code}${value}`
-  if (instance.value.phoneNumberOfBranchAbort) {
-    instance.value.phoneNumberOfBranchAbort.abort(APIStatusCons.ABORT_API)
-  }
-  instance.value.phoneNumberOfBranchAbort = new AbortController()
-  const signal = instance.value.phoneNumberOfBranchAbort.signal
-  const options = {
-    method: MethodCons.GET,
-    signal: signal,
-    query: {
-      phoneNumber: phoneNumber,
-    },
-  }
-
-  const response = await $orgAPI(
-    APIOrgBranchCons.EXIST_PHONE_NUMBER_IN_SYSTEM,
-    options
-  )
-
-  if (response.data) {
-    instance.value.phoneNumberOfBranchError = t('name_is_exist_in_system', {
-      name: t('phone_number'),
-    })
-  } else {
-    instance.value.phoneNumberOfBranchError = ''
-  }
+  instance.value.phoneNumberOfBranchError = ''
 }
 /// Validate email of branch
-const emailOfBranch = async (
-  instance: Ref<CreateOrgType>,
-  t: any,
-  $orgAPI: any
-) => {
+const emailOfBranch = async (instance: Ref<CreateOrgType>, t: any) => {
   const emailOfBranch = instance.value.emailOfBranch
   if (!emailOfBranch) {
     instance.value.emailOfBranchError = t('please_enter_name', {
@@ -165,38 +132,14 @@ const emailOfBranch = async (
     })
     return
   }
-
-  if (instance.value.emailOfBranchAbort) {
-    instance.value.emailOfBranchAbort.abort(APIStatusCons.ABORT_API)
-  }
-  instance.value.emailOfBranchAbort = new AbortController()
-  const signal = instance.value.emailOfBranchAbort.signal
-  const options = {
-    method: MethodCons.GET,
-    signal: signal,
-    query: {
-      email: emailOfBranch,
-    },
-  }
-
-  const response = await $orgAPI(
-    APIOrgBranchCons.EXIST_EMAIL_IN_SYSTEM,
-    options
-  )
-  if (response.data) {
-    instance.value.emailOfBranchError = t('name_is_exist_in_system', {
-      name: t('email'),
-    })
-  } else {
-    instance.value.emailOfBranchError = ''
-  }
+  instance.value.emailOfBranchError = ''
 }
 /// Validate address of branch
 const addressOfBranch = (instance: Ref<CreateOrgType>, t: any) => {
   const addressOfBranch = instance.value.addressOfBranch
   if (!addressOfBranch) {
     instance.value.addressOfBranchError = t('please_enter_name', {
-      name: t('branch').toLocaleLowerCase(),
+      name: t('address').toLocaleLowerCase(),
     })
     return
   }
@@ -289,8 +232,8 @@ const allValidate = async (
     CreateOrgValidate.sizeOfOrg(instance, t),
     CreateOrgValidate.avatarOfBranch(instance, t),
     CreateOrgValidate.nameOfBranch(instance, t),
-    CreateOrgValidate.emailOfBranch(instance, t, $orgAPI),
-    CreateOrgValidate.phoneNumberOfBranch(instance, t, $orgAPI),
+    CreateOrgValidate.emailOfBranch(instance, t),
+    CreateOrgValidate.phoneNumberOfBranch(instance, t),
     CreateOrgValidate.addressOfBranch(instance, t),
     CreateOrgValidate.termsAndPrivacy(instance, t),
   ])

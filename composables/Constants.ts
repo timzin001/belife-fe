@@ -99,8 +99,10 @@ export const APIOrgPositionCons = {
 }
 
 export const APIOrgBranchCons = {
-  EXIST_PHONE_NUMBER_IN_SYSTEM: 'branch/exist-phone-number-in-system',
-  EXIST_EMAIL_IN_SYSTEM: 'branch/exist-email-in-system',
+  EXIST_NAME: 'branch/exist-name',
+  EXIST_EMAIL: 'branch/exist-email',
+  EXIST_PHONE_NUMBER: 'branch/exist-phone-number',
+  CREATE: 'branch/create',
 }
 
 export const APIPathAccountCons = {

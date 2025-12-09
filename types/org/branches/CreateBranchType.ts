@@ -22,6 +22,8 @@ export interface CreateBranchType {
   countries: Array<PhoneNumberType>
   phoneNumberPattern: string
   phoneNumberPlaceHolder: string
-  phoneNumber: string
+  phoneNumber: string | null
   phoneNumberError: string | null
+  addressError: string | null
+  address: string | null
 }
