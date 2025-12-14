@@ -534,6 +534,7 @@ const store = GlobalStore()
 const toast = useToast()
 const { t, locale } = useI18n()
 const route = useRoute()
+const { $orgAPI } = useNuxtApp()
 
 const selectedData = ref()
 const createdAtViewFilter = ref()
@@ -784,22 +785,13 @@ const getSearchQuery = () => {
 }
 /// Get list data
 const getListData = async (query: any) => {
-  // const options: any = {
-  //   method: 'get',
-  //   query: query,
-  // }
-  // const { data, error, status } = await CallAPI(
-  //   APIPathPosition.GET_LIST,
-  //   options,
-  //   toast,
-  //   t,
-  //   true
-  // )
-  // /// Check error
-  // if (status.value !== APIStatusCons.SUCCESS) {
-  //   /// Check abort
-  //   return
-  // }
+  const options: any = {
+    method: MethodCons.GET,
+    query: query,
+  }
+  const response: any = await $orgAPI(APIOrgPositionCons.LIST, options)
+  console.log(response)
+
   // const value: any = data.value
   // const result = value.data
   // instance.value.list = mapNoToList(result.list, result.paginator.offset)
