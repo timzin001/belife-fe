@@ -1,6 +1,6 @@
 <template>
   <div class="page flex items-center justify-center">
-    <div class="flex card rounded-[8px] sign-up-group">
+    <div class="flex card sign-up-group">
       <div class="image-group relative">
         <img :src="HowlingWolves" alt="logo" class="image h-full" />
         <div

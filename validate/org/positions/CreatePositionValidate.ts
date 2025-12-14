@@ -54,7 +54,7 @@ const validateName = async (
   const result = await $orgAPI(APIOrgPositionCons.EXIST_NAME, options)
   if (result.data) {
     instance.value.nameError = t('name_is_exist_in_organization', {
-      name1: t('name'),
+      name: t('name'),
     })
   } else {
     instance.value.nameError = ''
