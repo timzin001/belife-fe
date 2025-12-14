@@ -97,6 +97,10 @@ export const APIOrgPositionCons = {
   EXIST_NAME: 'position/exist-name',
   CREATE: 'position/create',
 }
+export const APIOrgDepartmentCons = {
+  EXIST_NAME: 'department/exist-name',
+  CREATE: 'department/create',
+}
 
 export const APIOrgBranchCons = {
   EXIST_NAME: 'branch/exist-name',
@@ -202,9 +206,6 @@ export const PathStaffCons = {
   DEPARTMENTS: '/staff/departments',
   POSITIONS: '/staff/positions',
   CREATE_BRANCH: '/staff/create-branch',
-  CREATE_DEPARTMENT: '/staff/create-department',
-  CREATE_EMPLOYEE: '/staff/create-employee',
-  CREATE_POSITION: '/staff/create-position',
 }
 
 export const PathOrgCons = {

@@ -227,20 +227,29 @@
         </Column>
       </DataTable>
     </div>
+    <CreateUpdateDialog
+      :title="instance.titleDialog"
+      :visible="instance.visibleDialog"
+      @click-ok="clickOkDialog"
+      @click-close="clickCloseDialog"
+    />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /// Import
 import { ref, onMounted } from 'vue'
 import { CustomerService } from '@/service/CustomerService'
 import { FilterMatchMode } from '@primevue/core/api'
+import CreateUpdateDialog from './components/create-update-dialog.vue'
+import type { DepartmentsType } from '~/types/org/departments/DepartmentsType'
 /// Define
 const { t } = useI18n()
-const instance = ref({
-  list: [],
-  paginator: null,
+const instance = ref<DepartmentsType>({
+  visibleDialog: false,
+  titleDialog: '',
 })
+
 const columns = [
   { field: 'createdAt', header: t('created_date') },
   { field: 'updatedAt', header: t('updated_date') },
@@ -266,22 +275,17 @@ const formatCurrency = (value) => {
   return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
 }
 
-/// Click close
-const clickCloseDialog = () => {
-  instance.value.addOrUpdateDialogVisible = false
-  getListData()
-}
-/// Click save
-const clickSaveDialog = () => {
-  instance.value.addOrUpdateDialogVisible = false
-}
-/// Click add department
 const clickCreate = async () => {
-  /// Move to add
-  await navigateTo({ path: PathStaff.CREATE_DEPARTMENT })
+  instance.value.visibleDialog = true
+}
+const clickOkDialog = () => {
+  instance.value.visibleDialog = false
+}
+
+const clickCloseDialog = () => {
+  instance.value.visibleDialog = false
 }
 </script>
-<style></style>
 <style scoped lang="scss">
 :deep(.p-chip) {
   gap: 5px !important;

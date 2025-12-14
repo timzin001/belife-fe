@@ -1,4 +1,4 @@
-.create-branch {
+.create-department {
     flex: 1;
     padding: 30px;
     padding-top: 20px;
@@ -25,7 +25,7 @@
     }
 
     .label {
-        width: 120px;
+        width: 110px;
 
         span {
             margin-left: 2px;
@@ -38,7 +38,7 @@
     }
 
     .avatar-des {
-        margin-left: 120px;
+        margin-left: 110px;
         font-size: 13px;
     }
 
@@ -57,7 +57,7 @@
         border-width: 1px;
     }
     :deep(.p-message-text) {
-        padding-left: 120px;
+        padding-left: 110px;
     }
     .close{
         border-radius: 50px;
@@ -90,7 +90,7 @@
 // $mobile-max : 767px;
 // $mobile-min: 360px;
 @media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-    .create-branch {
+    .create-department {
         flex: 1;
         padding: 10px;
         padding-top: 15px;
