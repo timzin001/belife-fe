@@ -12,4 +12,5 @@ export interface CreatePositionType {
   avatarError: string | null
   position: any
   nameAbort: any
+  data: any
 }

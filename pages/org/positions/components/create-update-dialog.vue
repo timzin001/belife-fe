@@ -12,7 +12,13 @@
             class="text-[20px] w-full font-bold flex items-center justify-center"
           >
             {{
-              $t('create_name', { name: $t('position').toLocaleLowerCase() })
+              instance.data
+                ? $t('update_name', {
+                    name: $t('position').toLocaleLowerCase(),
+                  })
+                : $t('create_name', {
+                    name: $t('position').toLocaleLowerCase(),
+                  })
             }}
             <div class="flex-1 flex ml-[10px]">
               <div class="spinner-mini" v-if="instance.loading"></div>
@@ -108,12 +114,15 @@
             <div class="w-full flex items-center justify-center footer">
               <Button
                 severity="success"
-                :label="$t('save')"
-                class="h-[32px] button"
+                :label="props.data ? $t('update') : $t('save')"
+                class="h-[30px] button"
                 @click="clickSave"
               >
                 <template #icon>
-                  <img :src="Save" class="w-[14px] icon" />
+                  <img
+                    :src="instance.data ? Update : Save"
+                    class="w-[14px] icon"
+                  />
                 </template>
               </Button>
             </div>
@@ -128,6 +137,7 @@ import type { CreatePositionType } from '~/types/org/positions/CreatePositionTyp
 import DefaultAvatar from '~/assets/images/default-avatar.png'
 import Times from '~/assets/icons/times.svg'
 import Save from '~/assets/icons/save.svg'
+import Update from '~/assets/icons/update.svg'
 import { CreatePositionValidate } from '~/validate/org/positions/CreatePositionValidate'
 const { t, locale } = useI18n()
 const toast = useToast()
@@ -161,6 +171,7 @@ const instance = ref<CreatePositionType>({
   avatarError: null,
   position: null,
   nameAbort: null,
+  data: null,
 })
 const emits = defineEmits(['click-close', 'click-ok'])
 /// Update visible
@@ -174,7 +185,7 @@ const updateVisible = (value: any) => {
 
 /// Change name
 const changeName = (evt: any) => {
-  CreatePositionValidate.name(instance, t, $orgAPI)
+  CreatePositionValidate.name(instance, t, $orgAPI, locale.value)
 }
 
 /// click close
@@ -203,9 +214,56 @@ const onFileSelectAvatar = (event: any) => {
   reader.readAsDataURL(file)
 }
 
-/// Create save position
-const clickSave = async (evt: any) => {
-  const validate = await CreatePositionValidate.all(instance, t, $orgAPI)
+/// Handle update
+const handleUpdate = async () => {
+  const validate = await CreatePositionValidate.all(
+    instance,
+    t,
+    $orgAPI,
+    locale.value
+  )
+  if (!validate) {
+    return
+  }
+  instance.value.loading = true
+  let formData = new FormData()
+  formData.append('id', instance.value.data.id)
+  if (instance.value.avatarFile) {
+    formData.append('avatar', instance.value.avatarFile)
+  }
+  if (instance.value.name) {
+    formData.append('name', instance.value.name || '')
+  }
+  if (instance.value.description) {
+    formData.append('description', instance.value.description || '')
+  }
+  formData.append('active', JSON.stringify(instance.value.active))
+  const options: any = {
+    method: MethodCons.POST,
+    body: formData,
+    headers: { 'Content-Type': 'no-content-type' },
+  }
+  const response: any = await $orgAPI(APIOrgPositionCons.UPDATE, options)
+  instance.value.loading = false
+  toast.add({
+    severity: ToastCons.SUCCESS,
+    summary: t('success'),
+    detail: t('name_of_organization_has_been_updated_successfully', {
+      name: t('position'),
+    }),
+    life: ToastCons.DURATION,
+  })
+  emits('click-ok')
+}
+
+/// Handle save
+const handleSave = async () => {
+  const validate = await CreatePositionValidate.all(
+    instance,
+    t,
+    $orgAPI,
+    locale.value
+  )
   if (!validate) {
     return
   }
@@ -232,16 +290,35 @@ const clickSave = async (evt: any) => {
   })
   emits('click-ok')
 }
+/// Create save position
+const clickSave = async (evt: any) => {
+  if (props.data) {
+    handleUpdate()
+  } else {
+    console.log('Call handleSave')
+    handleSave()
+  }
+}
 watch(
   () => props.visible,
   (value) => {
     /// Update show or hide from parent
     instance.value.visible = props.visible
+
     instance.value.name = null
     instance.value.description = null
     instance.value.active = true
     instance.value.loading = false
     instance.value.avatar = DefaultAvatar
+    instance.value.data = null
+
+    if (value && props.data) {
+      instance.value.name = props.data.name[locale.value]
+      instance.value.description = props.data.description[locale.value]
+      instance.value.avatar = props.data.avatar.location
+      instance.value.active = props.data.active.value
+      instance.value.data = props.data
+    }
   }
 )
 </script>

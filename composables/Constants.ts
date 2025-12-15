@@ -96,6 +96,7 @@ export const APIOrgTenantCons = {
 export const APIOrgPositionCons = {
   EXIST_NAME: 'position/exist-name',
   CREATE: 'position/create',
+  UPDATE: 'position/update',
   LIST: 'position/get-list-positions',
 }
 export const APIOrgDepartmentCons = {

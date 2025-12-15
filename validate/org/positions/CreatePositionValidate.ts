@@ -21,7 +21,8 @@ const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
 const validateName = async (
   instance: Ref<CreatePositionType>,
   t: any,
-  $orgAPI: any
+  $orgAPI: any,
+  lang: string
 ) => {
   if (!instance.value.name) {
     instance.value.nameError = t('please_enter_name', {
@@ -36,6 +37,14 @@ const validateName = async (
       { name1: t('name'), name2: 2 }
     )
     return
+  }
+
+  if (instance.value.data) {
+    const nameObj = instance.value.data.name
+    if (instance.value.name == nameObj[lang]) {
+      instance.value.nameError = ''
+      return
+    }
   }
 
   if (instance.value.nameAbort) {
@@ -65,11 +74,12 @@ const validateName = async (
 const validateAll = async (
   instance: Ref<CreatePositionType>,
   t: any,
-  $orgAPI: any
+  $orgAPI: any,
+  lang: string
 ) => {
   await Promise.all([
     validateAvatar(instance, t),
-    validateName(instance, t, $orgAPI),
+    validateName(instance, t, $orgAPI, lang),
   ])
 
   if (instance.value.avatarError || instance.value.nameError) {

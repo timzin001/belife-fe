@@ -168,7 +168,10 @@
     "successfully_signed_in_to_name_organization": "Successfully signed in to {name} organization.",
     "organization_name_has_been_created_successfully": "Organization {name} has been created successfully.",
     "name_of_organization_has_been_created_successfully": "{name} of organization has been created successfully.",
+    "name_of_organization_has_been_updated_successfully": "{name} of organization has been updated successfully.",
     "avatar_of_branch":"Avatar of branch",
-    "avatar_of_organization": "Avatar of organization"
-
+    "avatar_of_organization": "Avatar of organization",
+    "update_name": "Update {name}",
+    "update": "Update",
+    "edit": "Edit"
 }

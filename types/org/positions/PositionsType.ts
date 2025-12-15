@@ -1,6 +1,7 @@
 export interface PositionsType {
   visibleDialog: boolean
   titleDialog: string
+  track: any | null
   list: any[]
   total: number
   limit: number

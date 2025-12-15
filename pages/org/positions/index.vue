@@ -56,8 +56,21 @@
               </div>
               <div class="line mt-[10px]"></div>
               <div class="flex mt-[10px] items-center justify-end">
-                <img class="w-[15px] h-[15px] pencil" :src="Pencil" />
-                <img class="w-[15px] h-[15px] trash" :src="Trash" />
+                <Button
+                  severity="success"
+                  :label="$t('edit')"
+                  class="h-[25px] button"
+                  @click="clickEdit(item)"
+                >
+                  <template #icon>
+                    <img :src="Pencil" class="w-[12px] pencil" />
+                  </template>
+                </Button>
+                <!-- <img
+                  class="w-[15px] h-[15px] pencil"
+                  :src="Pencil"
+                  @click="clickEdit(item)"
+                /> -->
               </div>
             </div>
           </div>
@@ -67,6 +80,7 @@
     <CreateUpdateDialog
       :title="instance.titleDialog"
       :visible="instance.visibleDialog"
+      :data="instance.track"
       @click-ok="clickOkDialog"
       @click-close="clickCloseDialog"
     />
@@ -104,6 +118,7 @@ const instance = ref<PositionsType>({
   visibleDialog: false,
   titleDialog: '',
   list: [],
+  track: null,
   total: 0,
   limit: 20,
   page: 1,
@@ -134,6 +149,10 @@ const clearFilterName = () => {
 const clickCreate = async () => {
   /// Move to add
   // await navigateTo({ path: PathStaff.CREATE_POSITION })
+  instance.value.visibleDialog = true
+}
+const clickEdit = async (item: any) => {
+  instance.value.track = item
   instance.value.visibleDialog = true
 }
 /// Get search query
@@ -290,6 +309,7 @@ const inputUpdatedAt = (evt: any) => {
 
 const clickOkDialog = () => {
   instance.value.visibleDialog = false
+  initData()
 }
 
 const clickCloseDialog = () => {
