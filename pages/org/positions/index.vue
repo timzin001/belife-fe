@@ -3,7 +3,7 @@
     <div class="w-full card positions flex flex-col">
       <div class="flex items-center justify-end header">
         <div class="search">
-          <img :src="Search" class="w-[18px] icon" @click="clearFilterName" />
+          <img :src="Search" class="w-[18px] icon" @click="clearFilterAll"></img>
           <InputText
             class="w-full h-[30px] input"
             v-model="filters.all"
@@ -11,8 +11,8 @@
             @input="inputSearchAll"
             :placeholder="$t('searching_dot')"
           />
-          <div class="clear">
-            <img :src="Times" class="w-[14px] icon" @click="clearFilterName" />
+          <div class="clear" v-if="filters.all">
+            <img :src="Times" class="w-[14px] icon" @click="clearFilterAll"></img>
           </div>
         </div>
         <Button
@@ -201,9 +201,9 @@ const onChangePage = (evt: any) => {
   getListData(query)
 }
 
-/// Clear fitler title
-const clearFilterName = () => {
-  filters.value.name = ''
+/// Clear fitler all
+const clearFilterAll = () => {
+  filters.value.all = ''
 }
 
 /// Click create position
