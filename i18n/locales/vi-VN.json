@@ -174,5 +174,6 @@
     "update": "Cập nhật",
     "edit": "Chỉnh sửa",
     "the_system_could_not_find_any_data_corresponding_to_your_request_please_check_the_applied_search_parameters_or_try_again_later":"Hệ thống chưa thể tìm thấy dữ liệu nào tương ứng với yêu cầu của bạn. Vui lòng kiểm tra lại các tham số tìm kiếm đã áp dụng hoặc quay lại sau.",
-    "an_unexpected_technical_issue_occurred_while_processing_your_request_our_system_is_currently_unable_to_complete_this_action_please_try_again_later":"Đã có một trục trặc kỹ thuật không mong muốn xảy ra trong quá trình xử lý yêu cầu của bạn. Hệ thống của chúng tôi hiện chưa thể hoàn thành thao tác này. Vui lòng quay lại sau."
+    "an_unexpected_technical_issue_occurred_while_processing_your_request_our_system_is_currently_unable_to_complete_this_action_please_try_again_later":"Đã có một trục trặc kỹ thuật không mong muốn xảy ra trong quá trình xử lý yêu cầu của bạn. Hệ thống của chúng tôi hiện chưa thể hoàn thành thao tác này. Vui lòng quay lại sau.",
+    "filter": "Lọc"
 }

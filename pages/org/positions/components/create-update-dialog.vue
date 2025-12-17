@@ -44,11 +44,7 @@
                   severity="secondary"
                   class="p-button-outlined h-[32px] flex-1"
                 />
-                <!-- <img
-                  :src="instance.avatar"
-                  alt="Image"
-                  class="rounded-[8px] w-full image"
-                /> -->
+
                 <div class="ml-[50px]">
                   <LoadingImg :src="instance.avatar" />
                 </div>
@@ -78,7 +74,7 @@
                       name: $t('name').toLocaleLowerCase(),
                     })
                   "
-                />
+                ></InputText>
               </div>
 
               <Message
@@ -102,15 +98,15 @@
                       name: $t('description').toLocaleLowerCase(),
                     })
                   "
-                />
+                ></Textarea>
               </div>
             </div>
             <div class="mt-[10px]">
               <div class="flex items-center justify-start w-full">
-                <label for="department-name" class="label"
+                <label for="active-name" class="label"
                   >{{ $t('active') }}<span>*</span></label
                 >
-                <Checkbox v-model="instance.active" binary />
+                <Checkbox v-model="instance.active" binary id="active-name" />
               </div>
             </div>
             <div class="w-full line h-[1px] mt-[20px]"></div>
@@ -146,12 +142,6 @@ const { t, locale } = useI18n()
 const toast = useToast()
 const { $orgAPI } = useNuxtApp()
 const props = defineProps({
-  title: {
-    type: String,
-  },
-  message: {
-    type: String,
-  },
   data: {
     type: Object as PropType<any>,
   },
@@ -326,5 +316,5 @@ watch(
 )
 </script>
 <style scoped lang="scss">
-@import url('~/assets/scss/org/CreatePosition.scss');
+@import url('~/assets/scss/org/positions/CreatePosition.scss');
 </style>

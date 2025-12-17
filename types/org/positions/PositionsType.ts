@@ -1,6 +1,4 @@
 export interface PositionsType {
-  visibleDialog: boolean
-  titleDialog: string
   track: any | null
   list: any[]
   total: number
@@ -10,25 +8,10 @@ export interface PositionsType {
   errorData: boolean
   loading: boolean
   init: boolean
+  filterVisible: boolean
+  createVisible: boolean
 }
 export interface OptionType {
   title: string
   value: boolean
-}
-
-export interface PositionFilterType {
-  all: string
-  name: string
-  description: string
-  creator: string
-  using: string
-  active: OptionType | null
-  lastUpdater: string
-  createdAt: []
-  createdAtTemp: []
-  createdAtString: string
-  updatedAt: []
-  updatedAtTemp: []
-  updatedAtString: string
-  sortField: string
 }

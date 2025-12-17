@@ -15,11 +15,21 @@
             <img :src="Times" class="w-[14px] icon" @click="clearFilterAll"></img>
           </div>
         </div>
+         <Button
+          @click="clickFilter()"
+          severity="info"
+          :label="$t('filter')"
+          class="ml-[10px] mr-[10px] h-[30px] ml-[20px]"
+        >
+          <template #icon>
+            <img :src="Filter" class="w-[14px] add" />
+          </template>
+        </Button>
         <Button
           @click="clickCreate()"
           severity="success"
           :label="$t('create')"
-          class="w-[90px] h-[30px] ml-[20px]"
+          class="ml-[10px] mr-[10px] h-[30px] ml-[20px]"
         >
           <template #icon>
             <img :src="Add" class="w-[14px] add" />
@@ -37,7 +47,7 @@
           >
             <div class="item">
               <div class="status"></div>
-              <div class="flex flex-col flex-1">
+              <div class="p-[10px] flex flex-col flex-1">
                 <div class="flex w-full items-start justify-start">
                   <Skeleton width="50px" height="50px" />
                   <div class="flex-1 ml-[20px] flex flex-col">
@@ -81,11 +91,6 @@
               </div>
               <div class="info flex flex-col flex-1">
                 <div class="flex w-full items-start justify-start">
-                  <!-- <img
-                  class="avatar"
-                  :src="item.avatar.location"
-                  :alt="item.name"
-                /> -->
                   <LoadingImg :src="item.avatar.location"></LoadingImg>
                   <div class="flex-1 ml-[20px] flex flex-col">
                     <div class="name">
@@ -138,11 +143,16 @@
       </div>
     </div>
     <CreateUpdateDialog
-      :title="instance.titleDialog"
-      :visible="instance.visibleDialog"
+      :visible="instance.createVisible"
       :data="instance.track"
-      @click-ok="clickOkDialog"
-      @click-close="clickCloseDialog"
+      @click-ok="clickOkCreateDialog"
+      @click-close="clickCloseCreateDialog"
+    />
+    <FilterDialog
+      :visible="instance.filterVisible"
+      :data="filters"
+      @click-ok="clickOkFilterDialog"
+      @click-close="clickCloseFilterDialog"
     />
   </div>
 </template>
@@ -154,10 +164,12 @@ import { GlobalStore } from '~/store/Global'
 import Pencil from '~/assets/icons/pencil.svg'
 import Search from '~/assets/icons/search.svg'
 import Add from '~/assets/icons/add.svg'
+import Filter from '~/assets/icons/filter.svg'
 import Times from '~/assets/icons/times.svg'
-import type { PositionFilterType } from '~/types/org/positions/PositionsType'
 import type { PositionsType } from '~/types/org/positions/PositionsType'
+import type { FilterPositionType } from '~/types/org/positions/FilterPositionType'
 import CreateUpdateDialog from './components/create-update-dialog.vue'
+import FilterDialog from './components/filter-dialog.vue'
 
 /// Define
 const store = GlobalStore()
@@ -165,8 +177,8 @@ const { t, locale } = useI18n()
 const route = useRoute()
 const { $orgAPI } = useNuxtApp()
 const instance = ref<PositionsType>({
-  visibleDialog: false,
-  titleDialog: '',
+  createVisible: false,
+  filterVisible:false,
   list: [],
   track: null,
   total: 0,
@@ -177,7 +189,7 @@ const instance = ref<PositionsType>({
   noData: false,
   errorData: false,
 })
-const filters = ref(<PositionFilterType>{})
+const filters = ref(<FilterPositionType>{})
 const datePattern = ref('yy/mm/dd')
 
 /// Set param to url and get list data
@@ -205,17 +217,18 @@ const onChangePage = (evt: any) => {
 const clearFilterAll = () => {
   filters.value.all = ''
 }
-
+/// Click create position
+const clickFilter = async () => {
+  instance.value.filterVisible = true
+}
 /// Click create position
 const clickCreate = async () => {
-  /// Move to add
-  // await navigateTo({ path: PathStaff.CREATE_POSITION })
   instance.value.track = null
-  instance.value.visibleDialog = true
+  instance.value.createVisible = true
 }
 const clickEdit = async (item: any) => {
   instance.value.track = item
-  instance.value.visibleDialog = true
+  instance.value.createVisible = true
 }
 /// Get search query
 const getSearchQuery = () => {
@@ -287,14 +300,23 @@ const initData = () => {
   /// Set param url in onMounted
   getListData(query)
 }
-
-const clickOkDialog = () => {
-  instance.value.visibleDialog = false
+const clickOkFilterDialog = (evt:any) => {
+  console.log('clickOkFilterDialog')
+  console.log(evt)
+  instance.value.filterVisible = false
   initData()
 }
 
-const clickCloseDialog = () => {
-  instance.value.visibleDialog = false
+const clickOkCreateDialog = () => {
+  instance.value.createVisible = false
+  initData()
+}
+const clickCloseFilterDialog = () => {
+  instance.value.filterVisible = false
+}
+
+const clickCloseCreateDialog = () => {
+  instance.value.createVisible = false
 }
 /// Get data
 initData()
@@ -314,5 +336,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import url('~/assets/scss/org/Positions.scss');
+@import url('~/assets/scss/org/positions/Positions.scss');
 </style>

@@ -8,7 +8,8 @@
       class="w-full image"
     />
     <div class="loading-group" v-if="instance.loading">
-      <div class="spinner-mini"></div>
+      <!-- <div class="spinner-mini"></div> -->
+      <Skeleton width="100%" height="100%" />
     </div>
   </div>
 </template>
