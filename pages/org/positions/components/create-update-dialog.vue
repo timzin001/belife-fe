@@ -44,11 +44,14 @@
                   severity="secondary"
                   class="p-button-outlined h-[32px] flex-1"
                 />
-                <img
+                <!-- <img
                   :src="instance.avatar"
                   alt="Image"
                   class="rounded-[8px] w-full image"
-                />
+                /> -->
+                <div class="ml-[50px]">
+                  <LoadingImg :src="instance.avatar" />
+                </div>
               </div>
               <div class="avatar-des">{{ $t('avatar_with_1_1_ratio') }}</div>
               <Message

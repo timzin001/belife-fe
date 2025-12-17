@@ -1,0 +1,40 @@
+.no-data {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .content {
+        padding: 15px;
+        max-width: 500px;
+
+        .status {
+            border: 1px solid $border-color;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            width: 4px;
+        }
+
+        .status1 {
+            height: 100%;
+            width: 4px;
+            background-color: $warn-color;
+            border-top-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .inner {
+            border: 1px solid $border-color;
+            border-left: none;
+            border-top-right-radius: 8px;
+            padding: 15px;
+
+            :deep(.image) {
+                border-style: unset;
+                border-width: unset;
+                filter: invert(45%) sepia(73%) saturate(3777%) hue-rotate(244deg) brightness(96%) contrast(101%);
+            }
+        }
+    }
+}

@@ -49,7 +49,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       onResponseError({ request, response, options }) {
         const data = response._data
         const messages = JSON.stringify(data.messages)
-
         if (response.status === APIStatusCons.BAD_REQUEST) {
           toast.add({
             severity: ToastCons.ERROR,
@@ -119,7 +118,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       onResponseError({ request, response, options }) {
         const data = response._data
         const messages = JSON.stringify(data.messages)
-
         if (response.status === APIStatusCons.BAD_REQUEST) {
           toast.add({
             severity: ToastCons.ERROR,

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="w-full card positions">
+    <div class="w-full card positions flex flex-col">
       <div class="flex items-center justify-end header">
         <div class="search">
           <img :src="Search" class="w-[18px] icon" @click="clearFilterName" />
@@ -17,63 +17,88 @@
         </div>
         <Button
           @click="clickCreate()"
+          severity="success"
           :label="$t('create')"
           class="w-[90px] h-[30px] ml-[20px]"
-          icon="pi pi-plus"
-        ></Button>
+        >
+          <template #icon>
+            <img :src="Add" class="w-[14px] add" />
+          </template>
+        </Button>
       </div>
-      <div class="body">
-        <div class="grid grid-cols-12 gap-4">
+      <div class="body flex flex-col flex-1">
+        <NoData :status="instance.noData"></NoData>
+        <ErrorData :status="instance.errorData"></ErrorData>
+        <div
+          class="grid grid-cols-12 gap-4 flex-1"
+          v-if="instance.list && !instance.noData"
+        >
           <div
             v-for="(item, index) in instance.list"
             :key="index"
             class="col-span-12 sm:col-span-3 md:col-span-3 xl:col-span-3 p-2"
           >
-            <div class="item flex flex-col">
-              <div class="flex w-full items-start justify-start">
-                <img
+            <div class="item flex flex-row">
+              <div class="status">
+                <div
+                  :class="{
+                    status1: item.active.value,
+                    status2: !item.active.value,
+                  }"
+                ></div>
+              </div>
+              <div class="info flex flex-col flex-1">
+                <div class="flex w-full items-start justify-start">
+                  <!-- <img
                   class="avatar"
                   :src="item.avatar.location"
                   :alt="item.name"
-                />
-                <div class="flex-1 ml-[20px] flex flex-col">
-                  <div class="name">
-                    {{ item.name[locale] }}
-                  </div>
-                  <div
-                    :class="{
-                      active: item.active.value,
-                      inactive: !item.active.value,
-                    }"
-                  >
-                    {{ item.active[locale] }}
+                /> -->
+                  <LoadingImg :src="item.avatar.location"></LoadingImg>
+                  <div class="flex-1 ml-[20px] flex flex-col">
+                    <div class="name">
+                      {{ item.name[locale] }}
+                    </div>
+                    <div
+                      :class="{
+                        active: item.active.value,
+                        inactive: !item.active.value,
+                      }"
+                    >
+                      {{ item.active[locale] }}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="line mt-[10px]"></div>
-              <div class="description mt-[10px]">
-                {{ item.description[locale] }}
-              </div>
-              <div class="line mt-[10px]"></div>
-              <div class="flex mt-[10px] items-center justify-end">
-                <Button
-                  severity="success"
-                  :label="$t('edit')"
-                  class="h-[25px] button"
-                  @click="clickEdit(item)"
-                >
-                  <template #icon>
-                    <img :src="Pencil" class="w-[12px] pencil" />
-                  </template>
-                </Button>
-                <!-- <img
-                  class="w-[15px] h-[15px] pencil"
-                  :src="Pencil"
-                  @click="clickEdit(item)"
-                /> -->
+                <div class="line mt-[10px]"></div>
+                <div class="description mt-[10px]">
+                  {{ item.description[locale] }}
+                </div>
+                <div class="line mt-[10px]"></div>
+                <div class="flex mt-[10px] items-center justify-end">
+                  <Button
+                    severity="info"
+                    :label="$t('edit')"
+                    class="h-[25px] button"
+                    @click="clickEdit(item)"
+                  >
+                    <template #icon>
+                      <img :src="Pencil" class="w-[12px] pencil" />
+                    </template>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="paginator-wrapper" v-if="instance.list && !instance.noData">
+          <Paginator
+            :rows="instance.limit"
+            :page="0"
+            :first="0"
+            @page="onChangePage"
+            :totalRecords="instance.total"
+            :rowsPerPageOptions="[20, 40, 80]"
+          ></Paginator>
         </div>
       </div>
     </div>
@@ -90,30 +115,20 @@
 <script setup lang="ts">
 /// Import
 import { ref, onMounted } from 'vue'
-import { useToast } from 'primevue/usetoast'
 import { GlobalStore } from '~/store/Global'
-import DefaultAvatar from '~/assets/images/default-avatar.png'
 import Pencil from '~/assets/icons/pencil.svg'
-import Trash from '~/assets/icons/trash.svg'
 import Search from '~/assets/icons/search.svg'
+import Add from '~/assets/icons/add.svg'
 import Times from '~/assets/icons/times.svg'
 import type { PositionFilterType } from '~/types/org/positions/PositionsType'
 import type { PositionsType } from '~/types/org/positions/PositionsType'
-import type { HeaderColumnType } from '~/types/common/HeaderColumnType'
 import CreateUpdateDialog from './components/create-update-dialog.vue'
 
 /// Define
 const store = GlobalStore()
-const toast = useToast()
 const { t, locale } = useI18n()
 const route = useRoute()
 const { $orgAPI } = useNuxtApp()
-
-const selectedData = ref()
-const createdAtViewFilter = ref()
-const createdAtViewStatus = ref()
-const updatedAtViewFilter = ref()
-const updatedAtViewStatus = ref()
 const instance = ref<PositionsType>({
   visibleDialog: false,
   titleDialog: '',
@@ -123,6 +138,8 @@ const instance = ref<PositionsType>({
   limit: 20,
   page: 1,
   loading: false,
+  noData: false,
+  errorData: false,
 })
 const filters = ref(<PositionFilterType>{})
 const datePattern = ref('yy/mm/dd')
@@ -139,6 +156,14 @@ const inputSearchAll = (evt: any) => {
   console.log(filters.value.all)
   console.log(evt)
 }
+/// Change page
+const onChangePage = (evt: any) => {
+  console.log(evt)
+  instance.value.page = evt.page + 1
+  const query = getSearchQuery()
+  /// Set param url in onMounted
+  getListData(query)
+}
 
 /// Clear fitler title
 const clearFilterName = () => {
@@ -149,6 +174,7 @@ const clearFilterName = () => {
 const clickCreate = async () => {
   /// Move to add
   // await navigateTo({ path: PathStaff.CREATE_POSITION })
+  instance.value.track = null
   instance.value.visibleDialog = true
 }
 const clickEdit = async (item: any) => {
@@ -195,14 +221,25 @@ const getListData = async (query: any) => {
     method: MethodCons.GET,
     query: query,
   }
-  const response: any = await $orgAPI(APIOrgPositionCons.LIST, options)
-  console.log(response)
-  instance.value.list = response.data.list
+  try {
+    const response: any = await $orgAPI(APIOrgPositionCons.LIST, options)
+    const data = response.data
+    instance.value.list = data.list
+    instance.value.total = data.total
+    instance.value.errorData = false
+    if (data.total) {
+      instance.value.noData = false
+    } else {
+      instance.value.noData = true
+    }
+  } catch (e) {
+    instance.value.errorData = true
+  }
+  console.log(instance.value)
 }
 
 /// Init data
 const initData = () => {
-  console.log(`InitData = ${store.getLanguage()}`)
   if (store.getLanguage() === LocaleCons.EN) {
     datePattern.value = 'yy/mm/dd'
   }
@@ -212,99 +249,6 @@ const initData = () => {
   const query = getSearchQuery()
   /// Set param url in onMounted
   getListData(query)
-}
-
-/// Clear created at string
-const clearCreatedAt = () => {
-  filters.value.createdAtString = ''
-  filters.value.createdAt = []
-  filters.value.createdAtTemp = []
-}
-
-/// Clear updated at string
-const clearUpdatedAt = () => {
-  filters.value.updatedAtString = ''
-  filters.value.updatedAt = []
-  filters.value.updatedAtTemp = []
-}
-/// Check input text
-const inputCreatedAt = (evt: any) => {
-  /// Check date
-  const value = filters.value.createdAtString
-  if (!value) {
-    return
-  }
-  let arr = value.split('-')
-  if (arr.length === 1) {
-    const first = arr[0].trim()
-    if (!isDate(first, store.getLanguage())) {
-      /// Waiting update
-      setTimeout(() => {
-        clearCreatedAt()
-      }, 10)
-
-      return
-    }
-    return
-  }
-  if (arr.length === 2) {
-    const first = arr[0].trim()
-    const last = arr[1].trim()
-    if (
-      !isDate(first, store.getLanguage()) ||
-      !isDate(last, store.getLanguage())
-    ) {
-      /// Waiting update
-      setTimeout(() => {
-        clearCreatedAt()
-      }, 10)
-      return
-    }
-    return
-  }
-  /// Waiting update
-  setTimeout(() => {
-    clearCreatedAt()
-  }, 10)
-}
-const inputUpdatedAt = (evt: any) => {
-  /// Check date
-  const value = filters.value.updatedAtString
-  if (!value) {
-    return
-  }
-  let arr = value.split('-')
-  if (arr.length === 1) {
-    const first = arr[0].trim()
-    if (!isDate(first, store.getLanguage())) {
-      /// Waiting update
-      setTimeout(() => {
-        clearUpdatedAt()
-      }, 10)
-
-      return
-    }
-    return
-  }
-  if (arr.length === 2) {
-    const first = arr[0].trim()
-    const last = arr[1].trim()
-    if (
-      !isDate(first, store.getLanguage()) ||
-      !isDate(last, store.getLanguage())
-    ) {
-      /// Waiting update
-      setTimeout(() => {
-        clearUpdatedAt()
-      }, 10)
-      return
-    }
-    return
-  }
-  /// Waiting update
-  setTimeout(() => {
-    clearUpdatedAt()
-  }, 10)
 }
 
 const clickOkDialog = () => {

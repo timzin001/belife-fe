@@ -6,7 +6,9 @@ export interface PositionsType {
   total: number
   limit: number
   page: number
-  loading: false
+  noData: boolean
+  errorData: boolean
+  loading: boolean
 }
 export interface OptionType {
   title: string
