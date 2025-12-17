@@ -9,6 +9,7 @@ export interface PositionsType {
   noData: boolean
   errorData: boolean
   loading: boolean
+  init: boolean
 }
 export interface OptionType {
   title: string

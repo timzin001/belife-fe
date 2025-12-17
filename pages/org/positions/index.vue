@@ -29,6 +29,38 @@
       <div class="body flex flex-col flex-1">
         <NoData :status="instance.noData"></NoData>
         <ErrorData :status="instance.errorData"></ErrorData>
+        <div class="grid grid-cols-12 gap-4 flex-1" v-if="instance.init">
+          <div
+            v-for="index in 20"
+            :key="index"
+            class="col-span-12 sm:col-span-3 md:col-span-3 xl:col-span-3 p-2"
+          >
+            <div class="item">
+              <div class="status"></div>
+              <div class="flex flex-col flex-1">
+                <div class="flex w-full items-start justify-start">
+                  <Skeleton width="50px" height="50px" />
+                  <div class="flex-1 ml-[20px] flex flex-col">
+                    <div class="name">
+                      <Skeleton width="100%" height="25px" />
+                    </div>
+                    <div class="active mt-[5px]">
+                      <Skeleton width="100%" height="20px" />
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-[10px]"></div>
+                <div class="description mt-[10px]">
+                  <Skeleton width="100%" height="30px" />
+                </div>
+                <div class="mt-[10px]"></div>
+                <div class="flex mt-[10px] items-center justify-end">
+                  <Skeleton width="80px" height="25px" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div
           class="grid grid-cols-12 gap-4 flex-1"
           v-if="instance.list && !instance.noData"
@@ -90,7 +122,10 @@
             </div>
           </div>
         </div>
-        <div class="paginator-wrapper" v-if="instance.list && !instance.noData">
+        <div
+          class="paginator-wrapper"
+          v-if="instance.list && !instance.noData && !instance.init"
+        >
           <Paginator
             :rows="instance.limit"
             :page="0"
@@ -137,6 +172,7 @@ const instance = ref<PositionsType>({
   total: 0,
   limit: 20,
   page: 1,
+  init: true,
   loading: false,
   noData: false,
   errorData: false,
@@ -235,6 +271,7 @@ const getListData = async (query: any) => {
   } catch (e) {
     instance.value.errorData = true
   }
+  instance.value.init = false
   console.log(instance.value)
 }
 
