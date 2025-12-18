@@ -58,23 +58,28 @@
                 >{{ instance.avatarError }}</Message
               >
             </div>
-            <div class="mt-[10px]">
+            <div class="mt-[15px]">
               <div class="flex items-center justify-start w-full">
                 <label for="name" class="label"
                   >{{ $t('name') }}<span>*</span></label
                 >
-                <InputText
-                  id="name"
-                  v-model="instance.name"
-                  class="flex-auto"
-                  @value-change="changeName"
-                  autocomplete="off"
-                  :placeholder="
-                    $t('please_enter_name', {
-                      name: $t('name').toLocaleLowerCase(),
-                    })
-                  "
-                ></InputText>
+                <div class="group-input">
+                  <InputText
+                    id="name"
+                    v-model="instance.name"
+                    class="w-full"
+                    @value-change="changeName"
+                    autocomplete="off"
+                    :placeholder="
+                      $t('please_enter_name', {
+                        name: $t('name').toLocaleLowerCase(),
+                      })
+                    "
+                  ></InputText>
+                  <div class="clear" v-if="instance.name">
+                    <img :src="Times" class="w-[14px] icon" @click="clickClearName"></img>
+                  </div>
+                </div>
               </div>
 
               <Message
@@ -85,23 +90,28 @@
                 >{{ instance.nameError }}</Message
               >
             </div>
-            <div class="mt-[10px]">
+            <div class="mt-[15px]">
               <div class="flex items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
-                <Textarea
-                  class="flex-1"
-                  autocomplete="off"
-                  rows="2"
-                  v-model="instance.description"
-                  :placeholder="
-                    $t('please_enter_name', {
-                      name: $t('description').toLocaleLowerCase(),
-                    })
-                  "
-                ></Textarea>
+                 <div class="group-input">
+                  <Textarea
+                    class="w-full"
+                    autocomplete="off"
+                    rows="2"
+                    v-model="instance.description"
+                    :placeholder="
+                      $t('please_enter_name', {
+                        name: $t('description').toLocaleLowerCase(),
+                      })
+                    "
+                  ></Textarea>
+                   <div class="clear" v-if="instance.description">
+                    <img :src="Times" class="w-[14px] icon" @click="clickClearDescription"></img>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="mt-[10px]">
+            <div class="mt-[15px]">
               <div class="flex items-center justify-start w-full">
                 <label for="active-name" class="label"
                   >{{ $t('active') }}<span>*</span></label
@@ -186,6 +196,15 @@ const clickClose = () => {
   emits('click-close')
 }
 
+/// Clear name
+const clickClearName = ()=>{
+  instance.value.name='';
+  CreatePositionValidate.name(instance, t, $orgAPI, locale.value)
+}
+/// Clear description
+const clickClearDescription = ()=>{
+  instance.value.description='';
+}
 /// Select avatar
 const onFileSelectAvatar = (event: any) => {
   const file = event.files[0]
@@ -248,6 +267,7 @@ const handleUpdate = async () => {
   })
   emits('click-ok')
 }
+
 
 /// Handle save
 const handleSave = async () => {

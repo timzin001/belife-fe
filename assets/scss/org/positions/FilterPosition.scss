@@ -72,6 +72,27 @@
             cursor: pointer;
         }
     }
+    .sort-group{
+        height: 25px;
+        background-color: #f2f2f2;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
+        justify-items: center;
+        align-items: center;
+        color: $text-color;
+        .icon{
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            filter: invert(28%) sepia(17%) saturate(12%) hue-rotate(16deg) brightness(105%) contrast(85%);
+        }
+        &:hover{
+            cursor: pointer;
+            background-color: #f8f8f9;
+        }
+    }
     .footer {
         margin-top: 20px;
     }

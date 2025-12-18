@@ -82,22 +82,23 @@
                 <label for="department-name" class="label">
                   {{ $t('sort') }}
                 </label>
-                <Checkbox
+                <!-- <Checkbox
                   v-model="instance.active"
                   binary
                   class="mr-[10px]"
                   @value-change="changeActive"
-                />
-                {{ $t('name') }}
-                <Checkbox
-                  v-model="instance.inActive"
-                  binary
-                  @value-change="changeInActive"
-                  class="ml-[20px] mr-[10px]"
-                />
-                <span>
-                  {{ $t('description') }}
-                </span>
+                /> -->
+                <div class="sort-group flex" @click="clickSort('name')">
+                   <img :src="instance.sortNameIcon"class="icon"></img>
+                    {{ $t('name') }}
+                </div>
+
+                <div class="sort-group flex ml-[20px]" @click="clickSort('description')">
+                   <img :src="instance.sortDescriptionIcon" class="icon"></img>
+                    {{ $t('description') }}
+                </div>
+               
+            
               </div>
             </div>
             <div class="w-full line h-[1px] mt-[20px]"></div>
@@ -121,6 +122,9 @@
 </template>
 <script setup lang="ts">
 import Times from '~/assets/icons/times.svg'
+import Sort from '~/assets/icons/sort-alt.svg'
+import SortUp from '~/assets/icons/sort-alpha-up.svg'
+import SortDown from '~/assets/icons/sort-alpha-down.svg'
 import Filter from '~/assets/icons/filter.svg'
 import type { FilterPositionDialogType } from '~/types/org/positions/FilterPositionDialogType'
 const props = defineProps({
@@ -136,9 +140,12 @@ const instance = ref<FilterPositionDialogType>({
   visible: false,
   name: null,
   description: null,
-  sort: null,
   active: false,
   inActive: false,
+  sortName:1,
+  sortDescription:0,
+  sortNameIcon:SortUp,
+  sortDescriptionIcon:Sort
 })
 const emits = defineEmits(['click-close', 'click-ok'])
 /// Update visible
@@ -150,6 +157,38 @@ const updateVisible = (value: any) => {
   }
 }
 
+const clickSort = (type:string)=>{
+  // 0: UNSORT
+  // 1: ASC
+  // 2: DESC
+  if(type == "name"){
+      instance.value.sortDescription = 0;
+      instance.value.sortDescriptionIcon = Sort;
+      if(instance.value.sortName == 0){
+        instance.value.sortName = 1
+        instance.value.sortNameIcon = SortUp
+      }else if(instance.value.sortName == 1){
+        instance.value.sortName = 2
+        instance.value.sortNameIcon = SortDown
+      }else if(instance.value.sortName == 2){
+        instance.value.sortName = 1
+        instance.value.sortNameIcon = SortUp
+      }
+  }else if(type == "description"){
+      instance.value.sortName = 0;
+      instance.value.sortNameIcon = Sort;
+      if(instance.value.sortDescription == 0){
+        instance.value.sortDescription = 1
+        instance.value.sortDescriptionIcon = SortUp
+      }else if(instance.value.sortDescription == 1){
+        instance.value.sortDescription = 2
+        instance.value.sortDescriptionIcon = SortDown
+      }else if(instance.value.sortDescription == 2){
+        instance.value.sortDescription = 1
+        instance.value.sortDescriptionIcon = SortUp
+      }
+  }
+}
 /// Change name
 const changeName = (evt: any) => {}
 
@@ -173,11 +212,31 @@ const changeInActive = (evt: any) => {
 
 /// Create save position
 const clickSave = async (evt: any) => {
+  let sortField = "";
+  let sortStatus = "";
+  if(instance.value.sortName != 0){
+    sortField = "name";
+    if(instance.value.sortName == 1){
+      sortStatus = "ASC"
+    }else if(instance.value.sortName == 2){
+      sortStatus = "DESC"
+    }
+  }else if(instance.value.sortDescription != 0){
+    sortField = "description"
+     if(instance.value.sortDescription == 1){
+      sortStatus = "ASC"
+    }else if(instance.value.sortDescription == 2){
+      sortStatus = "DESC"
+    }
+  }
+  console.log(`-------clickSave=${sortStatus}------------`)
   emits('click-ok', {
     name: instance.value.name,
     description: instance.value.description,
     active: instance.value.active,
     inActive: instance.value.inActive,
+    sortField:sortField,
+    sortStatus:sortStatus
   })
 }
 watch(

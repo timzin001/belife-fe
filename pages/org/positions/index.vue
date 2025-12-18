@@ -317,9 +317,12 @@ const clickOkFilterDialog = (evt:any) => {
   filters.value.name = evt.name;
   filters.value.description = evt.description;
   filters.value.active = evt.active;
-   filters.value.inActive = evt.inActive;
+  filters.value.inActive = evt.inActive;
+  filters.value.sortField = evt.sortField;
+  filters.value.sortStatus = evt.sortStatus;
   instance.value.filterVisible = false
   const query = getSearchQuery()
+  setParamUrl(query, route)
   getListData(query)
 }
 
@@ -347,7 +350,6 @@ watch(
 onMounted(() => {
   const query = getSearchQuery()
   setParamUrl(query, route)
-  // initData()
 })
 </script>
 
