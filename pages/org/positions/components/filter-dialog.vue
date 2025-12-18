@@ -56,7 +56,9 @@
             </div>
             <div class="mt-[10px]">
               <div class="flex items-center justify-start w-full">
-                <label for="department-name" class="label"></label>
+                <label for="department-name" class="label">
+                  {{ $t('status') }}
+                </label>
                 <Checkbox
                   v-model="instance.active"
                   binary
@@ -72,6 +74,29 @@
                 />
                 <span>
                   {{ $t('inactive') }}
+                </span>
+              </div>
+            </div>
+            <div class="mt-[10px]">
+              <div class="flex items-center justify-start w-full">
+                <label for="department-name" class="label">
+                  {{ $t('sort') }}
+                </label>
+                <Checkbox
+                  v-model="instance.active"
+                  binary
+                  class="mr-[10px]"
+                  @value-change="changeActive"
+                />
+                {{ $t('name') }}
+                <Checkbox
+                  v-model="instance.inActive"
+                  binary
+                  @value-change="changeInActive"
+                  class="ml-[20px] mr-[10px]"
+                />
+                <span>
+                  {{ $t('description') }}
                 </span>
               </div>
             </div>
@@ -97,7 +122,7 @@
 <script setup lang="ts">
 import Times from '~/assets/icons/times.svg'
 import Filter from '~/assets/icons/filter.svg'
-import type { FilterPositionType } from '~/types/org/positions/FilterPositionType'
+import type { FilterPositionDialogType } from '~/types/org/positions/FilterPositionDialogType'
 const props = defineProps({
   data: {
     type: Object as PropType<any>,
@@ -107,9 +132,8 @@ const props = defineProps({
     required: false,
   },
 })
-const instance = ref<FilterPositionType>({
+const instance = ref<FilterPositionDialogType>({
   visible: false,
-  all: null,
   name: null,
   description: null,
   sort: null,

@@ -176,5 +176,6 @@
     "edit": "Edit",
     "the_system_could_not_find_any_data_corresponding_to_your_request_please_check_the_applied_search_parameters_or_try_again_later":"The system could not find any data corresponding to your request. Please check the applied search parameters or try again later.",
     "an_unexpected_technical_issue_occurred_while_processing_your_request_our_system_is_currently_unable_to_complete_this_action_please_try_again_later":"An unexpected technical issue occurred while processing your request. Our system is currently unable to complete this action. Please try again later.",
-    "filter": "Filter"
+    "filter": "Filter",
+    "sort": "Sort"
 }

@@ -236,7 +236,18 @@ const getSearchQuery = () => {
     limit: instance.value.limit,
     page: instance.value.page,
   }
-  result.name = filters.value.name ?? ''
+  result.name = filters.value.name || ''
+  result.description = filters.value.description || ''
+  if(filters.value.active){
+      result.active=true;
+  }else if(filters.value.inActive){
+     result.active=false;
+  }else{
+    result.active = ''
+  }
+  result.sortField = filters.value.sortField || 'name';
+  result.sortStatus = filters.value.sortStatus || 'ASC';
+ 
   // result.all = filters.value.all ?? ''
 
   // result.description = filters.value.description ?? ''
@@ -303,8 +314,13 @@ const initData = () => {
 const clickOkFilterDialog = (evt:any) => {
   console.log('clickOkFilterDialog')
   console.log(evt)
+  filters.value.name = evt.name;
+  filters.value.description = evt.description;
+  filters.value.active = evt.active;
+   filters.value.inActive = evt.inActive;
   instance.value.filterVisible = false
-  initData()
+  const query = getSearchQuery()
+  getListData(query)
 }
 
 const clickOkCreateDialog = () => {
