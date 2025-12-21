@@ -23,15 +23,6 @@
             padding-bottom: 20px;
             padding-top: 20px;
 
-            .label {
-                width: 110px;
-        
-                span {
-                    margin-left: 2px;
-                    color: red;
-                }
-            }
-
             .group-input{
                 flex: 1;
                 position: relative;
@@ -61,7 +52,14 @@
         }
     }
 
-    
+    .label {
+        width: 110px;
+
+        span {
+            margin-left: 2px;
+            color: red;
+        }
+    }
     .icon {
         filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
     }

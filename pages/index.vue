@@ -248,6 +248,7 @@ const { $auth } = useNuxtApp()
 const store = GlobalStore()
 
 const initTinymce = () => {
+  // @ts-ignore
   tinymce.init({
     selector: '#mytextarea',
     menubar: false,

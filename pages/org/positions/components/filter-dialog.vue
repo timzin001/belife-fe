@@ -24,57 +24,73 @@
             <div class="mt-[10px]">
               <div class="flex items-center justify-start w-full">
                 <label for="name" class="label">{{ $t('name') }}</label>
-                <InputText
-                  id="name"
-                  v-model="instance.name"
-                  class="flex-auto"
-                  @value-change="changeName"
-                  autocomplete="off"
-                  :placeholder="
-                    $t('please_enter_name', {
-                      name: $t('name').toLocaleLowerCase(),
-                    })
-                  "
-                ></InputText>
+                  <div class="group-input">
+                    <InputText
+                      id="name"
+                      v-model="instance.name"
+                      class="w-full"
+                      @value-change="changeName"
+                      autocomplete="off"
+                      :placeholder="
+                        $t('please_enter_name', {
+                          name: $t('name').toLocaleLowerCase(),
+                        })
+                      "
+                    ></InputText>
+                    <div class="clear" v-if="instance.name">
+                      <img :src="Times" class="w-[14px] icon" @click="clickClearName"></img>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-[15px]">
+              <div class="flex items-start justify-start w-full">
+                <div class="label">{{ $t('description') }}</div>
+                <div class="group-input">
+                  <Textarea
+                    class="w-full"
+                    autocomplete="off"
+                    rows="2"
+                    v-model="instance.description"
+                    :placeholder="
+                      $t('please_enter_name', {
+                        name: $t('description').toLocaleLowerCase(),
+                      })
+                    "
+                  ></Textarea>
+                  <div class="clear" v-if="instance.description">
+                      <img :src="Times" class="w-[14px] icon" @click="clickClearDescription"></img>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="mt-[10px]">
               <div class="flex items-start justify-start w-full">
-                <div class="label">{{ $t('description') }}</div>
-                <Textarea
-                  class="flex-1"
-                  autocomplete="off"
-                  rows="2"
-                  v-model="instance.description"
-                  :placeholder="
-                    $t('please_enter_name', {
-                      name: $t('description').toLocaleLowerCase(),
-                    })
-                  "
-                ></Textarea>
-              </div>
-            </div>
-            <div class="mt-[10px]">
-              <div class="flex items-center justify-start w-full">
-                <label for="department-name" class="label">
+                <label class="label">
                   {{ $t('status') }}
                 </label>
-                <Checkbox
-                  v-model="instance.active"
-                  binary
-                  class="mr-[10px]"
-                  @value-change="changeActive"
-                />
-                {{ $t('active') }}
-                <Checkbox
-                  v-model="instance.inActive"
-                  binary
-                  @value-change="changeInActive"
-                  class="ml-[20px] mr-[10px]"
-                />
-                <span>
-                  {{ $t('inactive') }}
-                </span>
+                <div class="group-status">
+                  <div class="flex items-center justify-start">
+                    <Checkbox
+                      v-model="instance.active"
+                      binary
+                      class="mr-[10px]"
+                      @value-change="changeActive"
+                    />
+                    {{ $t('active') }}
+                  </div>
+                  <div class="flex items-center justify-start inactive">
+                    <Checkbox
+                      v-model="instance.inActive"
+                      binary
+                      @value-change="changeInActive"
+                      class="mr-[10px]"
+                    />
+                    <span>
+                      {{ $t('inactive') }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="mt-[10px]">
@@ -155,6 +171,14 @@ const updateVisible = (value: any) => {
     instance.value.visible = props.visible
     emits('click-close')
   }
+}
+/// Clear name
+const clickClearName = ()=>{
+  instance.value.name='';
+}
+/// Clear description
+const clickClearDescription = ()=>{
+  instance.value.description = ""
 }
 
 const clickSort = (type:string)=>{

@@ -22,6 +22,43 @@
             padding: 30px;
             padding-bottom: 20px;
             padding-top: 20px;
+
+            .group-input {
+                flex: 1;
+                position: relative;
+        
+                .clear {
+                    position: absolute;
+                    z-index: 1;
+                    background-color: red;
+                    right: -9px;
+                    top: -9px;
+                    background-color: #f2f2f2;
+                    border-radius: 50px;
+                    width: 18px;
+                    height: 18px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+        
+                    .icon {
+                        top: unset;
+                        left: unset;
+                        filter: invert(88%) sepia(2%) saturate(6818%) hue-rotate(184deg) brightness(76%) contrast(86%);
+                    }
+        
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+            .group-status{
+                display: flex;
+                flex-direction: row;
+                .inactive{
+                    margin-left: 20px;
+                }
+            }
         }
     }
 
@@ -133,6 +170,13 @@
                 border-top-right-radius: 10px;
                 border-bottom-left-radius: 10px;
                 padding: 10px;
+                .group-status {
+                    display: flex;
+                    flex-direction: column;
+                    .inactive {
+                        margin-left: unset;
+                    }
+                }
             }
         }
 

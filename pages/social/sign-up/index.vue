@@ -348,6 +348,7 @@ const clickSignUp = async () => {
   store.setAccessTokenUser(data.accessToken)
   store.setRefreshTokenUser(data.refreshToken)
   store.setUser(parseUser)
+  store.setListOrgs(null)
   store.setOrg(null)
 
   await navigateTo({

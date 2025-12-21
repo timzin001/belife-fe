@@ -19,117 +19,114 @@
           @click="clickFilter()"
           severity="info"
           :label="$t('filter')"
-          class="ml-[10px] mr-[10px] h-[30px] ml-[20px]"
+          class="h-[30px] filter-button"
         >
           <template #icon>
-            <img :src="Filter" class="w-[14px] add" />
+            <img :src="Filter" class="w-[14px] icon-button" />
           </template>
         </Button>
         <Button
           @click="clickCreate()"
           severity="success"
           :label="$t('create')"
-          class="ml-[10px] mr-[10px] h-[30px] ml-[20px]"
+          class="h-[30px] create-button"
         >
           <template #icon>
-            <img :src="Add" class="w-[14px] add" />
+            <img :src="Add" class="w-[14px] icon-button" />
           </template>
         </Button>
       </div>
       <div class="body flex flex-col flex-1">
         <NoData :status="instance.noData"></NoData>
         <ErrorData :status="instance.errorData"></ErrorData>
-        <div class="grid grid-cols-12 gap-4 flex-1" v-if="instance.init">
+      
+        <div class="gap flex-1 grid mb-[56px]" v-if="instance.init">
           <div
-            v-for="index in 20"
+            v-for="index in 12"
             :key="index"
-            class="col-span-12 sm:col-span-3 md:col-span-3 xl:col-span-3 p-2"
+            class="item flex flex-row"
           >
-            <div class="item">
-              <div class="status"></div>
-              <div class="p-[10px] flex flex-col flex-1">
-                <div class="flex w-full items-start justify-start">
-                  <Skeleton width="50px" height="50px" />
-                  <div class="flex-1 ml-[20px] flex flex-col">
-                    <div class="name">
-                      <Skeleton width="100%" height="25px" />
-                    </div>
-                    <div class="active mt-[5px]">
-                      <Skeleton width="100%" height="20px" />
-                    </div>
+            <div class="status"></div>
+            <div class="p-[10px] flex flex-col flex-1">
+              <div class="flex w-full items-start justify-start">
+                <Skeleton width="50px" height="50px" />
+                <div class="flex-1 ml-[20px] flex flex-col">
+                  <div class="name">
+                    <Skeleton width="100%" height="25px" />
+                  </div>
+                  <div class="active mt-[5px]">
+                    <Skeleton width="100%" height="20px" />
                   </div>
                 </div>
-                <div class="mt-[10px]"></div>
-                <div class="description mt-[10px]">
-                  <Skeleton width="100%" height="30px" />
-                </div>
-                <div class="mt-[10px]"></div>
-                <div class="flex mt-[10px] items-center justify-end">
-                  <Skeleton width="80px" height="25px" />
-                </div>
+              </div>
+              <div class="mt-[10px]"></div>
+              <div class="description flex-1 mt-[10px]">
+                <Skeleton width="100%" height="100%" />
+              </div>
+              <div class="mt-[10px]"></div>
+              <div class="flex mt-[10px] items-center justify-end">
+                <Skeleton width="80px" height="25px" />
               </div>
             </div>
           </div>
         </div>
         <div
-          class="grid grid-cols-12 gap-4 flex-1"
-          v-if="instance.list && !instance.noData"
+          class="gap flex-1 grid"
+          v-if="instance.list && !instance.noData && !instance.init"
         >
           <div
             v-for="(item, index) in instance.list"
             :key="index"
-            class="col-span-12 sm:col-span-3 md:col-span-3 xl:col-span-3 p-2"
+            class="item flex flex-row"
           >
-            <div class="item flex flex-row">
-              <div class="status">
-                <div
-                  :class="{
-                    status1: item.active.value,
-                    status2: !item.active.value,
-                  }"
-                ></div>
-              </div>
-              <div class="info flex flex-col flex-1">
-                <div class="flex w-full items-start justify-start">
-                  <LoadingImg :src="item.avatar.location"></LoadingImg>
-                  <div class="flex-1 ml-[20px] flex flex-col">
-                    <div class="name">
-                      {{ item.name[locale] }}
-                    </div>
-                    <div
-                      :class="{
-                        active: item.active.value,
-                        inactive: !item.active.value,
-                      }"
-                    >
-                      {{ item.active[locale] }}
-                    </div>
+            <div class="status">
+              <div
+                :class="{
+                  status1: item.active.value,
+                  status2: !item.active.value,
+                }"
+              ></div>
+            </div>
+            <div class="info flex flex-col flex-1">
+              <div class="flex w-full items-start justify-start">
+                <LoadingImg :src="item.avatar.location"></LoadingImg>
+                <div class="flex-1 ml-[20px] flex flex-col">
+                  <div class="name">
+                    {{ item.name[locale] }}
+                  </div>
+                  <div
+                    :class="{
+                      active: item.active.value,
+                      inactive: !item.active.value,
+                    }"
+                  >
+                    {{ item.active[locale] }}
                   </div>
                 </div>
-                <div class="line mt-[10px]"></div>
-                <div class="description mt-[10px]">
-                  {{ item.description[locale] }}
-                </div>
-                <div class="line mt-[10px]"></div>
-                <div class="flex mt-[10px] items-center justify-end">
-                  <Button
-                    severity="info"
-                    :label="$t('edit')"
-                    class="h-[25px] button"
-                    @click="clickEdit(item)"
-                  >
-                    <template #icon>
-                      <img :src="Pencil" class="w-[12px] pencil" />
-                    </template>
-                  </Button>
-                </div>
+              </div>
+              <div class="line mt-[10px]"></div>
+              <div class="description mt-[10px] flex-1">
+                {{ item.description[locale] }}
+              </div>
+              <div class="line mt-[10px]"></div>
+              <div class="flex mt-[10px] items-center justify-end">
+                <Button
+                  severity="info"
+                  :label="$t('edit')"
+                  class="h-[25px] button"
+                  @click="clickEdit(item)"
+                >
+                  <template #icon>
+                    <img :src="Pencil" class="w-[12px] pencil" />
+                  </template>
+                </Button>
               </div>
             </div>
           </div>
         </div>
         <div
           class="paginator-wrapper"
-          v-if="instance.list && !instance.noData && !instance.init"
+          v-if="instance.list && !instance.noData && !instance.init && instance.total > 12"
         >
           <Paginator
             :rows="instance.limit"
@@ -182,7 +179,7 @@ const instance = ref<PositionsType>({
   list: [],
   track: null,
   total: 0,
-  limit: 20,
+  limit: 12,
   page: 1,
   init: true,
   loading: false,
@@ -195,22 +192,20 @@ const datePattern = ref('yy/mm/dd')
 /// Set param to url and get list data
 const setParamAndGetListData = () => {
   const query = getSearchQuery()
-  setParamUrl(query, route)
   getListData(query)
+  setParamUrl(query, route)
 }
 
 /// Execute filter data
 const inputSearchAll = (evt: any) => {
-  console.log(filters.value.all)
-  console.log(evt)
+  console.log('inputSearchAll')
+  setParamAndGetListData()
 }
 /// Change page
 const onChangePage = (evt: any) => {
-  console.log(evt)
+  console.log('onChangePage')
   instance.value.page = evt.page + 1
-  const query = getSearchQuery()
-  /// Set param url in onMounted
-  getListData(query)
+  setParamAndGetListData()
 }
 
 /// Clear fitler all
@@ -236,6 +231,7 @@ const getSearchQuery = () => {
     limit: instance.value.limit,
     page: instance.value.page,
   }
+  result.all = filters.value.all || ''
   result.name = filters.value.name || ''
   result.description = filters.value.description || ''
   if(filters.value.active){
@@ -247,32 +243,7 @@ const getSearchQuery = () => {
   }
   result.sortField = filters.value.sortField || 'name';
   result.sortStatus = filters.value.sortStatus || 'ASC';
- 
-  // result.all = filters.value.all ?? ''
-
-  // result.description = filters.value.description ?? ''
-  // // result.countUsing = filters.value.using ?? ''
-  // result.active = filters.value.active?.value ?? ''
-  // result.creator = filters.value.creator ?? ''
-  // result.lastUpdater = filters.value.lastUpdater ?? ''
-  // if (filters.value.createdAt && filters.value.createdAt.length) {
-  //   result.createdAt = convertDateRangeToStringData(
-  //     filters.value.createdAt,
-  //     store.getLanguage()
-  //   )
-  // } else {
-  //   result.createdAt = ''
-  // }
-  // if (filters.value.updatedAt && filters.value.updatedAt.length) {
-  //   result.updatedAt = convertDateRangeToStringData(
-  //     filters.value.updatedAt,
-  //     store.getLanguage()
-  //   )
-  //   console.log(result.updatedAt)
-  // } else {
-  //   result.updatedAt = ''
-  // }
-  // result.sortField = filters.value.sortField ?? ''
+  // setParamUrl(result, route)
   return result
 }
 /// Get list data
@@ -307,13 +278,9 @@ const initData = () => {
   if (store.getLanguage() === LocaleCons.VI) {
     datePattern.value = 'dd/mm/yy'
   }
-  const query = getSearchQuery()
-  /// Set param url in onMounted
-  getListData(query)
 }
 const clickOkFilterDialog = (evt:any) => {
   console.log('clickOkFilterDialog')
-  console.log(evt)
   filters.value.name = evt.name;
   filters.value.description = evt.description;
   filters.value.active = evt.active;
@@ -321,14 +288,14 @@ const clickOkFilterDialog = (evt:any) => {
   filters.value.sortField = evt.sortField;
   filters.value.sortStatus = evt.sortStatus;
   instance.value.filterVisible = false
-  const query = getSearchQuery()
-  setParamUrl(query, route)
-  getListData(query)
+
+  setParamAndGetListData()
 }
 
 const clickOkCreateDialog = () => {
   instance.value.createVisible = false
-  initData()
+  console.log('clickOkCreateDialog')
+  setParamAndGetListData()
 }
 const clickCloseFilterDialog = () => {
   instance.value.filterVisible = false
@@ -340,16 +307,18 @@ const clickCloseCreateDialog = () => {
 /// Get data
 initData()
 
+
 watch(
   () => store.getLanguage(),
   (value) => {
+    console.log("--------watch---------")
     /// Set language
     setParamAndGetListData()
   }
 )
 onMounted(() => {
-  const query = getSearchQuery()
-  setParamUrl(query, route)
+  console.log("--------onMounted---------")
+  setParamAndGetListData()
 })
 </script>
 

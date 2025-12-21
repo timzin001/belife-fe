@@ -761,5 +761,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import url('~/assets/scss/org/CreateOrg.scss');
+@import url('~/assets/scss/org/CreateOrg/CreateOrg.scss');
 </style>
