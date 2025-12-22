@@ -6,7 +6,7 @@
     @update:visible="updateVisible"
   >
     <template #container>
-      <div class="create-department">
+      <div class="create-department-group">
         <div class="header w-full flex relative">
           <div
             class="text-[20px] w-full font-bold flex items-center justify-center"
@@ -14,10 +14,10 @@
             {{
               instance.data
                 ? $t('update_name', {
-                    name: $t('department').toLocaleLowerCase(),
+                    name: $t('group_of_name', {name:$t('department')}).toLocaleLowerCase(),
                   })
                 : $t('create_name', {
-                    name: $t('department').toLocaleLowerCase(),
+                    name: $t('group_of_name', {name:$t('department')}).toLocaleLowerCase(),
                   })
             }}
             <div class="flex-1 flex ml-[10px]">
@@ -91,75 +91,6 @@
               >
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-center justify-start w-full">
-                <label for="name" class="label"
-                  >{{ $t('group') }}<span>*</span></label
-                >
-                <div class="group-input flex">
-                  <div class="select-group">
-                    <Select
-                      v-model="instance.group"
-                      :options="props.listGroups"
-                      optionLabel="name"
-                      :autoOptionFocus="true"
-                      @value-change="onChangeGroup"
-                      :placeholder="$t('select_name', {name:$t('group').toLocaleLowerCase()})"
-                      class="w-full h-[30px]"
-                    >
-                      <template #value="slotProps">
-                        <div
-                          v-if="slotProps.value"
-                          class="flex items-center justify-start h-[100%] pl-[10px] option-item"
-                        >
-                        <LoadingImg :src="slotProps.value.avatar.location"></LoadingImg>
-    
-                          <div class="text-[14px] ml-[5px]">
-                            {{ slotProps.value.name[locale] }}
-                          </div>
-                        </div>
-                        <span v-else>
-                          {{ slotProps.placeholder }}
-                        </span>
-                      </template>
-                      <template #option="slotProps">
-                        <div class="flex items-center justify-center pl-[10px] h-[30px] option-item">
-                          <LoadingImg :src="slotProps.option.avatar.location"></LoadingImg>
-                          <div class="text-[14px] ml-[5px]">
-                            {{ slotProps.option.name[locale] }}
-                          </div>
-                        </div>
-                      </template>
-                    </Select>
-                    <div class="clear" v-if="instance.group">
-                    <img :src="Times" class="w-[14px] icon" @click="clickClearGroup"></img>
-                    </div>
-                  </div>
-                  <Button
-                    severity="success"
-                    :label="$t('create')"
-                    class="h-[30px] button ml-[15px]"
-                    @click="clickCreateGroup"
-                  >
-                    <template #icon>
-                      <img
-                        :src="Add"
-                        class="w-[14px] icon"
-                      />
-                    </template>
-                  </Button>
-                 
-                </div>
-              </div>
-
-              <Message
-                v-if="instance.groupError"
-                severity="error"
-                size="small"
-                variant="simple"
-                >{{ instance.groupError }}</Message
-              >
-            </div>
-            <div class="mt-[15px]">
               <div class="flex items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
                  <div class="group-input">
@@ -209,22 +140,14 @@
       </div>
     </template>
   </Dialog>
-  <CreateUpdateGroupDialog
-    :visible="instance.createGroupVisible"
-    @click-ok="clickOkCreateGroupDialog"
-    @click-close="clickCloseCreateGroupDialog"
-  />
 </template>
 <script setup lang="ts">
-import type { CreateDepartmentType } from '~/types/org/departments/CreateDepartmentType'
+import type { CreateDepartmentGroupType } from '~/types/org/departments/CreateDepartmentGroupType'
 import DefaultAvatar from '~/assets/images/default-avatar.png'
 import Times from '~/assets/icons/times.svg'
 import Save from '~/assets/icons/save.svg'
-import Add from '~/assets/icons/add.svg'
 import Update from '~/assets/icons/update.svg'
-import { CreateDepartmentValidate } from '~/validate/org/departments/CreateDepartmentValidate'
-import LoadingImg from '~/components/LoadingImg.vue'
-import CreateUpdateGroupDialog from './create-update-group-dialog.vue'
+import { CreateDepartmentGroupValidate } from '~/validate/org/departments/CreateDepartmentGroupValidate'
 const { t, locale } = useI18n()
 const toast = useToast()
 const { $orgAPI } = useNuxtApp()
@@ -232,15 +155,12 @@ const props = defineProps({
   data: {
     type: Object as PropType<any>,
   },
-  listGroups:{
-    type: Array
-  },
   visible: {
     type: Boolean,
     required: false,
   },
 })
-const instance = ref<CreateDepartmentType>({
+const instance = ref<CreateDepartmentGroupType>({
   visible: false,
   loading: false,
   name: '',
@@ -255,12 +175,8 @@ const instance = ref<CreateDepartmentType>({
   position: null,
   nameAbort: null,
   data: null,
-  group:null,
-  listGroups:[],
-  createGroupVisible:false,
-  groupError: null,
 })
-const emits = defineEmits(['click-close', 'reload-list-groups', 'click-ok'])
+const emits = defineEmits(['click-close', 'click-ok'])
 /// Update visible
 const updateVisible = (value: any) => {
   if (!value) {
@@ -269,42 +185,21 @@ const updateVisible = (value: any) => {
     emits('click-close')
   }
 }
-const clickOkCreateGroupDialog = ()=>{
-  instance.value.createGroupVisible = false
-  console.log('clickOkCreateDialog')
-   emits('reload-list-groups')
-}
-const clickCloseCreateGroupDialog = ()=>{
-  instance.value.createGroupVisible = false
-}
-/// Click create group
-const clickCreateGroup = async () => {
-  instance.value.createGroupVisible = true
-}
+
 /// Change name
 const changeName = (evt: any) => {
-  CreateDepartmentValidate.name(instance, t, $orgAPI, locale.value)
-}
-
-/// Chnage group
-const onChangeGroup = (evt:any)=>{
-  CreateDepartmentValidate.group(instance, t, locale.value);
+  CreateDepartmentGroupValidate.name(instance, t, $orgAPI, locale.value)
 }
 
 /// click close
 const clickClose = () => {
   emits('click-close')
 }
-/// Click clear group
-const clickClearGroup=()=>{
-  instance.value.group = null
-  CreateDepartmentValidate.group(instance, t, locale.value);
-}
 
 /// Clear name
 const clickClearName = ()=>{
   instance.value.name='';
-  CreateDepartmentValidate.name(instance, t, $orgAPI, locale.value)
+  CreateDepartmentGroupValidate.name(instance, t, $orgAPI, locale.value)
 }
 /// Clear description
 const clickClearDescription = ()=>{
@@ -325,7 +220,7 @@ const onFileSelectAvatar = (event: any) => {
       const width = image.width
       instance.value.widthAvatar = width
       instance.value.heightAvatar = height
-      CreateDepartmentValidate.avatar(instance, t)
+      CreateDepartmentGroupValidate.avatar(instance, t)
     }
   }
   reader.readAsDataURL(file)
@@ -333,7 +228,7 @@ const onFileSelectAvatar = (event: any) => {
 
 /// Handle update
 const handleUpdate = async () => {
-  const validate = await CreateDepartmentValidate.all(
+  const validate = await CreateDepartmentGroupValidate.all(
     instance,
     t,
     $orgAPI,
@@ -360,7 +255,7 @@ const handleUpdate = async () => {
     body: formData,
     headers: { 'Content-Type': 'no-content-type' },
   }
-  const response: any = await $orgAPI(APIOrgDepartmentCons.UPDATE, options)
+  const response: any = await $orgAPI(APIOrgDepartmentGroupCons.UPDATE, options)
   instance.value.loading = false
   toast.add({
     severity: ToastCons.SUCCESS,
@@ -376,7 +271,7 @@ const handleUpdate = async () => {
 
 /// Handle save
 const handleSave = async () => {
-  const validate = await CreateDepartmentValidate.all(
+  const validate = await CreateDepartmentGroupValidate.all(
     instance,
     t,
     $orgAPI,
@@ -390,14 +285,13 @@ const handleSave = async () => {
   formData.append('avatar', instance.value.avatarFile)
   formData.append('name', instance.value.name || '')
   formData.append('description', instance.value.description || '')
-  formData.append('groupId', instance.value.group.id || '')
   formData.append('active', JSON.stringify(instance.value.active))
   const options: any = {
     method: MethodCons.POST,
     body: formData,
     headers: { 'Content-Type': 'no-content-type' },
   }
-  const response: any = await $orgAPI(APIOrgDepartmentCons.CREATE, options)
+  const response: any = await $orgAPI(APIOrgDepartmentGroupCons.CREATE, options)
   instance.value.loading = false
   toast.add({
     severity: ToastCons.SUCCESS,
@@ -422,6 +316,8 @@ watch(
   () => props.visible,
   (value) => {
     /// Update show or hide from parent
+    console.log("------props.visible-----")
+    console.log(props.visible)
     instance.value.visible = props.visible
 
     instance.value.name = null
@@ -442,5 +338,5 @@ watch(
 )
 </script>
 <style scoped lang="scss">
-@import url('~/assets/scss/org/departments/CreateDepartment.scss');
+@import url('~/assets/scss/org/departments/CreateDepartmentGroup.scss');
 </style>

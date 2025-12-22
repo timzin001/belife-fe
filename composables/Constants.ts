@@ -97,13 +97,21 @@ export const APIOrgPositionCons = {
   EXIST_NAME: 'position/exist-name',
   CREATE: 'position/create',
   UPDATE: 'position/update',
-  LIST: 'position/get-list-positions',
+  LIST: 'position/get-list',
 }
 export const APIOrgDepartmentCons = {
   EXIST_NAME: 'department/exist-name',
   CREATE: 'department/create',
+  UPDATE: 'department/update',
+  LIST: 'department/get-list',
 }
-
+export const APIOrgDepartmentGroupCons = {
+  EXIST_NAME: 'department-group/exist-name',
+  CREATE: 'department-group/create',
+  UPDATE: 'department-group/update',
+  LIST_GROUPS_DATA: 'department-group/get-list-groups-data',
+  LIST_GROUPS: 'department-group/get-list-groups',
+}
 export const APIOrgBranchCons = {
   EXIST_NAME: 'branch/exist-name',
   EXIST_EMAIL: 'branch/exist-email',

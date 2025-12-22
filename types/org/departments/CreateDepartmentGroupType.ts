@@ -1,4 +1,4 @@
-export interface CreateDepartmentType {
+export interface CreateDepartmentGroupType {
   visible: boolean
   loading: boolean
   name: string | null
@@ -13,8 +13,4 @@ export interface CreateDepartmentType {
   position: any
   nameAbort: any
   data: any
-  group: any
-  groupError: string | null
-  listGroups: any[]
-  createGroupVisible: boolean
 }

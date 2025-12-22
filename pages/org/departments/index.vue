@@ -1,237 +1,158 @@
 <template>
   <div class="page">
-    <div class="h-full w-full card rounded-[8px] p-[5px]">
-      <DataTable
-        :value="customers"
-        scrollable
-        class="table-data"
-        v-model:filters="filters"
-        :globalFilterFields="[
-          'name',
-          'country.name',
-          'representative.name',
-          'status',
-        ]"
-        paginator
-        :rows="10"
-        :loading="loading"
-        stripedRows
-        dataKey="id"
-        selectionMode="single"
-        filterDisplay="row"
-        resizableColumns
-        columnResizeMode="expand"
-      >
-        <template #header>
-          <div class="flex filter">
-            <div class="flex-1 flex loading">
-              <div class="spinner-mini"></div>
-            </div>
-            <div class="flex input-action items-center justify-end">
-              <div class="flex col-search">
-                <MultiSelect
-                  :modelValue="selectedColumns"
-                  :options="columns"
-                  :maxSelectedLabels="1"
-                  size="small"
-                  optionLabel="header"
-                  @update:modelValue="onToggle"
-                  display="chip"
-                  class="multi-select h-[32px]"
-                  placeholder="Select Columns"
-                />
-
-                <div class="search relative">
-                  <i class="pi pi-search icon-search absolute" />
-                  <InputText
-                    class="w-full h-[32px] pl-[30px]"
-                    v-model="filters['global'].value"
-                    autocomplete="off"
-                    :placeholder="$t('searching_dot')"
-                  />
+    <div class="w-full card departments flex flex-col">
+      <div class="flex items-center justify-end header">
+        <div class="search">
+          <img :src="Search" class="w-[18px] icon" @click="clearFilterAll"></img>
+          <InputText
+            class="w-full h-[30px] input"
+            v-model="filters.all"
+            autocomplete="off"
+            @input="inputSearchAll"
+            :placeholder="$t('searching_dot')"
+          />
+          <div class="clear" v-if="filters.all">
+            <img :src="Times" class="w-[14px] icon" @click="clearFilterAll"></img>
+          </div>
+        </div>
+         <Button
+          @click="clickFilter()"
+          severity="info"
+          :label="$t('filter')"
+          class="h-[30px] filter-button"
+        >
+          <template #icon>
+            <img :src="Filter" class="w-[14px] icon-button" />
+          </template>
+        </Button>
+        <Button
+          @click="clickCreate()"
+          severity="success"
+          :label="$t('create')"
+          class="h-[30px] create-button"
+        >
+          <template #icon>
+            <img :src="Add" class="w-[14px] icon-button" />
+          </template>
+        </Button>
+      </div>
+      <div class="body flex flex-col flex-1">
+        <NoData :status="instance.noData"></NoData>
+        <ErrorData :status="instance.errorData"></ErrorData>
+      
+        <!-- <div class="gap flex-1 grid mb-[56px]" v-if="instance.init">
+          <div
+            v-for="index in 12"
+            :key="index"
+            class="item flex flex-row"
+          >
+            <div class="status"></div>
+            <div class="p-[10px] flex flex-col flex-1">
+              <div class="flex w-full items-start justify-start">
+                <Skeleton width="50px" height="50px" />
+                <div class="flex-1 ml-[20px] flex flex-col">
+                  <div class="name">
+                    <Skeleton width="100%" height="25px" />
+                  </div>
+                  <div class="active mt-[5px]">
+                    <Skeleton width="100%" height="20px" />
+                  </div>
                 </div>
               </div>
-
-              <Button
-                @click="clickCreate()"
-                :label="$t('create')"
-                class="w-[90px] h-[32px] ml-[10px]"
-                icon="pi pi-plus"
-              />
+              <div class="mt-[10px]"></div>
+              <div class="description flex-1 mt-[10px]">
+                <Skeleton width="100%" height="100%" />
+              </div>
+              <div class="mt-[10px]"></div>
+              <div class="flex mt-[10px] items-center justify-end">
+                <Skeleton width="80px" height="25px" />
+              </div>
             </div>
           </div>
-        </template>
-        <template #empty> No customers found. </template>
-        <template #loading> Loading customers data. Please wait. </template>
-        <Column
-          field="name"
-          header="Name"
-          :showFilterMenu="false"
-          sortable
-          style="min-width: 200px"
-        >
-          <template #body="{ data }">
-            <div class="flex items-center gap-2">
-              <img
-                :alt="data.representative.name"
-                :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
-                style="width: 32px"
-              />
-              <span>{{ data.representative.name }}</span>
+        </div> -->
+        <div  class="flex-1" v-if="instance.list && !instance.noData && !instance.init && !instance.errorData">
+          <Panel header="Header" toggleable   v-for="(item, index) in instance.list"
+            :key="index">
+            <template #header>
+                <div class="flex items-center gap-2 group-header">
+                    <LoadingImg :src="item.avatar.location"></LoadingImg>
+                    <span class="font-bold">{{ item.name[locale] }}</span>
+                </div>
+            </template>
+            <div class="group-body">
+              <div class="top-line"></div>
+              <div class="gap flex-1 grid">
+                <div v-for="(child, count) in item.departments" class="item flex">
+                  <div class="status">
+                    <div
+                      :class="{
+                        status1: child.active.value,
+                        status2: !child.active.value,
+                      }"
+                    ></div>
+                  </div>
+                  <div class="info flex flex-col flex-1">
+                    <div class="flex w-full items-start justify-start">
+                      <LoadingImg :src="item.avatar.location"></LoadingImg>
+                      <div class="flex-1 ml-[20px] flex flex-col">
+                        <div class="name">
+                          {{ child.name[locale] }}
+                        </div>
+                        <div
+                          :class="{
+                            active: child.active.value,
+                            inactive: !child.active.value,
+                          }"
+                        >
+                          {{ child.active[locale] }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="line mt-[10px]"></div>
+                    <div class="description mt-[10px] flex-1">
+                      {{ child.description[locale] }}
+                    </div>
+                    <div class="line mt-[10px]"></div>
+                    <div class="flex mt-[10px] items-center justify-end">
+                      <Button
+                        severity="info"
+                        :label="$t('edit')"
+                        class="h-[25px] button"
+                        @click="clickEdit(child)"
+                      >
+                        <template #icon>
+                          <img :src="Pencil" class="w-[12px] pencil" />
+                        </template>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by country"
-            />
-          </template>
-        </Column>
-        <Column
-          header="Numbers"
-          filterField="representative"
-          :showFilterMenu="false"
-          style="min-width: 14rem"
-          sortable
-        >
-          <template #body="{ data }">
-            <div class="flex items-center">
-              <span>{{ 1 }}</span>
-            </div>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputNumber
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by country"
-            />
-          </template>
-        </Column>
-        <Column
-          header="Creator"
-          filterField="representative"
-          :showFilterMenu="false"
-          style="min-width: 14rem"
-          sortable
-        >
-          <template #body="{ data }">
-            <div class="flex items-center gap-2">
-              <img
-                :alt="data.representative.name"
-                :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
-                style="width: 32px"
-              />
-              <span>{{ data.representative.name }}</span>
-            </div>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by country"
-            />
-          </template>
-        </Column>
-
-        <Column
-          header="Last updater"
-          filterField="representative"
-          :showFilterMenu="false"
-          style="min-width: 14rem"
-          sortable
-        >
-          <template #body="{ data }">
-            <div class="flex items-center gap-2">
-              <img
-                :alt="data.representative.name"
-                :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
-                style="width: 32px"
-              />
-              <span>{{ data.representative.name }}</span>
-            </div>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by country"
-            />
-          </template>
-        </Column>
-        <Column
-          header="Created at"
-          filterField="representative"
-          :showFilterMenu="false"
-          style="min-width: 14rem"
-          sortable
-        >
-          <template #body="{ data }">
-            <div class="flex items-center">
-              <span>{{ `20/10/2012` }}</span>
-            </div>
-          </template>
-
-          <template #filter="{ filterModel }">
-            <DatePicker
-              v-model="filterModel.value"
-              dateFormat="mm/dd/yy"
-              placeholder="mm/dd/yyyy"
-              selectionMode="range"
-            />
-          </template>
-        </Column>
-        <Column
-          header="Updated at"
-          filterField="representative"
-          :showFilterMenu="false"
-          style="min-width: 14rem"
-          sortable
-        >
-          <template #body="{ data }">
-            <div class="flex items-center">
-              <span>{{ `20/10/2012` }}</span>
-            </div>
-          </template>
-
-          <template #filter="{ filterModel }">
-            <DatePicker
-              v-model="filterModel.value"
-              dateFormat="mm/dd/yy"
-              placeholder="mm/dd/yyyy"
-              selectionMode="range"
-            />
-          </template>
-        </Column>
-        <Column style="min-width: 12rem">
-          <template #body="slotProps">
-            <Button
-              icon="pi pi-pencil"
-              outlined
-              rounded
-              class="mr-2"
-              @click="editProduct(slotProps.data)"
-            />
-            <Button
-              icon="pi pi-trash"
-              outlined
-              rounded
-              severity="danger"
-              @click="confirmDeleteProduct(slotProps.data)"
-            />
-          </template>
-        </Column>
-      </DataTable>
+            
+          </Panel>
+        </div>
+      </div>
     </div>
     <CreateUpdateDialog
-      :title="instance.titleDialog"
-      :visible="instance.visibleDialog"
-      @click-ok="clickOkDialog"
-      @click-close="clickCloseDialog"
+      :visible="instance.createVisible"
+      :data="instance.track"
+      :list-groups="instance.listGroups"
+      @reload-list-groups="getListGroup"
+      @click-ok="clickOkCreateDialog"
+      @click-close="clickCloseCreateDialog"
+    />
+     <CreateUpdateGroupDialog
+      :visible="instance.createGroupVisible"
+      :data="instance.trackGroup"
+      @click-ok="clickOkCreateGroupDialog"
+      @click-close="clickCloseCreateGroupDialog"
+    />
+    <FilterDialog
+      :visible="instance.filterVisible"
+      :data="filters"
+      @click-ok="clickOkFilterDialog"
+      @click-close="clickCloseFilterDialog"
     />
   </div>
 </template>
@@ -239,141 +160,189 @@
 <script setup lang="ts">
 /// Import
 import { ref, onMounted } from 'vue'
-import { CustomerService } from '@/service/CustomerService'
-import { FilterMatchMode } from '@primevue/core/api'
-import CreateUpdateDialog from './components/create-update-dialog.vue'
+import { GlobalStore } from '~/store/Global'
+import Pencil from '~/assets/icons/pencil.svg'
+import Search from '~/assets/icons/search.svg'
+import Add from '~/assets/icons/add.svg'
+import Filter from '~/assets/icons/filter.svg'
+import Times from '~/assets/icons/times.svg'
 import type { DepartmentsType } from '~/types/org/departments/DepartmentsType'
+import type { FilterPositionType } from '~/types/org/positions/FilterPositionType'
+import CreateUpdateDialog from './components/create-update-dialog.vue'
+import CreateUpdateGroupDialog from './components/create-update-group-dialog.vue'
+import FilterDialog from './components/filter-dialog.vue'
+
 /// Define
-const { t } = useI18n()
+const store = GlobalStore()
+const { t, locale } = useI18n()
+const route = useRoute()
+const { $orgAPI } = useNuxtApp()
 const instance = ref<DepartmentsType>({
-  visibleDialog: false,
-  titleDialog: '',
+  createVisible: false,
+  filterVisible:false,
+  list: [],
+  track: null,
+  init: true,
+  loading: false,
+  noData: false,
+  errorData: false,
+  trackGroup:null,
+  createGroupVisible:false,
+  listGroups:[]
 })
+const filters = ref(<FilterPositionType>{})
+const datePattern = ref('yy/mm/dd')
 
-const columns = [
-  { field: 'createdAt', header: t('created_date') },
-  { field: 'updatedAt', header: t('updated_date') },
-]
-
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  'country.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  representative: { value: null, matchMode: FilterMatchMode.IN },
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
-  verified: { value: null, matchMode: FilterMatchMode.EQUALS },
-})
-onMounted(() => {
-  CustomerService.getCustomersLarge().then((data) => {
-    customers.value = data
-  })
-})
-
-const customers = ref()
-const balanceFrozen = ref(false)
-const formatCurrency = (value) => {
-  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+/// Set param to url and get list data
+const setParamAndGetListData = () => {
+  const query = getSearchQuery()
+  getListData(query)
+  setParamUrl(query, route)
 }
 
+/// Execute filter data
+const inputSearchAll = (evt: any) => {
+  console.log('inputSearchAll')
+  setParamAndGetListData()
+}
+
+/// Clear fitler all
+const clearFilterAll = () => {
+  filters.value.all = ''
+}
+/// Click create position
+const clickFilter = async () => {
+  instance.value.filterVisible = true
+}
+/// Click create department
 const clickCreate = async () => {
-  instance.value.visibleDialog = true
+  instance.value.track = null
+  instance.value.createVisible = true
+  // instance.value.trackGroup = null
+  // instance.value.createGroupVisible = true
 }
-const clickOkDialog = () => {
-  instance.value.visibleDialog = false
+const clickEdit = async (item: any) => {
+  instance.value.track = item
+  instance.value.createVisible = true
+}
+/// Get search query
+const getSearchQuery = () => {
+  let result: any = {
+  }
+  result.all = filters.value.all || ''
+  result.name = filters.value.name || ''
+  result.description = filters.value.description || ''
+  if(filters.value.active){
+      result.active=true;
+  }else if(filters.value.inActive){
+     result.active=false;
+  }else{
+    result.active = ''
+  }
+  result.sortField = filters.value.sortField || 'name';
+  result.sortStatus = filters.value.sortStatus || 'ASC';
+  // setParamUrl(result, route)
+  return result
+}
+/// Get list data
+const getListData = async (query: any) => {
+  const options: any = {
+    method: MethodCons.GET,
+    query: query,
+  }
+  try {
+    const response: any = await $orgAPI(APIOrgDepartmentGroupCons.LIST_GROUPS_DATA, options)
+    const data = response.data
+    instance.value.list = data
+    instance.value.errorData = false
+    if (data && data.length) {
+      instance.value.noData = false
+    } else {
+      instance.value.noData = true
+    }
+  } catch (e) {
+    instance.value.errorData = true
+  }
+  instance.value.init = false
+  console.log(instance.value)
 }
 
-const clickCloseDialog = () => {
-  instance.value.visibleDialog = false
+/// Get list data
+const getListGroup = async () => {
+  const options: any = {
+    method: MethodCons.GET,
+    query: {
+    },
+  }
+  try {
+    const response: any = await $orgAPI(APIOrgDepartmentGroupCons.LIST_GROUPS, options)
+    const data = response.data
+    console.log(data);
+    instance.value.listGroups = data || []
+  } catch (e) {
+  }
 }
+
+/// Init data
+const initData = () => {
+  if (store.getLanguage() === LocaleCons.EN) {
+    datePattern.value = 'yy/mm/dd'
+  }
+  if (store.getLanguage() === LocaleCons.VI) {
+    datePattern.value = 'dd/mm/yy'
+  }
+}
+const clickOkFilterDialog = (evt:any) => {
+  console.log('clickOkFilterDialog')
+  filters.value.name = evt.name;
+  filters.value.description = evt.description;
+  filters.value.active = evt.active;
+  filters.value.inActive = evt.inActive;
+  filters.value.sortField = evt.sortField;
+  filters.value.sortStatus = evt.sortStatus;
+  instance.value.filterVisible = false
+
+  setParamAndGetListData()
+}
+
+const clickOkCreateGroupDialog = () => {
+  instance.value.createGroupVisible = false
+  console.log('clickOkCreateDialog')
+  setParamAndGetListData()
+}
+
+const clickOkCreateDialog = () => {
+  instance.value.createVisible = false
+  console.log('clickOkCreateDialog')
+  setParamAndGetListData()
+}
+const clickCloseFilterDialog = () => {
+  instance.value.filterVisible = false
+}
+
+const clickCloseCreateDialog = () => {
+  instance.value.createVisible = false
+}
+const clickCloseCreateGroupDialog = () => {
+  instance.value.createGroupVisible = false
+}
+/// Get data
+initData()
+
+
+watch(
+  () => store.getLanguage(),
+  (value) => {
+    /// Set language
+    setParamAndGetListData()
+  }
+)
+onMounted(() => {
+  setParamAndGetListData()
+  getListGroup();
+})
 </script>
+
 <style scoped lang="scss">
-:deep(.p-chip) {
-  gap: 5px !important;
-  padding-inline: 5px !important;
-}
-.page {
-  display: flex;
-  padding: 10px;
-}
-.table-data {
-  margin-top: 20px;
-  margin-bottom: 30px;
-}
-.icon-search {
-  margin-left: 10px;
-  margin-top: 10px;
-  color: #cccccc;
-  font-size: 14px !important;
-}
-.search {
-  width: 300px;
-  margin-left: 10px;
-}
-.multi-select {
-  width: 300px;
-}
-
-/// Tablet
-@media screen and (min-width: $tablet-min) and (max-width: $tablet-max) {
-  .table-data {
-    margin-top: 10px;
-    margin-bottom: 20px;
-  }
-}
-
-/// Tablet mini
-@media screen and (min-width: $tablet-mini-min) and (max-width: $tablet-mini-max) {
-  .table-data {
-    margin-top: 5px;
-    margin-bottom: 10px;
-  }
-  .filter {
-    flex-direction: column;
-    .loading {
-      margin-bottom: 10px;
-    }
-    .input-action {
-      width: 100%;
-      .col-search {
-        width: 100%;
-        .search {
-          width: unset;
-          flex: 1;
-        }
-      }
-    }
-  }
-}
-
-/// Mobile
-@media screen and (min-width: $mobile-min) and (max-width: $mobile-max) {
-  .table-data {
-    margin-top: 5px;
-    margin-bottom: 10px;
-  }
-  .filter {
-    flex-direction: column;
-    .loading {
-      margin-bottom: 10px;
-    }
-    .input-action {
-      width: 100%;
-      align-items: start;
-      .col-search {
-        flex-direction: column;
-        flex: 1;
-        .multi-select {
-          width: unset;
-          flex: 1;
-        }
-        .search {
-          margin-top: 10px;
-          margin-left: unset;
-          width: unset;
-          flex: 1;
-        }
-      }
-    }
-  }
-}
+@import url('~/assets/scss/org/departments/Departments.scss');
 </style>

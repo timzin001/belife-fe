@@ -1,7 +1,7 @@
-import type { CreateDepartmentType } from '~/types/org/departments/CreateDepartmentType'
+import type { CreatePositionType } from '~/types/org/positions/CreatePositionType'
 import { type Ref } from 'vue'
 /// Validate avatar
-const validateAvatar = (instance: Ref<CreateDepartmentType>, t: any) => {
+const validateAvatar = (instance: Ref<CreatePositionType>, t: any) => {
   const avatar = instance.value.avatar || ''
   if (avatar.endsWith(DEFAULT_AVATAR)) {
     instance.value.avatarError = t('please_select_name', {
@@ -16,22 +16,10 @@ const validateAvatar = (instance: Ref<CreateDepartmentType>, t: any) => {
 
   instance.value.avatarError = ''
 }
-const validateGroup = (
-  instance: Ref<CreateDepartmentType>,
-  t: any,
-  lang: string
-) => {
-  if (!instance.value.group) {
-    instance.value.groupError = t('please_select_name', {
-      name: t('group').toLocaleLowerCase(),
-    })
-    return
-  }
-  instance.value.groupError = ''
-}
+
 /// Validate name
 const validateName = async (
-  instance: Ref<CreateDepartmentType>,
+  instance: Ref<CreatePositionType>,
   t: any,
   $orgAPI: any,
   lang: string
@@ -72,10 +60,10 @@ const validateName = async (
       name: instance.value.name,
     },
   }
-  const result = await $orgAPI(APIOrgDepartmentCons.EXIST_NAME, options)
+  const result = await $orgAPI(APIOrgDepartmentGroupCons.EXIST_NAME, options)
   if (result.data) {
     instance.value.nameError = t('name_is_exist_in_organization', {
-      name1: t('name'),
+      name: t('name'),
     })
   } else {
     instance.value.nameError = ''
@@ -84,7 +72,7 @@ const validateName = async (
 
 /// Validate all
 const validateAll = async (
-  instance: Ref<CreateDepartmentType>,
+  instance: Ref<CreatePositionType>,
   t: any,
   $orgAPI: any,
   lang: string
@@ -92,21 +80,16 @@ const validateAll = async (
   await Promise.all([
     validateAvatar(instance, t),
     validateName(instance, t, $orgAPI, lang),
-    validateGroup(instance, t, lang),
   ])
-  if (
-    instance.value.avatarError ||
-    instance.value.nameError ||
-    instance.value.groupError
-  ) {
+
+  if (instance.value.avatarError || instance.value.nameError) {
     return false
   }
   return true
 }
 
-export const CreateDepartmentValidate = {
+export const CreateDepartmentGroupValidate = {
   avatar: validateAvatar,
   name: validateName,
-  group: validateGroup,
   all: validateAll,
 }
