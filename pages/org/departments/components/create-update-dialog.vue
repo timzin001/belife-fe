@@ -33,20 +33,22 @@
         <div class="contain items-center justify-center">
           <div class="inner">
             <div>
-              <div class="flex items-center justify-start">
+              <div class="flex item2 items-center justify-start">
                 <label class="label">{{ $t('avatar') }}<span>*</span></label>
-                <FileUpload
-                  mode="basic"
-                  @select="onFileSelectAvatar"
-                  customUpload
-                  auto
-                  :chooseLabel="$t('choose')"
-                  severity="secondary"
-                  class="p-button-outlined h-[32px] flex-1"
-                />
+                <div class="image-group flex items-center">
+                  <FileUpload
+                    mode="basic"
+                    @select="onFileSelectAvatar"
+                    customUpload
+                    auto
+                    :chooseLabel="$t('choose')"
+                    severity="secondary"
+                    class="p-button-outlined h-[32px] flex-1"
+                  />
 
-                <div class="ml-[50px]">
-                  <LoadingImg :src="instance.avatar" />
+                  <div class="ml-[50px]">
+                    <LoadingImg :src="instance.avatar" />
+                  </div>
                 </div>
               </div>
               <div class="avatar-des">{{ $t('avatar_with_1_1_ratio') }}</div>
@@ -54,12 +56,13 @@
                 v-if="instance.avatarError"
                 severity="error"
                 size="small"
+                class="avatar-error"
                 variant="simple"
                 >{{ instance.avatarError }}</Message
               >
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-center justify-start w-full">
+              <div class="flex item1 items-center justify-start w-full">
                 <label for="name" class="label"
                   >{{ $t('name') }}<span>*</span></label
                 >
@@ -91,7 +94,7 @@
               >
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-center justify-start w-full">
+              <div class="flex item1 items-center justify-start w-full">
                 <label for="name" class="label"
                   >{{ $t('group') }}<span>*</span></label
                 >
@@ -109,11 +112,11 @@
                       <template #value="slotProps">
                         <div
                           v-if="slotProps.value"
-                          class="flex items-center justify-start h-[100%] pl-[10px] option-item"
+                          class="option-item"
                         >
                         <LoadingImg :src="slotProps.value.avatar.location"></LoadingImg>
     
-                          <div class="text-[14px] ml-[5px]">
+                          <div class="option-text1">
                             {{ slotProps.value.name[locale] }}
                           </div>
                         </div>
@@ -122,10 +125,10 @@
                         </span>
                       </template>
                       <template #option="slotProps">
-                        <div class="flex items-center justify-center pl-[10px] h-[30px] option-item">
-                          <LoadingImg :src="slotProps.option.avatar.location"></LoadingImg>
-                          <div class="text-[14px] ml-[5px]">
-                            {{ slotProps.option.name[locale] }}
+                        <div class="h-[30px] option-item">
+                            <LoadingImg :src="slotProps.option.avatar.location"></LoadingImg>
+                            <div class="option-text2">
+                              {{ slotProps.option.name[locale] }}
                           </div>
                         </div>
                       </template>
@@ -160,7 +163,7 @@
               >
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-start justify-start w-full">
+              <div class="flex item1 items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
                  <div class="group-input">
                   <Textarea
@@ -181,9 +184,9 @@
               </div>
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-center justify-start w-full">
+              <div class="flex item3 items-center justify-start w-full">
                 <label for="active-name" class="label"
-                  >{{ $t('active') }}<span>*</span></label
+                  >{{ $t('active') }}</label
                 >
                 <Checkbox v-model="instance.active" binary id="active-name" />
               </div>
@@ -225,6 +228,7 @@ import Update from '~/assets/icons/update.svg'
 import { CreateDepartmentValidate } from '~/validate/org/departments/CreateDepartmentValidate'
 import LoadingImg from '~/components/LoadingImg.vue'
 import CreateUpdateGroupDialog from './create-update-group-dialog.vue'
+
 const { t, locale } = useI18n()
 const toast = useToast()
 const { $orgAPI } = useNuxtApp()
@@ -234,6 +238,9 @@ const props = defineProps({
   },
   listGroups:{
     type: Array
+  },
+  group:{
+    type:Object as PropType<any>,
   },
   visible: {
     type: Boolean,
@@ -430,6 +437,7 @@ watch(
     instance.value.loading = false
     instance.value.avatar = DefaultAvatar
     instance.value.data = null
+    instance.value.group = null;
 
     if (value && props.data) {
       instance.value.name = props.data.name[locale.value]
@@ -437,6 +445,10 @@ watch(
       instance.value.avatar = props.data.avatar.location
       instance.value.active = props.data.active.value
       instance.value.data = props.data
+      instance.value.group = props.group
+      /// Find group
+    
+     
     }
   }
 )

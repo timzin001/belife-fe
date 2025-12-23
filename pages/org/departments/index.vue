@@ -77,6 +77,16 @@
                 <div class="flex items-center gap-2 group-header">
                     <LoadingImg :src="item.avatar.location"></LoadingImg>
                     <span class="font-bold">{{ item.name[locale] }}</span>
+                    <Button
+                        severity="info"
+                        :label="$t('edit')"
+                        class="h-[25px] button"
+                        @click="clickEditGroup(item)"
+                      >
+                        <template #icon>
+                          <img :src="Pencil" class="w-[12px] pencil" />
+                        </template>
+                      </Button>
                 </div>
             </template>
             <div class="group-body">
@@ -118,7 +128,7 @@
                         severity="info"
                         :label="$t('edit')"
                         class="h-[25px] button"
-                        @click="clickEdit(child)"
+                        @click="clickEdit(item,child)"
                       >
                         <template #icon>
                           <img :src="Pencil" class="w-[12px] pencil" />
@@ -137,6 +147,7 @@
     <CreateUpdateDialog
       :visible="instance.createVisible"
       :data="instance.track"
+      :group="instance.trackGroup"
       :list-groups="instance.listGroups"
       @reload-list-groups="getListGroup"
       @click-ok="clickOkCreateDialog"
@@ -217,12 +228,12 @@ const clickFilter = async () => {
 /// Click create department
 const clickCreate = async () => {
   instance.value.track = null
+  instance.value.trackGroup = null
   instance.value.createVisible = true
-  // instance.value.trackGroup = null
-  // instance.value.createGroupVisible = true
 }
-const clickEdit = async (item: any) => {
-  instance.value.track = item
+const clickEdit = async (item: any, child:any) => {
+  instance.value.trackGroup = item
+  instance.value.track = child
   instance.value.createVisible = true
 }
 /// Get search query
@@ -309,11 +320,11 @@ const clickOkCreateGroupDialog = () => {
   instance.value.createGroupVisible = false
   console.log('clickOkCreateDialog')
   setParamAndGetListData()
+  getListGroup();
 }
 
 const clickOkCreateDialog = () => {
   instance.value.createVisible = false
-  console.log('clickOkCreateDialog')
   setParamAndGetListData()
 }
 const clickCloseFilterDialog = () => {
@@ -325,6 +336,10 @@ const clickCloseCreateDialog = () => {
 }
 const clickCloseCreateGroupDialog = () => {
   instance.value.createGroupVisible = false
+}
+const clickEditGroup = (evt:any)=>{
+  instance.value.trackGroup = evt
+  instance.value.createGroupVisible = true
 }
 /// Get data
 initData()

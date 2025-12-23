@@ -33,25 +33,28 @@
         <div class="contain items-center justify-center">
           <div class="inner">
             <div>
-              <div class="flex items-center justify-start">
+              <div class="flex item2 items-center justify-start">
                 <label class="label">{{ $t('avatar') }}<span>*</span></label>
-                <FileUpload
-                  mode="basic"
-                  @select="onFileSelectAvatar"
-                  customUpload
-                  auto
-                  :chooseLabel="$t('choose')"
-                  severity="secondary"
-                  class="p-button-outlined h-[32px] flex-1"
-                />
+                  <div class="image-group flex items-center">
+                    <FileUpload
+                      mode="basic"
+                      @select="onFileSelectAvatar"
+                      customUpload
+                      auto
+                      :chooseLabel="$t('choose')"
+                      severity="secondary"
+                      class="p-button-outlined h-[32px] flex-1"
+                    />
 
-                <div class="ml-[50px]">
-                  <LoadingImg :src="instance.avatar" />
+                    <div class="ml-[50px]">
+                      <LoadingImg :src="instance.avatar" />
+                    </div>
                 </div>
               </div>
               <div class="avatar-des">{{ $t('avatar_with_1_1_ratio') }}</div>
               <Message
                 v-if="instance.avatarError"
+                class="avatar-error"
                 severity="error"
                 size="small"
                 variant="simple"
@@ -59,7 +62,7 @@
               >
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-center justify-start w-full">
+              <div class="flex item1 items-center justify-start w-full">
                 <label for="name" class="label"
                   >{{ $t('name') }}<span>*</span></label
                 >
@@ -91,7 +94,7 @@
               >
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-start justify-start w-full">
+              <div class="flex item1 items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
                  <div class="group-input">
                   <Textarea
@@ -112,9 +115,9 @@
               </div>
             </div>
             <div class="mt-[15px]">
-              <div class="flex items-center justify-start w-full">
+              <div class="flex item3 items-center justify-start w-full">
                 <label for="active-name" class="label"
-                  >{{ $t('active') }}<span>*</span></label
+                  >{{ $t('active') }}</label
                 >
                 <Checkbox v-model="instance.active" binary id="active-name" />
               </div>
