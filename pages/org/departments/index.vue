@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <div class="w-full card departments flex flex-col">
-      <div class="flex items-center justify-end header">
+    <div class="w-full  departments flex flex-col">
+      <div class="flex items-center card justify-end header">
         <div class="search">
           <img :src="Search" class="w-[18px] icon" @click="clearFilterAll"></img>
           <InputText
@@ -72,21 +72,24 @@
         </div> -->
         <div  class="flex-1" v-if="instance.list && !instance.noData && !instance.init && !instance.errorData">
           <Panel header="Header" toggleable   v-for="(item, index) in instance.list"
-            :key="index">
+            :key="index" class="mb-[10px] card">
             <template #header>
-                <div class="flex items-center gap-2 group-header">
+                <div class="flex items-center gap-2 group-header card-header">
                     <LoadingImg :src="item.avatar.location"></LoadingImg>
-                    <span class="font-bold">{{ item.name[locale] }}</span>
-                    <Button
-                        severity="info"
-                        :label="$t('edit')"
-                        class="h-[25px] button"
-                        @click="clickEditGroup(item)"
-                      >
-                        <template #icon>
-                          <img :src="Pencil" class="w-[12px] pencil" />
-                        </template>
-                      </Button>
+                    <div>
+                        <div class="flex">
+                          <span class="font-bold title">{{ item.name[locale] }}</span>
+                          <img :src="Pencil" class="w-[12px] pencil ml-[10px]"   @click="clickEditGroup(item)"/>
+                        </div>
+                        <div
+                          :class="{
+                            active: item.active.value,
+                            inactive: !item.active.value,
+                          }"
+                        >
+                          {{ item.active[locale] }}
+                        </div>
+                    </div>
                 </div>
             </template>
             <div class="group-body">

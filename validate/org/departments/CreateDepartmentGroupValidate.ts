@@ -41,7 +41,7 @@ const validateName = async (
 
   if (instance.value.data) {
     const nameObj = instance.value.data.name
-    if (instance.value.name == nameObj[lang]) {
+    if (instance.value.name.trim() == nameObj[lang].trim()) {
       instance.value.nameError = ''
       return
     }

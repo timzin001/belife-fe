@@ -80,7 +80,11 @@
                     "
                   ></InputText>
                   <div class="clear" v-if="instance.name">
-                    <img :src="Times" class="w-[14px] icon" @click="clickClearName"></img>
+                    <img
+                      :src="Times"
+                      class="w-[14px] icon"
+                      @click="clickClearName"
+                    />
                   </div>
                 </div>
               </div>
@@ -106,35 +110,44 @@
                       optionLabel="name"
                       :autoOptionFocus="true"
                       @value-change="onChangeGroup"
-                      :placeholder="$t('select_name', {name:$t('group').toLocaleLowerCase()})"
+                      :placeholder="
+                        $t('select_name', {
+                          name: $t('group').toLocaleLowerCase(),
+                        })
+                      "
                       class="w-full h-[30px]"
                     >
                       <template #value="slotProps">
-                        <div
-                          v-if="slotProps.value"
-                          class="option-item"
-                        >
-                        <LoadingImg :src="slotProps.value.avatar.location"></LoadingImg>
-    
+                        <div v-if="slotProps.value" class="option-item">
+                          <LoadingImg
+                            :src="slotProps.value.avatar.location"
+                          ></LoadingImg>
+
                           <div class="option-text1">
                             {{ slotProps.value.name[locale] }}
                           </div>
                         </div>
-                        <span v-else>
+                        <span v-else class="pl-[10px]">
                           {{ slotProps.placeholder }}
                         </span>
                       </template>
                       <template #option="slotProps">
                         <div class="h-[30px] option-item">
-                            <LoadingImg :src="slotProps.option.avatar.location"></LoadingImg>
-                            <div class="option-text2">
-                              {{ slotProps.option.name[locale] }}
+                          <LoadingImg
+                            :src="slotProps.option.avatar.location"
+                          ></LoadingImg>
+                          <div class="option-text2">
+                            {{ slotProps.option.name[locale] }}
                           </div>
                         </div>
                       </template>
                     </Select>
                     <div class="clear" v-if="instance.group">
-                    <img :src="Times" class="w-[14px] icon" @click="clickClearGroup"></img>
+                      <img
+                        :src="Times"
+                        class="w-[14px] icon"
+                        @click="clickClearGroup"
+                      />
                     </div>
                   </div>
                   <Button
@@ -144,13 +157,9 @@
                     @click="clickCreateGroup"
                   >
                     <template #icon>
-                      <img
-                        :src="Add"
-                        class="w-[14px] icon"
-                      />
+                      <img :src="Add" class="w-[14px] icon" />
                     </template>
                   </Button>
-                 
                 </div>
               </div>
 
@@ -165,7 +174,7 @@
             <div class="mt-[15px]">
               <div class="flex item1 items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
-                 <div class="group-input">
+                <div class="group-input">
                   <Textarea
                     class="w-full"
                     autocomplete="off"
@@ -177,17 +186,21 @@
                       })
                     "
                   ></Textarea>
-                   <div class="clear" v-if="instance.description">
-                    <img :src="Times" class="w-[14px] icon" @click="clickClearDescription"></img>
+                  <div class="clear" v-if="instance.description">
+                    <img
+                      :src="Times"
+                      class="w-[14px] icon"
+                      @click="clickClearDescription"
+                    />
                   </div>
                 </div>
               </div>
             </div>
             <div class="mt-[15px]">
               <div class="flex item3 items-center justify-start w-full">
-                <label for="active-name" class="label"
-                  >{{ $t('active') }}</label
-                >
+                <label for="active-name" class="label">{{
+                  $t('active')
+                }}</label>
                 <Checkbox v-model="instance.active" binary id="active-name" />
               </div>
             </div>
@@ -236,11 +249,11 @@ const props = defineProps({
   data: {
     type: Object as PropType<any>,
   },
-  listGroups:{
-    type: Array
+  listGroups: {
+    type: Array,
   },
-  group:{
-    type:Object as PropType<any>,
+  group: {
+    type: Object as PropType<any>,
   },
   visible: {
     type: Boolean,
@@ -262,9 +275,9 @@ const instance = ref<CreateDepartmentType>({
   position: null,
   nameAbort: null,
   data: null,
-  group:null,
-  listGroups:[],
-  createGroupVisible:false,
+  group: null,
+  listGroups: [],
+  createGroupVisible: false,
   groupError: null,
 })
 const emits = defineEmits(['click-close', 'reload-list-groups', 'click-ok'])
@@ -276,12 +289,12 @@ const updateVisible = (value: any) => {
     emits('click-close')
   }
 }
-const clickOkCreateGroupDialog = ()=>{
+const clickOkCreateGroupDialog = () => {
   instance.value.createGroupVisible = false
   console.log('clickOkCreateDialog')
-   emits('reload-list-groups')
+  emits('reload-list-groups')
 }
-const clickCloseCreateGroupDialog = ()=>{
+const clickCloseCreateGroupDialog = () => {
   instance.value.createGroupVisible = false
 }
 /// Click create group
@@ -294,8 +307,8 @@ const changeName = (evt: any) => {
 }
 
 /// Chnage group
-const onChangeGroup = (evt:any)=>{
-  CreateDepartmentValidate.group(instance, t, locale.value);
+const onChangeGroup = (evt: any) => {
+  CreateDepartmentValidate.group(instance, t, locale.value)
 }
 
 /// click close
@@ -303,19 +316,19 @@ const clickClose = () => {
   emits('click-close')
 }
 /// Click clear group
-const clickClearGroup=()=>{
+const clickClearGroup = () => {
   instance.value.group = null
-  CreateDepartmentValidate.group(instance, t, locale.value);
+  CreateDepartmentValidate.group(instance, t, locale.value)
 }
 
 /// Clear name
-const clickClearName = ()=>{
-  instance.value.name='';
+const clickClearName = () => {
+  instance.value.name = ''
   CreateDepartmentValidate.name(instance, t, $orgAPI, locale.value)
 }
 /// Clear description
-const clickClearDescription = ()=>{
-  instance.value.description='';
+const clickClearDescription = () => {
+  instance.value.description = ''
 }
 /// Select avatar
 const onFileSelectAvatar = (event: any) => {
@@ -361,6 +374,10 @@ const handleUpdate = async () => {
   if (instance.value.description) {
     formData.append('description', instance.value.description || '')
   }
+  if (props.group?.id != instance.value.group.id) {
+    formData.append('groupId', instance.value.group.id || '')
+  }
+
   formData.append('active', JSON.stringify(instance.value.active))
   const options: any = {
     method: MethodCons.POST,
@@ -379,7 +396,6 @@ const handleUpdate = async () => {
   })
   emits('click-ok')
 }
-
 
 /// Handle save
 const handleSave = async () => {
@@ -437,7 +453,7 @@ watch(
     instance.value.loading = false
     instance.value.avatar = DefaultAvatar
     instance.value.data = null
-    instance.value.group = null;
+    instance.value.group = null
 
     if (value && props.data) {
       instance.value.name = props.data.name[locale.value]
@@ -445,10 +461,18 @@ watch(
       instance.value.avatar = props.data.avatar.location
       instance.value.active = props.data.active.value
       instance.value.data = props.data
-      instance.value.group = props.group
       /// Find group
-    
-     
+      const listGroups = props.listGroups || []
+      const filter: any = listGroups.filter((item: any) => {
+        console.log(item)
+        console.log(`${item.id} == ${props.group.id}`)
+        console.log(item.id == props.group.id)
+        return item.id == props.group.id
+      })
+
+      if (filter.length) {
+        instance.value.group = filter[0]
+      }
     }
   }
 )

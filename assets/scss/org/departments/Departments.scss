@@ -3,6 +3,7 @@
     padding: 10px !important;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
 .departments {
     flex: 1;
     border-top-right-radius: 8px;
@@ -18,7 +19,7 @@
         padding-bottom: 20px;
         padding-left: 20px;
         padding-right: 20px;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         
         .search {
             width: 300px;
@@ -75,8 +76,8 @@
 
     .body{
         padding-bottom: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
+        // padding-left: 20px;
+        // padding-right: 20px;
         .grid{
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -85,49 +86,88 @@
             grid-row-gap: 15px;
         }
         :deep(.p-panel-header){
-            padding:0px;
+            padding: 0px;
         }
-        .group-header{
-            :deep(.img-group){
+       
+        :deep(.p-panel){
+            border-radius:unset;
+            border-top-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+
+        }
+        :deep(.p-panel-header) {
+            padding-left: 20px;
+            height: 70px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 3px solid $primary-color;
+            .title {
+                font-weight: bold;
+                color: $text-color;
+            }
+            .active,
+            .inactive {
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .active {
+                color: $primary-color;
+            }
+
+            .inactive {
+                color: $danger-color
+            }
+            .p-button{
+                height:30px;
+                background-color: unset;
+                margin-right: 20px;
                 width: 30px;
-                height: 30px;
-                .image{
-                    width: 30px;
-                    height: 30px;
+            }
+         
+            .img-group {
+                width: 35px;
+                height: 35px;
+               
+                .image {
+                    border-color: unset;
+                    border-width: unset;
+                    border-style: unset;
+                    width: 35px;
+                    height: 35px;
+                    border-top-right-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                    // display: none;
+                }
+            }
+
+            .pencil {
+                filter: invert(47%) sepia(80%) saturate(635%) hue-rotate(155deg) brightness(100%) contrast(95%);
+                &:hover {
+                    cursor: pointer;
                 }
             }
         }
+        :deep(.p-panel-content){
+            padding:unset;
+        }
         .group-body{
-            padding-top: 10px;
+            // padding-top: 10px;
+            padding:20px;
+            
             .item {
-                .status {
-                    border: 1px solid $border-color;
-                    border-left: none;
-                    border-right: none;
-                    border-bottom: none;
-                    width: 4px;
-                }
-
-                .status1 {
-                    height: 100%;
-                    width: 4px;
-                    background-color: $primary-color;
-                    border-top-right-radius: 8px;
-                    border-bottom-left-radius: 8px;
-                }
-
-                .status2 {
-                    height: 100%;
-                    width: 4px;
-                    background-color: $danger-color;
-                    border-top-right-radius: 8px;
-                    border-bottom-left-radius: 8px;
-                }
-
+                // background-color: #22c55e;
+                border-color: #ebedfa;
+                border-width: 4px;
+                border-style: solid;
+                border-top-right-radius: 8px;
+                border-bottom-left-radius: 8px;
+                // height: 100px;
+            
                 .info {
-                    border: 1px solid $border-color;
-                    border-left: none;
-                    border-top-right-radius: 8px;
+                    // border: 1px solid $border-color;
+                    // border-left: none;
+                    // border-top-right-radius: 8px;
                     // border-bottom-left-radius: 8px;
                     padding: 10px;
 
@@ -139,6 +179,7 @@
                     .active,
                     .inactive {
                         font-size: 12px;
+                        font-weight: 500;
                     }
 
                     .active {
@@ -162,7 +203,7 @@
                     .pencil {
                         filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(123deg) brightness(101%) contrast(96%);
                     }
-
+                   
                     .button {
                         padding-left: 5px;
                         padding-right: 5px;
