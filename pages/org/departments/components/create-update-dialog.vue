@@ -172,7 +172,7 @@
               >
             </div>
             <div class="mt-[15px]">
-              <div class="flex item1 items-start justify-start w-full">
+              <div class="flex item4 items-start justify-start w-full">
                 <div class="label">{{ $t('description') }}</div>
                 <div class="group-input">
                   <Textarea
