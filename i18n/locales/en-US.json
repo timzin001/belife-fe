@@ -176,5 +176,7 @@
     "filter": "Filter",
     "sort": "Sort",
     "group_of_name":"Group of {name}",
-    "group":"Group"
+    "group":"Group",
+    "images": "Images",
+    "drag_and_ddrop_files_to_here_to_upload": "Drag and drop files to here to upload."
 }

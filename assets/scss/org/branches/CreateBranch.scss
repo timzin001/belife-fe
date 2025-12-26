@@ -12,6 +12,7 @@
     .contain {
         display: flex;
         flex-direction: column;
+        overflow-y: scroll;
 
         .inner {
             width: 100%;
@@ -22,9 +23,9 @@
             padding: 30px;
             padding-bottom: 20px;
             padding-top: 20px;
-            .item1,.item2,.item3 {
+            .item1,.item2,.item3, .item4, .item5 {
                 flex-direction: row;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: flex-start;
                 .label {
                     width: 120px;
@@ -73,6 +74,74 @@
                         border-width: 1px;
                     }
                 }
+            }
+            .item4{
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: flex-start;
+            }
+            .item5{
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+               :deep(.p-fileupload){
+                    width: 100%;
+                    border-radius: unset;
+                    height: 150px;
+                    border: 1px solid $border-color;
+                    border-top-right-radius: 8px;
+                    border-bottom-left-radius: 8px;
+               }
+               :deep(.p-fileupload-header){
+                    display: none;
+               }
+               :deep(.p-fileupload-content){
+                    padding:10px;
+                    height: 150px;
+                    .images-wrap{
+                        overflow-x: scroll;
+                        .image-group{
+                            position: relative;
+                            width: 120px;
+                            border: 1px solid $border-color;
+                            border-top-right-radius: 8px;
+                            border-bottom-left-radius: 8px;
+                            overflow: hidden;
+                            .remove{
+                                position: absolute;
+                                z-index: 1;
+                                top: 0;
+                                right: 0;
+                                width: 20px;
+                                height: 20px;
+                                background-color: #888888;
+                                // border-top-right-radius: 8px;
+                                border-bottom-left-radius: 8px;
+                                // border-radius: 25px;
+                                padding: 3px;
+                                &:hover{
+                                    cursor: pointer;
+                                }
+                            }
+                            .remove-icon{
+                                filter: invert(98%) sepia(2%) saturate(550%) hue-rotate(139deg) brightness(118%) contrast(100%);
+                            }
+                        }
+                    }
+               }
+               .images-upload-icon{
+                    filter: invert(48%) sepia(43%) saturate(2236%) hue-rotate(166deg) brightness(99%) contrast(90%);
+               }
+               .images-empty{
+                padding-top: 20px;
+                &:hover{
+                    cursor: pointer;
+                }
+               }
+               .image{
+                    width: 100%;
+                    height: 100%;
+               }
             }
         }
     }
@@ -140,13 +209,13 @@
         .contain {
             display: flex;
             flex-direction: column;
+            max-height: 500px;
     
             .inner {
                 width: 100%;
-                border: 1px solid $border-color;
-                border-top-right-radius: 10px;
-                border-bottom-left-radius: 10px;
+                border: unset;
                 padding: 10px;
+                padding-bottom: 50px;
                 .item1,
                 .item2,
                 .item3,
@@ -177,6 +246,14 @@
         }
         .footer {
             margin-top: 15px;
+            position: absolute;
+            z-index: 1;
+            bottom:0px;
+            left: 0px;
+            right: 0px;
+            padding-top: 5px;
+            padding-bottom: 15px;
+            background-color: white;
         }
     }
 }

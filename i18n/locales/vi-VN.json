@@ -175,5 +175,7 @@
     "filter": "Lọc",
     "sort": "Sắp xếp",
     "group_of_name":"Nhóm {name}",
-    "group":"Nhóm"
+    "group":"Nhóm",
+    "images": "Hình ảnh",
+    "drag_and_ddrop_files_to_here_to_upload": "Kéo và thả tập tin vào đây để tải lên."
 }
